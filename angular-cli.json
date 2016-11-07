@@ -18,7 +18,8 @@
       "prefix": "xp",
       "mobile": false,
       "styles": [
-        "styles.sass"
+        "styles.scss",
+        "../node_modules/bootstrap/dist/css/bootstrap.min.css"
       ],
       "scripts": [],
       "environments": {
@@ -41,7 +42,7 @@
     }
   },
   "defaults": {
-    "styleExt": "sass",
+    "styleExt": "scss",
     "prefixInterfaces": false,
     "inline": {
       "style": false,

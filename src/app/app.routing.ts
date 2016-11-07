@@ -1,6 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from './core/auth.guard';
 import { LoginComponent } from './components/login/login.component';
 // TODO: import { DashboardComponent } from './components/dashboard/dashboard.component';
 
