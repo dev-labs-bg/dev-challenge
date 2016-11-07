@@ -11,7 +11,6 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
-    loginFail: boolean = false;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -36,17 +35,7 @@ export class LoginComponent implements OnInit {
         let router = this.router;
 
         // call login
-        this.authService.login(email, password).subscribe(
-            function (passed) {
-                if (passed) {
-                    // navigate if login successful
-                    router.navigate(['dashboard']);
-                } else {
-                    // set login as a failure
-                    this.loginFail = true;
-                }
-            }
-        );
+        this.authService.login(email, password);
     }
 
 }

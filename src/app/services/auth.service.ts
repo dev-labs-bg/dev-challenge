@@ -9,40 +9,32 @@ import { HttpService } from './http.service';
 @Injectable()
 export class AuthService {
     isAuth: boolean = false;
-    private loginToken: string = localStorage.getItem('cm_token');
+    private loginToken: string = localStorage.getItem('xp_login_token');
 
     constructor(
         private router: Router,
         private httpService: HttpService
-    ) {
-        /**
-         * When the page loads,
-         * check if the user is already authenticated or not
-         */
-        // this.isAuthenticated().subscribe(
-        //     authStatus => this.toggleAuthentication(authStatus, this.loginToken)
-        // );
-    }
+    ) {}
 
-    login(email, password): Observable<boolean> {
-        const state = new Subject<boolean>();
+    login(email, password) {
+        // instantiate authService
+        let authService = this;
 
+        // call login
         this.httpService.post('login', {
             email,
             password
         }).subscribe(
-            response => state.next(response.success),
-            error => state.next(false)
+            response => authService.toggleAuthentication(response.success, response.loginToken),
+            error => console.log(error)
         );
-
-        return state.asObservable();
     }
 
     toggleAuthentication(isAuth: boolean, loginToken?: string) {
         this.isAuth = isAuth;
 
         if (isAuth) {
-            localStorage.setItem('cm_token', loginToken);
+            localStorage.setItem('xp_login_token', loginToken);
             this.loginToken = loginToken;
 
             // TODO: Navigate to the requested route
@@ -53,7 +45,7 @@ export class AuthService {
 
             console.log('LogIN successful!');
         } else {
-            localStorage.removeItem('cm_token');
+            localStorage.removeItem('xp_login_token');
             this.loginToken = null;
 
             this.router.navigate(['login']);
@@ -79,7 +71,7 @@ export class AuthService {
             state.next(false);
         }
 
-        this.httpService.post('get-logged-user').subscribe(
+        this.httpService.get('get-logged-user').subscribe(
             response => state.next(response.success),
             error => state.next(false)
         );

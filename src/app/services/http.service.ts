@@ -17,6 +17,27 @@ export class HttpService {
     }
 
     /**
+     * Get request
+     *
+     * @param endPoint
+     * @param params
+     * @returns {Observable<R>}
+     */
+    get(endPoint: string, params?: Object) {
+
+        return this.http.get(this.API_URL + endPoint, { headers: this.headers })
+            .map((response: Response) => response.json())
+            .map( (response: any) => {
+
+                if (! response.success) {
+                    this.onError(response);
+                }
+
+                return response;
+            });
+    }
+
+    /**
      * Post request
      *
      * @param endPoint - api url
@@ -25,8 +46,7 @@ export class HttpService {
      */
     post(endPoint: string, params?: Object) {
 
-        // const body = JSON.stringify(params);
-        const body = params;
+        const body = JSON.stringify(params);
 
         return this.http.post(this.API_URL + endPoint, body, { headers: this.headers })
             .map((response: Response) => response.json())
