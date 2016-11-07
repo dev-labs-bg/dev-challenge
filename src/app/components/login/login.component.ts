@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import {Router} from "@angular/router";
 
 import { AuthService } from '../../services/auth.service';
 
@@ -10,10 +11,12 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
+    loginFail: boolean = false;
 
     constructor(
         private formBuilder: FormBuilder,
-        private authService: AuthService
+        private authService: AuthService,
+        public router: Router
     ) { }
 
     ngOnInit() {
@@ -29,8 +32,21 @@ export class LoginComponent implements OnInit {
         // get form values
         const { email, password } = this.loginForm.value;
 
+        // instantiate a local router
+        let router = this.router;
+
         // call login
-        this.authService.login(email, password);
+        this.authService.login(email, password).subscribe(
+            function (passed) {
+                if (passed) {
+                    // navigate if login successful
+                    router.navigate(['dashboard']);
+                } else {
+                    // set login as a failure
+                    this.loginFail = true;
+                }
+            }
+        );
     }
 
 }

@@ -3,11 +3,12 @@ import {Http, Response, Headers, URLSearchParams} from '@angular/http';
 
 @Injectable()
 export class HttpService {
-    private API_URL: string = 'http://dev-challenge.dev/';
+    private API_URL: string = 'http://dev-challenge.dev/api/';
     private accessToken;
 
     private headers: Headers = new Headers({
         'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('xp_access_token'),
         'loginToken': localStorage.getItem('xp_login_token')
     });
 
@@ -15,14 +16,19 @@ export class HttpService {
         this.setAccessToken();
     }
 
-    post(endPoint: string, params?: Object, headers?: Headers) {
+    /**
+     * Post request
+     *
+     * @param endPoint - api url
+     * @param params - post data
+     * @returns {Observable<R>}
+     */
+    post(endPoint: string, params?: Object) {
 
         // const body = JSON.stringify(params);
         const body = params;
 
-        let requestHeaders = headers ? headers : this.headers;
-
-        return this.http.post(this.API_URL + endPoint, body, { headers: requestHeaders })
+        return this.http.post(this.API_URL + endPoint, body, { headers: this.headers })
             .map((response: Response) => response.json())
             .map( (response: any) => {
 
@@ -42,16 +48,32 @@ export class HttpService {
         this.headers = headers;
     }
 
+    /**
+     * accessToken setter
+     */
     setAccessToken() {
-        let accessToken = localStorage.getItem('xp_access_token');
+        this.accessToken = localStorage.getItem('xp_access_token');
 
-        if (accessToken != null) {
-            this.accessToken = accessToken;
-        } else {
+        if (this.accessToken == null) {
             this.generateAccessToken();
         }
     }
 
+    /**
+     * Get the access token
+     *
+     * @returns string accessToken
+     */
+    getAccessToken() {
+        return this.accessToken;
+    }
+
+    /**
+     * Generate an access token
+     *
+     * @return void
+     * TO DO: refactor this to an observable
+     */
     generateAccessToken() {
         // set post params
         let oAuth2Params = new URLSearchParams();
@@ -75,7 +97,7 @@ export class HttpService {
                 return response;
             }).subscribe(
             function (response) {
-                localStorage.setItem('xp_access_token', response.access_token);
+                localStorage.setItem('xp_access_token', "Bearer " + response.access_token);
 
                 this.accessToken = response.access_token;
             }

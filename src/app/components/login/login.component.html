@@ -42,5 +42,10 @@
             [disabled]="!loginForm.valid">
             Submit
         </button>
+        <div
+            *ngIf="loginFail"
+            class="alert alert-danger">
+            Credentials mismatch
+        </div>
     </form>
 </div>

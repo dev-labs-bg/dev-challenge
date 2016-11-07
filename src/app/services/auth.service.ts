@@ -11,7 +11,10 @@ export class AuthService {
     isAuth: boolean = false;
     private loginToken: string = localStorage.getItem('cm_token');
 
-    constructor(private router: Router, private httpService: HttpService) {
+    constructor(
+        private router: Router,
+        private httpService: HttpService
+    ) {
         /**
          * When the page loads,
          * check if the user is already authenticated or not
@@ -21,27 +24,18 @@ export class AuthService {
         // );
     }
 
-    login(email, password) {
+    login(email, password): Observable<boolean> {
+        const state = new Subject<boolean>();
+
         this.httpService.post('login', {
             email,
             password
         }).subscribe(
-            response => {
-                if (response.success) {
-                    console.log(response);
-                    const { login_token } = response.user;
-                    // this.toggleAuthentication(true, login_token);
-                } else {
-                    console.log(response);
-                    console.log('Log-in error');
-                    // this.toggleAuthentication(false);
-                }
-            },
-            error => {
-                console.log('Log-in error', error);
-                // this.toggleAuthentication(false);
-            }
+            response => state.next(response.success),
+            error => state.next(false)
         );
+
+        return state.asObservable();
     }
 
     toggleAuthentication(isAuth: boolean, loginToken?: string) {
