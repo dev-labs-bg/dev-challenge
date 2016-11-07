@@ -16,9 +16,9 @@ export class AuthService {
          * When the page loads,
          * check if the user is already authenticated or not
          */
-        this.isAuthenticated().subscribe(
-            authStatus => this.toggleAuthentication(authStatus, this.loginToken)
-        );
+        // this.isAuthenticated().subscribe(
+        //     authStatus => this.toggleAuthentication(authStatus, this.loginToken)
+        // );
     }
 
     login(email, password) {
@@ -28,16 +28,18 @@ export class AuthService {
         }).subscribe(
             response => {
                 if (response.success) {
+                    console.log(response);
                     const { login_token } = response.user;
-                    this.toggleAuthentication(true, login_token);
+                    // this.toggleAuthentication(true, login_token);
                 } else {
+                    console.log(response);
                     console.log('Log-in error');
-                    this.toggleAuthentication(false);
+                    // this.toggleAuthentication(false);
                 }
             },
             error => {
                 console.log('Log-in error', error);
-                this.toggleAuthentication(false);
+                // this.toggleAuthentication(false);
             }
         );
     }
