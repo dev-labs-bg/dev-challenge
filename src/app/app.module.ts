@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
+import {AlertModule, DatepickerModule} from 'ng2-bootstrap/ng2-bootstrap';
 
 import { routing } from './app.routing';
 import { AuthService } from './services/auth.service';
@@ -30,7 +30,8 @@ import { RegisterComponent } from './components/register/register.component';
     ReactiveFormsModule,
     HttpModule,
     routing,
-    AlertModule
+    AlertModule,
+    DatepickerModule
   ],
   providers: [AuthService, AuthGuard, HttpService],
   bootstrap: [AppComponent]

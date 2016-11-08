@@ -95,6 +95,83 @@
           You must specify a last name.
       </div>
     </div>
+    <div class="form-group">
+      <label for="date_of_birth" class="block-display">Date of birth</label>
+      <div class="datepicker-holder">
+        <datepicker
+            name="date_of_birth"
+            id="date_of_birth"
+            formControlName="date_of_birth"
+            [(ngModel)]="currentDate"
+            [(maxDate)]="currentDate"
+            required
+            ngDefaultControl>
+        </datepicker>
+      </div>
+      <div
+          *ngIf="registerForm.controls['date_of_birth'].hasError('required') &&
+          registerForm.controls['date_of_birth'].touched"
+          class="alert alert-danger">
+          You must specify a day of birth.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="city">City</label>
+      <input
+          type="city"
+          name="city"
+          class="form-control"
+          id="city"
+          formControlName="city"
+          placeholder="City"
+          required
+      />
+      <div
+          *ngIf="registerForm.controls['city'].hasError('required') &&
+          registerForm.controls['city'].touched"
+          class="alert alert-danger">
+          You must specify a city.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="university">University</label>
+      <input
+          type="university"
+          name="university"
+          class="form-control"
+          id="university"
+          formControlName="university"
+          placeholder="University"
+      />
+    </div>
+    <div class="form-group">
+      <label for="year_of_study">University</label>
+      <input
+          type="year_of_study"
+          name="year_of_study"
+          class="form-control"
+          id="year_of_study"
+          formControlName="year_of_study"
+          placeholder="Year of study"
+      />
+    </div>
+    <div class="form-group">
+      <label for="spent_time">Hours per day you could spend on dev-challenge</label>
+      <input
+          type="spent_time"
+          name="spent_time"
+          class="form-control"
+          id="spent_time"
+          formControlName="spent_time"
+          placeholder="1"
+      />
+      <div
+          *ngIf="registerForm.controls['spent_time'].hasError('required') &&
+          registerForm.controls['spent_time'].touched"
+          class="alert alert-danger">
+            You must fill in your available hours.
+      </div>
+    </div>
     <button
         type="submit"
         class="btn btn-default"
