@@ -12,7 +12,6 @@ import { Subscription } from 'rxjs/Rx';
 })
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
-    authSubscription: Subscription;
 
     constructor(
         private formBuilder: FormBuilder,
