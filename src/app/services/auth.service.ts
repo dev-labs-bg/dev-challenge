@@ -8,7 +8,6 @@ import { HttpService } from './http.service';
 
 @Injectable()
 export class AuthService {
-    isAuth: boolean = false;
     private loginToken: string = localStorage.getItem('xp_login_token');
 
     constructor(
@@ -49,8 +48,6 @@ export class AuthService {
      * @returns void
      */
     toggleAuthentication(isAuth: boolean, loginToken?: string) {
-        this.isAuth = isAuth;
-
         if (isAuth) {
             localStorage.setItem('xp_login_token', loginToken);
             this.loginToken = loginToken;
@@ -60,8 +57,6 @@ export class AuthService {
 
             // TODO: Navigate to the requested route
             this.router.navigate(['dashboard']);
-
-            console.log('LogIN successful!');
         } else {
             localStorage.removeItem('xp_login_token');
             this.loginToken = null;
@@ -69,8 +64,6 @@ export class AuthService {
             this.httpService.updateHeader("loginToken", null);
 
             this.router.navigate(['login']);
-
-            console.log('LogOUT successful!');
         }
     }
 

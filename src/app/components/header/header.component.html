@@ -3,16 +3,18 @@
 
         <div class="navbar-header">
             <h1 class="no-margin">
-                <a class="navbar-brand" href="javascript:;">{{ title }}</a>
+                <a class="navbar-brand" routerLink="/dashboard">{{ title }}</a>
             </h1>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li>
+                <li *ngIf="!authService.isAuthenticated()">
                     <a routerLink="/login" routerLinkActive="active">Login</a>
                 </li>
-                <li>
+            </ul>
+            <ul class="nav navbar-nav right">
+                <li *ngIf="authService.isAuthenticated()">
                     <a href="javascript:;" (click)="logout()">Logout</a>
                 </li>
             </ul>
