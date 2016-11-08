@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'xp-header',
@@ -8,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
   title = 'Dev Challenge';
 
-  constructor() { }
+  constructor(
+      private authService: AuthService
+  ) { }
 
   ngOnInit() {
+  }
+
+  logout() {
+      this.authService.logout();
   }
 
 }

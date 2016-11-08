@@ -16,6 +16,13 @@ export class AuthService {
         private httpService: HttpService
     ) {}
 
+    /**
+     * Login API request
+     *
+     * @param email
+     * @param password
+     * @returns void
+     */
     login(email, password) {
         // instantiate authService
         let authService = this;
@@ -25,11 +32,22 @@ export class AuthService {
             email,
             password
         }).subscribe(
-            response => authService.toggleAuthentication(response.success, response.loginToken),
+            response => {
+                if (response.success) {
+                    authService.toggleAuthentication(true, response.loginToken);
+                }
+            },
             error => console.log(error)
         );
     }
 
+    /**
+     * Change authentication state
+     *
+     * @param isAuth - is the user logged in
+     * @param loginToken - user's login token if logged in
+     * @returns void
+     */
     toggleAuthentication(isAuth: boolean, loginToken?: string) {
         this.isAuth = isAuth;
 
@@ -37,16 +55,18 @@ export class AuthService {
             localStorage.setItem('xp_login_token', loginToken);
             this.loginToken = loginToken;
 
+            // TODO: Maybe not here?
+            this.httpService.updateHeader("loginToken", loginToken);
+
             // TODO: Navigate to the requested route
             this.router.navigate(['dashboard']);
-
-            // TODO: Maybe not here?
-            this.httpService.updateHeaders(loginToken);
 
             console.log('LogIN successful!');
         } else {
             localStorage.removeItem('xp_login_token');
             this.loginToken = null;
+
+            this.httpService.updateHeader("loginToken", null);
 
             this.router.navigate(['login']);
 
@@ -54,6 +74,11 @@ export class AuthService {
         }
     }
 
+    /**
+     * Logout API request
+     *
+     * @returns void
+     */
     logout() {
         this.httpService.post('logout').subscribe(
             response => {
@@ -64,18 +89,30 @@ export class AuthService {
         );
     }
 
-    isAuthenticated(): Observable<boolean> {
-        const state = new Subject<boolean>();
+    /**
+     * Check if user is authenticated
+     *
+     * @returns {Observable<boolean>}
+     */
+    isAuthenticated(): boolean {
+        return Boolean(this.loginToken);
+    }
 
-        if (! this.loginToken) {
-            state.next(false);
-        }
-
+    /**
+     * Get logged user
+     *
+     * @returns {Observable<T>}
+     */
+    getLoggedUser() {
         this.httpService.get('get-logged-user').subscribe(
-            response => state.next(response.success),
-            error => state.next(false)
-        );
+            response => {
+                if (response.success) {
+                    return response.user
+                }
 
-        return state.asObservable();
+                return false;
+            },
+            error => console.log(error)
+        );
     }
 }

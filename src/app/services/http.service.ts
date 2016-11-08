@@ -64,8 +64,14 @@ export class HttpService {
         console.log('error', error);
     }
 
-    updateHeaders(headers) {
-        this.headers = headers;
+    /**
+     * Modify a header
+     *
+     * @param param - header key
+     * @param value - header value
+     */
+    updateHeader(param, value) {
+        this.headers.set(param, value);
     }
 
     /**

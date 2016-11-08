@@ -3,6 +3,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import {Router} from "@angular/router";
 
 import { AuthService } from '../../services/auth.service';
+import { Subscription } from 'rxjs/Rx';
 
 @Component({
     selector: 'xp-login',
@@ -11,12 +12,19 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
+    authSubscription: Subscription;
 
     constructor(
         private formBuilder: FormBuilder,
         private authService: AuthService,
-        public router: Router
-    ) { }
+        private router: Router
+    )
+    {
+        // navigate away if user is logged
+        if (this.authService.isAuthenticated()) {
+            this.router.navigate(['dashboard']);
+        }
+    }
 
     ngOnInit() {
         // init form and set rules
@@ -30,9 +38,6 @@ export class LoginComponent implements OnInit {
     onSubmit() {
         // get form values
         const { email, password } = this.loginForm.value;
-
-        // instantiate a local router
-        let router = this.router;
 
         // call login
         this.authService.login(email, password);
