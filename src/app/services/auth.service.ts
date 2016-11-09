@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 
 import { HttpService } from './http.service';
 
@@ -8,7 +8,7 @@ import { HttpService } from './http.service';
 
 @Injectable()
 export class AuthService {
-    private loginToken: string = localStorage.getItem('xp_login_token');
+    private loginToken: string = null;
     public successfulRegistration: boolean = false;
     public successfulActivation: boolean = null;
     public loginFail: boolean = false;
@@ -50,6 +50,25 @@ export class AuthService {
     }
 
     /**
+     * Get login token
+     *
+     * @param value
+     * @returns this.loginToken
+     */
+    getLoginToken() {
+        return this.loginToken;
+    }
+
+    /**
+     * Set login token value
+     *
+     * @param value
+     */
+    setLoginToken(value) {
+        this.loginToken = value;
+    }
+
+    /**
      * Change authentication state
      *
      * @param isAuth - is the user logged in
@@ -59,7 +78,7 @@ export class AuthService {
     toggleAuthentication(isAuth: boolean, loginToken?: string) {
         if (isAuth) {
             localStorage.setItem('xp_login_token', loginToken);
-            this.loginToken = loginToken;
+            this.setLoginToken(loginToken);
 
             // TODO: Maybe not here?
             this.httpService.updateHeader("loginToken", loginToken);
@@ -68,7 +87,7 @@ export class AuthService {
             this.router.navigate(['dashboard']);
         } else {
             localStorage.removeItem('xp_login_token');
-            this.loginToken = null;
+            this.setLoginToken(null);
 
             this.httpService.updateHeader("loginToken", null);
 
@@ -97,7 +116,7 @@ export class AuthService {
      * @returns {Observable<boolean>}
      */
     isAuthenticated(): boolean {
-        return Boolean(this.loginToken);
+        return Boolean(this.getLoginToken());
     }
 
     /**
@@ -143,5 +162,16 @@ export class AuthService {
             },
             error => console.log(error)
         );
+    }
+
+    isUserLogged() {
+        let authService = this;
+
+        return new Promise(function (resolve, reject) {
+            authService.httpService.get('get-logged-user').subscribe(
+                response => resolve(response.success),
+                error => reject(error)
+            );
+        });
     }
 }

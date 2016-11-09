@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import {Router} from "@angular/router";
 
@@ -17,13 +17,7 @@ export class LoginComponent implements OnInit {
         private formBuilder: FormBuilder,
         private authService: AuthService,
         private router: Router
-    )
-    {
-        // navigate away if user is logged
-        if (this.authService.isAuthenticated()) {
-            this.router.navigate(['dashboard']);
-        }
-    }
+    ) {}
 
     ngOnInit() {
         // init form and set rules

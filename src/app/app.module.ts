@@ -16,6 +16,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AccountActivationComponent } from './components/account-activation/account-activation.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AccountActivationComponent } from './components/account-activation/acco
     HeaderComponent,
     DashboardComponent,
     RegisterComponent,
-    AccountActivationComponent
+    AccountActivationComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

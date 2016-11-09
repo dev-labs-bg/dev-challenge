@@ -6,13 +6,15 @@ export class HttpService {
     private API_URL: string = 'http://dev-challenge.dev/api/';
     private accessToken;
 
-    private headers: Headers = new Headers({
+    public headers: Headers = new Headers({
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('xp_access_token'),
         'loginToken': localStorage.getItem('xp_login_token')
     });
 
-    constructor(private http: Http) {
+    constructor(
+        private http: Http
+    ) {
         this.setAccessToken();
     }
 
@@ -28,11 +30,6 @@ export class HttpService {
         return this.http.get(this.API_URL + endPoint, { headers: this.headers })
             .map((response: Response) => response.json())
             .map( (response: any) => {
-
-                if (! response.success) {
-                    this.onError(response);
-                }
-
                 return response;
             });
     }
@@ -51,17 +48,8 @@ export class HttpService {
         return this.http.post(this.API_URL + endPoint, body, { headers: this.headers })
             .map((response: Response) => response.json())
             .map( (response: any) => {
-
-                if (! response.success) {
-                    this.onError(response);
-                }
-
                 return response;
             });
-    }
-
-    onError(error) {
-        console.log('error', error);
     }
 
     /**

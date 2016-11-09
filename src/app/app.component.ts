@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {AuthService} from "./services/auth.service";
+import {HttpService} from "./services/http.service";
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,24 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
+  constructor(
+      private authService: AuthService,
+      private httpService: HttpService,
+  ) {
+      this.init();
+  }
+
+  init() {
+    this.httpService.get('get-logged-user').subscribe(
+      response => {
+        if (response.success) {
+          this.authService.toggleAuthentication(true, response.loginToken);
+        } else {
+          this.authService.toggleAuthentication(false);
+        }
+      }
+    );
+  }
 
 }
