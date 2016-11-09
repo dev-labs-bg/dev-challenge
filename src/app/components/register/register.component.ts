@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { DatepickerModule } from 'ng2-bootstrap/ng2-bootstrap';
@@ -12,15 +12,13 @@ import { AuthService } from "../../services/auth.service";
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  currentDate: Date = new Date();
-  minDate: Date = new Date();
+  currentDate = new Date();
+  maxDate: Date = new Date();
 
   constructor(
       private authService: AuthService,
       private formBuilder: FormBuilder
-  )
-  {
-  }
+  ) {}
 
   ngOnInit() {
       this.registerForm = this.formBuilder.group({
@@ -29,7 +27,6 @@ export class RegisterComponent implements OnInit {
           "password_confirmation": ['', Validators.required],
           "first_name": ['', Validators.required],
           "last_name": ['', Validators.required],
-          "date_of_birth": ['', Validators.required],
           "city": ['', Validators.required],
           "university": [''],
           "year_of_study": [''],
@@ -40,6 +37,7 @@ export class RegisterComponent implements OnInit {
   onSubmit() {
       // get form data
       let formData = this.registerForm.value;
+      formData.date_of_birth = this.currentDate;
 
       // register user
       this.authService.register(formData);

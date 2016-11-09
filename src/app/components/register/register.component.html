@@ -96,23 +96,15 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="date_of_birth" class="block-display">Date of birth</label>
+      <label class="block-display">Date of birth</label>
       <div class="datepicker-holder">
         <datepicker
             name="date_of_birth"
-            id="date_of_birth"
-            formControlName="date_of_birth"
             [(ngModel)]="currentDate"
-            [(maxDate)]="currentDate"
-            required
-            ngDefaultControl>
+            [ngModelOptions]="{standalone: true}"
+            [(maxDate)]="maxDate"
+            required>
         </datepicker>
-      </div>
-      <div
-          *ngIf="registerForm.controls['date_of_birth'].hasError('required') &&
-          registerForm.controls['date_of_birth'].touched"
-          class="alert alert-danger">
-          You must specify a day of birth.
       </div>
     </div>
     <div class="form-group">
