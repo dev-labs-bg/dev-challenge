@@ -9,23 +9,27 @@ import {HttpService} from "./services/http.service";
 })
 export class AppComponent {
 
-  constructor(
+    constructor(
       private authService: AuthService,
       private httpService: HttpService,
-  ) {
+    ) {
       this.init();
-  }
+    }
 
-  init() {
-    this.httpService.get('get-logged-user').subscribe(
-      response => {
-        if (response.success) {
-          this.authService.toggleAuthentication(true, response.loginToken);
-        } else {
-          this.authService.toggleAuthentication(false);
-        }
-      }
-    );
-  }
+    /**
+     * Init application and change auth state
+     * depending on if user is logged or not
+     */
+    init() {
+        this.httpService.get('get-logged-user').subscribe(
+            response => {
+                if (response.success) {
+                    this.authService.toggleAuthentication(true, response.user, response.loginToken);
+                } else {
+                    this.authService.toggleAuthentication(false);
+                }
+            }
+        );
+    }
 
 }

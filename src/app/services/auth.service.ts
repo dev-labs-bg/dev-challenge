@@ -1,14 +1,14 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 
 import { HttpService } from './http.service';
-
-// TODO: import { User } from "./user.interface";
+import { User } from "../classes/user";
 
 @Injectable()
 export class AuthService {
     private loginToken: string = null;
+    private loggedUser: User;
     public successfulRegistration: boolean = false;
     public successfulActivation: boolean = null;
     public loginFail: boolean = false;
@@ -37,7 +37,7 @@ export class AuthService {
         }).subscribe(
             response => {
                 if (response.success) {
-                    authService.toggleAuthentication(true, response.loginToken);
+                    authService.toggleAuthentication(true, response.user, response.loginToken);
                     return true;
                 } else {
                     this.loginFail = true;
@@ -69,16 +69,37 @@ export class AuthService {
     }
 
     /**
+     * Get the logged user
+     *
+     * @returns {User}
+     */
+    getLoggedUser()
+    {
+        return this.loggedUser;
+    }
+
+    /**
+     * Set the logged user instance
+     *
+     * @param user
+     */
+    setLoggedUser(user: User)
+    {
+        this.loggedUser = User.newUser(user);
+    }
+
+    /**
      * Change authentication state
      *
      * @param isAuth - is the user logged in
      * @param loginToken - user's login token if logged in
      * @returns void
      */
-    toggleAuthentication(isAuth: boolean, loginToken?: string) {
+    toggleAuthentication(isAuth: boolean, user?: User, loginToken?: string) {
         if (isAuth) {
             localStorage.setItem('xp_login_token', loginToken);
             this.setLoginToken(loginToken);
+            this.setLoggedUser(user);
 
             // TODO: Maybe not here?
             this.httpService.updateHeader("loginToken", loginToken);
@@ -88,6 +109,7 @@ export class AuthService {
         } else {
             localStorage.removeItem('xp_login_token');
             this.setLoginToken(null);
+            this.loggedUser = null;
 
             this.httpService.updateHeader("loginToken", null);
 
@@ -119,24 +141,6 @@ export class AuthService {
         return Boolean(this.getLoginToken());
     }
 
-    /**
-     * Get logged user
-     *
-     * @returns {Observable<T>}
-     */
-    getLoggedUser() {
-        this.httpService.get('get-logged-user').subscribe(
-            response => {
-                if (response.success) {
-                    return response.user
-                }
-
-                return false;
-            },
-            error => console.log(error)
-        );
-    }
-
     register(data) {
         this.httpService.post('register', data).subscribe(
             response => {
@@ -151,6 +155,13 @@ export class AuthService {
         );
     }
 
+    /**
+     * Activate account api request
+     *
+     * @param email - user email
+     * @param token - user token
+     * @returns void
+     */
     activateAccount(email, token) {
         this.httpService.post('account/activate/'+ email +'/' + token).subscribe(
             response => {
@@ -164,6 +175,13 @@ export class AuthService {
         );
     }
 
+    /**
+     * Get logged user from api and
+     * send it back as a Promise.
+     * User for canActivate guard
+     *
+     * @returns {Promise<T>|Promise}
+     */
     isUserLogged() {
         let authService = this;
 

@@ -9,6 +9,11 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
+                <li
+                    *ngIf="authService.getLoggedUser() != null &&
+                    authService.getLoggedUser().isAdmin()">
+                    <a routerLink="/admin" routerLinkActive="active">Admin</a>
+                </li>
                 <li *ngIf="!authService.isAuthenticated()">
                     <a routerLink="/login" routerLinkActive="active">Login</a>
                 </li>

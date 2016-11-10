@@ -9,6 +9,7 @@ import { routing } from './app.routing';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './core/auth.guard';
 import { HttpService } from './services/http.service';
+import { AdminService } from './services/admin.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -37,7 +38,7 @@ import { AdminComponent } from './components/admin/admin.component';
     AlertModule,
     DatepickerModule
   ],
-  providers: [AuthService, AuthGuard, HttpService],
+  providers: [AuthService, AuthGuard, HttpService, AdminService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
