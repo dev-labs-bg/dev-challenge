@@ -104,8 +104,10 @@ export class AuthService {
             // TODO: Maybe not here?
             this.httpService.updateHeader("loginToken", loginToken);
 
-            // TODO: Navigate to the requested route
-            this.router.navigate(['dashboard']);
+            // redirect only if current route is login
+            if (this.router.url == '/login') {
+                this.router.navigate(['dashboard']);
+            }
         } else {
             localStorage.removeItem('xp_login_token');
             this.setLoginToken(null);
@@ -182,12 +184,61 @@ export class AuthService {
      *
      * @returns {Promise<T>|Promise}
      */
-    isUserLogged() {
+    isUserLogged(): Promise<boolean> | boolean {
+        let userInstance = this.getLoggedUser();
+
+        if (userInstance != null) {
+            return true;
+        }
+
         let authService = this;
 
         return new Promise(function (resolve, reject) {
             authService.httpService.get('get-logged-user').subscribe(
-                response => resolve(response.success),
+                response => {
+                    if (response.success) {
+                        authService.toggleAuthentication(true, response.user, response.loginToken);
+                    } else {
+                        authService.toggleAuthentication(false);
+                    }
+
+                    resolve(response.success);
+                },
+                error => reject(error)
+            );
+        });
+    }
+
+    /**
+     * Check if the user is admin via API and
+     * send it back as a Promise.
+     * User for canActivate admin guard
+     *
+     * @returns {Promise<T>|Promise}
+     */
+    isUserAdmin(): Promise<boolean> | boolean {
+        let userInstance = this.getLoggedUser();
+
+        if (userInstance != null) {
+            return userInstance.isAdmin();
+        }
+
+        let authService = this;
+
+        return new Promise(function (resolve, reject) {
+            authService.httpService.get('get-logged-user').subscribe(
+                response => {
+                    if (response.success) {
+                        authService.toggleAuthentication(true, response.user, response.loginToken);
+
+                        let adminGuardUser: User = User.newUser(response.user);
+                        resolve(adminGuardUser.isAdmin());
+                    } else {
+                        authService.toggleAuthentication(false);
+                    }
+
+                    resolve(false);
+                },
                 error => reject(error)
             );
         });

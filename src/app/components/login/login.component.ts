@@ -3,7 +3,6 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import {Router} from "@angular/router";
 
 import { AuthService } from '../../services/auth.service';
-import { Subscription } from 'rxjs/Rx';
 
 @Component({
     selector: 'xp-login',
@@ -15,8 +14,7 @@ export class LoginComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private authService: AuthService,
-        private router: Router
+        private authService: AuthService
     ) {}
 
     ngOnInit() {
