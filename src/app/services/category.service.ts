@@ -8,10 +8,7 @@ export class CategoryService {
 
     constructor(
         private httpService: HttpService
-    )
-    {
-        this.getAll();
-    }
+    ) {}
 
     getAll() {
         this.httpService.get('category/all').subscribe(

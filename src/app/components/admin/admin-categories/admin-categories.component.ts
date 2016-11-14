@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from "../../../services/category.service";
-import {Category} from "../../../classes/category";
-import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+import { Category } from "../../../classes/category";
+import { CategoryFormService } from "./category-form/category-form.service";
 
 @Component({
     selector: 'xp-admin-categories',
@@ -10,57 +10,25 @@ import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 })
 export class AdminCategoriesComponent implements OnInit {
     private categories: Promise<Category[]> | Category[];
-    public categoryCreationTab: boolean = false;
-    public showCreationSuccess: boolean = false;
-    public categoryForm: FormGroup;
+    private selectedCategory: Category;
 
     constructor(
-      private categoryService: CategoryService,
-      private formBuilder: FormBuilder
-    ) { }
+        private categoryService: CategoryService,
+        private categoryFormService: CategoryFormService
+    ) {
+        this.categoryService.getAll();
+    }
 
     ngOnInit() {
-        this.categories = this.categoryService.getCategories();
-
-        this.categoryForm = this.formBuilder.group({
-            'name': [null, Validators.required]
-        });
+        //
     }
 
-    /**
-     * Change categoryCreationTab to true
-     *
-     * @returns void
-     */
-    showCategoryCreationTab() {
-        this.categoryCreationTab = true;
+    showCategoryEditTab(category) {
+        this.selectedCategory = category;
     }
 
-    /**
-     * Change categoryCreationTab to false
-     *
-     * @returns void
-     */
-    hideCategoryCreationTab() {
-        this.categoryCreationTab = false;
-    }
-
-    onSubmit() {
-        const { name } = this.categoryForm.value;
-
-        this.categoryService.createCategory({name: name}).subscribe(
-            response => {
-                if (response.success) {
-                    this.categoryService.addCategory(
-                        new Category(response.category.name)
-                    );
-                    this.showCreationSuccess = true;
-                    this.categoryForm.reset();
-                }
-
-                console.log(response);
-            }
-        );
+    isSelected(category) {
+        return (this.selectedCategory == category);
     }
 
 }

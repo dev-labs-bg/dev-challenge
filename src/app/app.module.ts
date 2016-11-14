@@ -22,6 +22,8 @@ import {AdminGuard} from "./core/admin.guard";
 import { AdminCategoriesComponent } from './components/admin/admin-categories/admin-categories.component';
 import { AdminTasksComponent } from './components/admin/admin-tasks/admin-tasks.component';
 import { CategoryService } from "./services/category.service";
+import { CategoryFormComponent } from './components/admin/admin-categories/category-form/category-form.component';
+import { CategoryFormService } from './components/admin/admin-categories/category-form/category-form.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { CategoryService } from "./services/category.service";
     AccountActivationComponent,
     AdminComponent,
     AdminCategoriesComponent,
-    AdminTasksComponent
+    AdminTasksComponent,
+    CategoryFormComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +53,8 @@ import { CategoryService } from "./services/category.service";
     HttpService,
     AdminService,
     AdminGuard,
-    CategoryService
+    CategoryService,
+    CategoryFormService
   ],
   bootstrap: [AppComponent]
 })

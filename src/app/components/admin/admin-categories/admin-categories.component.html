@@ -1,51 +1,18 @@
 <h1>Category creation</h1>
 
-<button (click)="showCategoryCreationTab()">New category</button>
+<button (click)="categoryFormService.showCategoryCreationTab()">New category</button>
 
-<div *ngIf="categoryCreationTab"
+<div *ngIf="categoryFormService.categoryCreationTab"
     class="padding-top-bottom">
-    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="name">Category name</label>
-            <input
-                type="text"
-                name="name"
-                class="form-control"
-                id="name"
-                formControlName="name"
-                placeholder="Name"
-                required
-            />
-            <div
-                *ngIf="categoryForm.controls['name'].hasError('required') &&
-                categoryForm.controls['name'].touched"
-                class="alert alert-danger">
-                You must specify a category name.
-            </div>
-        </div>
-        <div
-            class="btn btn-default"
-            (click)="hideCategoryCreationTab()">
-            Cancel
-        </div>
-        <button
-            type="submit"
-            class="btn btn-default"
-            [disabled]="!categoryForm.valid">
-            Submit
-        </button>
-        <div
-            *ngIf="showCreationSuccess"
-            class="alert alert-success">
-            Category created successfully.
-        </div>
-    </form>
+    <xp-category-form [category]=null></xp-category-form>
 </div>
 
 <div class="category-management-holder">
     <ul>
         <li *ngFor="let category of categoryService.getCategories()">
-          {{ category.name }}
+            <a (click)="showCategoryEditTab(category)" href="javascript:;">{{ category.name }}</a>
+            <div *ngIf="isSelected(category)">
+            </div>
         </li>
     </ul>
 </div>
