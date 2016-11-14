@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from "../../../services/category.service";
-import { Category } from "../../../classes/category";
 import { CategoryFormService } from "./category-form/category-form.service";
 
 @Component({
@@ -9,8 +8,6 @@ import { CategoryFormService } from "./category-form/category-form.service";
     styleUrls: ['./admin-categories.component.scss']
 })
 export class AdminCategoriesComponent implements OnInit {
-    private categories: Promise<Category[]> | Category[];
-    private selectedCategory: Category;
 
     constructor(
         private categoryService: CategoryService,
@@ -21,14 +18,6 @@ export class AdminCategoriesComponent implements OnInit {
 
     ngOnInit() {
         //
-    }
-
-    showCategoryEditTab(category) {
-        this.selectedCategory = category;
-    }
-
-    isSelected(category) {
-        return (this.selectedCategory == category);
     }
 
 }

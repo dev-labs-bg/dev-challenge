@@ -12,7 +12,7 @@ import {CategoryFormService} from "./category-form.service";
 export class CategoryFormComponent implements OnInit {
     public categoryForm: FormGroup;
     public showCreationSuccess: boolean = false;
-    @Input() category: string;
+    @Input() category: Category;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -21,8 +21,12 @@ export class CategoryFormComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        let formId = (this.category != null) ? this.category.getId() : '';
+        let formName = (this.category != null) ? this.category.getName() : '';
+
         this.categoryForm = this.formBuilder.group({
-            'name': [null, Validators.required]
+            'id': [formId],
+            'name': [formName, Validators.required]
         });
     }
 
@@ -35,7 +39,10 @@ export class CategoryFormComponent implements OnInit {
             response => {
                 if (response.success) {
                     this.categoryService.addCategory(
-                        new Category(response.category.name)
+                        new Category(
+                            response.category.id,
+                            response.category.name
+                        )
                     );
                     this.showCreationSuccess = true;
                     this.categoryForm.reset();
@@ -45,7 +52,20 @@ export class CategoryFormComponent implements OnInit {
     }
 
     onUpdate() {
-        console.log(5);
+        const { id, name } = this.categoryForm.value;
+
+        this.categoryService.updateCategory(id, name).subscribe(
+            response => {
+                if (response.success) {
+                    let updatedCategory = new Category(
+                        response.category.id,
+                        response.category.name
+                    );
+
+                    this.categoryService.changeCategoriesValue(updatedCategory);
+                }
+            }
+        );
     }
 
     handleForm(category) {

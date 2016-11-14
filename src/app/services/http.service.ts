@@ -53,6 +53,24 @@ export class HttpService {
     }
 
     /**
+     * Put request
+     *
+     * @param endPoint - api url
+     * @param params - post data
+     * @returns {Observable<R>}
+     */
+    put(endPoint: string, params?: Object) {
+
+        const body = JSON.stringify(params);
+
+        return this.http.put(this.API_URL + endPoint, body, { headers: this.headers })
+            .map((response: Response) => response.json())
+            .map( (response: any) => {
+                return response;
+            });
+    }
+
+    /**
      * Modify a header
      *
      * @param param - header key

@@ -1,6 +1,13 @@
 <form [formGroup]="categoryForm" (ngSubmit)="handleForm(category)">
+    <input
+        type="hidden"
+        name="id"
+        class="form-control"
+        id="id"
+        formControlName="id"
+    />
     <div class="form-group">
-    <label for="name">Category name</label>
+        <label for="name">Category name</label>
         <input
             type="text"
             name="name"
@@ -13,7 +20,7 @@
     </div>
     <div
         class="btn btn-default"
-        (click)="categoryFormService.hideCategoryCreationTab()">
+        (click)="categoryFormService.hideCategoryCreationTab(category)">
         Cancel
     </div>
     <button
