@@ -71,6 +71,22 @@ export class HttpService {
     }
 
     /**
+     * Delete request
+     *
+     * @param endPoint
+     * @param params
+     * @returns {Observable<R>}
+     */
+    delete(endPoint: string, params?: Object) {
+
+        return this.http.delete(this.API_URL + endPoint, { headers: this.headers })
+            .map((response: Response) => response.json())
+            .map( (response: any) => {
+                return response;
+            });
+    }
+
+    /**
      * Modify a header
      *
      * @param param - header key

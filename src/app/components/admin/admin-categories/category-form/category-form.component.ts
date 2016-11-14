@@ -10,16 +10,33 @@ import {CategoryFormService} from "./category-form.service";
   styleUrls: ['./category-form.component.scss'],
 })
 export class CategoryFormComponent implements OnInit {
+
+    /**
+     * @var category form
+     */
     public categoryForm: FormGroup;
+
+    /**
+     * @var Category Creation success after submit
+     * @type {boolean}
+     */
     public showCreationSuccess: boolean = false;
+
+    /**
+     * @var Parent component variable
+     */
     @Input() category: Category;
 
     constructor(
         private formBuilder: FormBuilder,
         private categoryService: CategoryService,
+        /* we use this in html, so never mind the highlight */
         private categoryFormService: CategoryFormService
     ) { }
 
+    /**
+     * Init category form
+     */
     ngOnInit() {
         let formId = (this.category != null) ? this.category.getId() : '';
         let formName = (this.category != null) ? this.category.getName() : '';
@@ -30,6 +47,9 @@ export class CategoryFormComponent implements OnInit {
         });
     }
 
+    /**
+     * Form submission on new category creation
+     */
     onCreate() {
         this.showCreationSuccess = false;
 
@@ -51,6 +71,9 @@ export class CategoryFormComponent implements OnInit {
         );
     }
 
+    /**
+     * Form submission on category update
+     */
     onUpdate() {
         const { id, name } = this.categoryForm.value;
 
@@ -62,12 +85,39 @@ export class CategoryFormComponent implements OnInit {
                         response.category.name
                     );
 
-                    this.categoryService.changeCategoriesValue(updatedCategory);
+                    this.categoryService.updateMainArray(updatedCategory);
                 }
             }
         );
     }
 
+    /**
+     * Handle for delete category button event
+     *
+     * @param category
+     */
+    deleteCategory(category) {
+        let confirmation = "Are you sure to want to delete category with name: " + category.getName();
+
+        if (confirm(confirmation)) {
+            const { id } = this.categoryForm.value;
+
+            this.categoryService.deleteCategory(id).subscribe(
+                response => {
+                    if (response.success) {
+                        this.categoryService.removeCategory(id);
+                    }
+                }
+            );
+        }
+    }
+
+    /**
+     * Handle form submission depending on the fact
+     * do we have a category or not
+     *
+     * @param category
+     */
     handleForm(category) {
         if (category == null)
             this.onCreate();

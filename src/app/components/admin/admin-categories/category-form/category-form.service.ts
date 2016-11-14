@@ -30,10 +30,23 @@ export class CategoryFormService {
         }
     }
 
+    /**
+     * Switch the selected category
+     * so we could easily interact with it
+     *
+     * @param category
+     */
     showCategoryEditTab(category) {
         this.selectedCategory = category;
     }
 
+    /**
+     * Check to see if the selected category
+     * is the current one we're displaying
+     *
+     * @param category
+     * @returns {boolean}
+     */
     isSelected(category) {
         return (this.selectedCategory == category);
     }

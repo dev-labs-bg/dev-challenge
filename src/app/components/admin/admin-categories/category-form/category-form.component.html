@@ -30,6 +30,12 @@
         Submit
     </button>
     <div
+        *ngIf="(category != null)"
+        (click)="deleteCategory(category)"
+        class="btn btn-default">
+        Delete
+    </div>
+    <div
         *ngIf="showCreationSuccess"
         class="alert alert-success">
         Category created successfully.
