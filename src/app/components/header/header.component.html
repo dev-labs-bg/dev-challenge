@@ -12,6 +12,9 @@
                 <li *ngIf="!authService.isAuthenticated()">
                     <a routerLink="/login" routerLinkActive="active">Login</a>
                 </li>
+                <li *ngIf="!authService.isAuthenticated()">
+                    <a routerLink="/register" routerLinkActive="active">Register</a>
+                </li>
             </ul>
             <ul class="nav navbar-nav right">
                 <li *ngIf="authService.isAuthenticated()">

@@ -1,4 +1,11 @@
 <div class="center-block login-form">
+
+    <div
+        *ngIf="authService.successfulRegistration"
+        class="alert alert-success">
+        Registration successful! Please activate your account to continue.
+    </div>
+
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="email">Email address</label>
@@ -42,5 +49,10 @@
             [disabled]="!loginForm.valid">
             Submit
         </button>
+        <div
+            *ngIf="authService.loginFail"
+            class="alert alert-danger">
+            Login failed, please try again.
+        </div>
     </form>
 </div>

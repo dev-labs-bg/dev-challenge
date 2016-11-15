@@ -9,6 +9,9 @@ import { HttpService } from './http.service';
 @Injectable()
 export class AuthService {
     private loginToken: string = localStorage.getItem('xp_login_token');
+    public successfulRegistration: boolean = false;
+    public successfulActivation: boolean = null;
+    public loginFail: boolean = false;
 
     constructor(
         private router: Router,
@@ -25,6 +28,7 @@ export class AuthService {
     login(email, password) {
         // instantiate authService
         let authService = this;
+        this.loginFail = false;
 
         // call login
         this.httpService.post('login', {
@@ -34,7 +38,12 @@ export class AuthService {
             response => {
                 if (response.success) {
                     authService.toggleAuthentication(true, response.loginToken);
+                    return true;
+                } else {
+                    this.loginFail = true;
                 }
+
+                return false;
             },
             error => console.log(error)
         );
@@ -104,6 +113,33 @@ export class AuthService {
                 }
 
                 return false;
+            },
+            error => console.log(error)
+        );
+    }
+
+    register(data) {
+        this.httpService.post('register', data).subscribe(
+            response => {
+                if (response.success) {
+                    this.successfulRegistration = true;
+                    this.router.navigate(['login']);
+                }
+
+                return false;
+            },
+            error => console.log(error)
+        );
+    }
+
+    activateAccount(email, token) {
+        this.httpService.post('account/activate/'+ email +'/' + token).subscribe(
+            response => {
+                if (response.success) {
+                    this.successfulActivation = true;
+                } else {
+                    this.successfulActivation = false;
+                }
             },
             error => console.log(error)
         );

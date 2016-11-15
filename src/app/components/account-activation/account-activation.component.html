@@ -1,0 +1,14 @@
+<p
+  *ngIf="authService.successfulActivation == null">
+  Checking credentials, please wait.
+</p>
+<p
+  *ngIf="authService.successfulActivation"
+  class="alert alert-success">
+  Account successfully activated.
+</p>
+<p
+  *ngIf="authService.successfulActivation === false"
+  class="alert alert-danger">
+  Something went wrong, please try again.
+</p>
