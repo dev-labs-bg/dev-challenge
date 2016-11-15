@@ -1,0 +1,46 @@
+<div class="center-block login-form">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input
+                type="email"
+                name="email"
+                class="form-control"
+                id="email"
+                formControlName="email"
+                placeholder="Email"
+                required
+            />
+            <div
+                *ngIf="loginForm.controls['email'].hasError('required') &&
+                loginForm.controls['email'].touched"
+                class="alert alert-danger">
+                You must specify an email.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input
+                type="password"
+                name="password"
+                class="form-control"
+                id="password"
+                formControlName="password"
+                placeholder="Password"
+                required
+            />
+            <div
+                *ngIf="loginForm.controls['password'].hasError('required') &&
+                loginForm.controls['password'].touched"
+                class="alert alert-danger">
+                You must specify a password
+            </div>
+        </div>
+        <button
+            type="submit"
+            class="btn btn-default"
+            [disabled]="!loginForm.valid">
+            Submit
+        </button>
+    </form>
+</div>
