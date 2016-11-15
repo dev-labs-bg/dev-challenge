@@ -6,6 +6,7 @@ import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { AssessmentTypeService } from "../../../services/assessment-type.service";
 import { CategoryService } from "../../../services/category.service";
 import { Task } from "../../../classes/task";
+import { Subscription } from "rxjs/Rx";
 
 @Component({
   selector: 'xp-admin-tasks',
@@ -14,6 +15,7 @@ import { Task } from "../../../classes/task";
 })
 export class AdminTasksComponent implements OnInit {
     private taskForm: FormGroup;
+    private selectedTask: Task = null;
 
     constructor(
         private taskService: TaskService,
@@ -36,6 +38,11 @@ export class AdminTasksComponent implements OnInit {
         });
     }
 
+    /**
+     * Create task submit
+     *
+     * @returns {Subscription}
+     */
     onCreate() {
         let values = this.taskForm.value;
 
@@ -48,6 +55,73 @@ export class AdminTasksComponent implements OnInit {
                 }
             }
         )
+    }
+
+    /**
+     * Update task submit
+     *
+     * @returns {Subscription}
+     */
+    onUpdate() {
+        let values = this.taskForm.value;
+
+        return this.taskService.updateTask(this.selectedTask.id, values).subscribe(
+            response => {
+                if (response.success) {
+                    this.taskService.updateMainArray(Task.newTask(response.task));
+                    this.taskForm.reset();
+                    document.getElementById("close_modal").click();
+                }
+            }
+        )
+    }
+
+    /**
+     * Open empty task form
+     */
+    showCreateTaskForm() {
+        this.selectedTask = null;
+        this.taskForm.reset();
+        document.getElementById('open_modal').click();
+    }
+
+    /**
+     * Change form submission depending on
+     * selectedTask state
+     */
+    handleSubmit(): Subscription | void {
+        if (this.selectedTask == null)
+            return this.onCreate();
+
+        return this.onUpdate();
+    }
+
+    /**
+     * Open update form with predefined values
+     *
+     * @param task
+     */
+    openUpdateForm(task) {
+        this.selectedTask = task;
+        this.taskForm.setValue(task.toForm());
+        document.getElementById('open_modal').click();
+    }
+
+    /**
+     * Delete a task
+     *
+     * @returns {Subscription}
+     */
+    deleteTask() {
+        return this.taskService.deleteTask(this.selectedTask.id).subscribe(
+            response => {
+                if (response.success) {
+                    this.taskService.removeTask(this.selectedTask.id);
+                    this.selectedTask = null;
+                    document.getElementById('close_modal').click();
+                }
+            }
+        );
     }
 
 }

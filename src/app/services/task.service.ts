@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Task } from "../classes/task";
 import { HttpService } from "./http.service";
-import {Subscription} from "rxjs/Rx";
+import { Subscription } from "rxjs/Rx";
+
+var _ = require('lodash');
 
 @Injectable()
 export class TaskService {
@@ -40,8 +42,61 @@ export class TaskService {
         return this.tasks;
     }
 
+    /**
+     * Create task http request
+     *
+     * @param values
+     * @returns {Observable<R>}
+     */
     createTask(values) {
         return this.httpService.post('task', values);
+    }
+
+    /**
+     * Update task http request
+     *
+     * @param id
+     * @param values
+     * @returns {Observable<R>}
+     */
+    updateTask(id, values) {
+        return this.httpService.put('task/' + id, values);
+    }
+
+    /**
+     * Update a task from the main array
+     * with a new one
+     *
+     * @param task
+     * @returns {Task[]}
+     */
+    updateMainArray(task: Task) {
+        let id = task.getId();
+        let taskIndex = _.findIndex(this.tasks, { id });
+
+        this.tasks[taskIndex] = task;
+
+        return this.tasks;
+    }
+
+    /**
+     * Delete task http request
+     *
+     * @param id
+     * @returns {Observable<R>}
+     */
+    deleteTask(id) {
+        return this.httpService.delete('task/' + id);
+    }
+
+    /**
+     * Remove a task from the main array
+     *
+     * @param id
+     * @returns {any}
+     */
+    removeTask(id) {
+        return _.remove(this.tasks, { id });
     }
 
     /**
