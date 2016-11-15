@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 
 import { HttpService } from './http.service';
-
-// TODO: import { User } from "./user.interface";
+import { User } from "../classes/user";
 
 @Injectable()
 export class AuthService {
-    private loginToken: string = localStorage.getItem('xp_login_token');
+    private loginToken: string = null;
+    private loggedUser: User;
     public successfulRegistration: boolean = false;
     public successfulActivation: boolean = null;
     public loginFail: boolean = false;
@@ -37,7 +37,7 @@ export class AuthService {
         }).subscribe(
             response => {
                 if (response.success) {
-                    authService.toggleAuthentication(true, response.loginToken);
+                    authService.toggleAuthentication(true, response.user, response.loginToken);
                     return true;
                 } else {
                     this.loginFail = true;
@@ -50,25 +50,68 @@ export class AuthService {
     }
 
     /**
+     * Get login token
+     *
+     * @param value
+     * @returns this.loginToken
+     */
+    getLoginToken() {
+        return this.loginToken;
+    }
+
+    /**
+     * Set login token value
+     *
+     * @param value
+     */
+    setLoginToken(value) {
+        this.loginToken = value;
+    }
+
+    /**
+     * Get the logged user
+     *
+     * @returns {User}
+     */
+    getLoggedUser()
+    {
+        return this.loggedUser;
+    }
+
+    /**
+     * Set the logged user instance
+     *
+     * @param user
+     */
+    setLoggedUser(user: User)
+    {
+        this.loggedUser = User.newUser(user);
+    }
+
+    /**
      * Change authentication state
      *
      * @param isAuth - is the user logged in
      * @param loginToken - user's login token if logged in
      * @returns void
      */
-    toggleAuthentication(isAuth: boolean, loginToken?: string) {
+    toggleAuthentication(isAuth: boolean, user?: User, loginToken?: string) {
         if (isAuth) {
             localStorage.setItem('xp_login_token', loginToken);
-            this.loginToken = loginToken;
+            this.setLoginToken(loginToken);
+            this.setLoggedUser(user);
 
             // TODO: Maybe not here?
             this.httpService.updateHeader("loginToken", loginToken);
 
-            // TODO: Navigate to the requested route
-            this.router.navigate(['dashboard']);
+            // redirect only if current route is login
+            if (this.router.url == '/login') {
+                this.router.navigate(['dashboard']);
+            }
         } else {
             localStorage.removeItem('xp_login_token');
-            this.loginToken = null;
+            this.setLoginToken(null);
+            this.loggedUser = null;
 
             this.httpService.updateHeader("loginToken", null);
 
@@ -97,25 +140,7 @@ export class AuthService {
      * @returns {Observable<boolean>}
      */
     isAuthenticated(): boolean {
-        return Boolean(this.loginToken);
-    }
-
-    /**
-     * Get logged user
-     *
-     * @returns {Observable<T>}
-     */
-    getLoggedUser() {
-        this.httpService.get('get-logged-user').subscribe(
-            response => {
-                if (response.success) {
-                    return response.user
-                }
-
-                return false;
-            },
-            error => console.log(error)
-        );
+        return Boolean(this.getLoginToken());
     }
 
     register(data) {
@@ -132,6 +157,13 @@ export class AuthService {
         );
     }
 
+    /**
+     * Activate account api request
+     *
+     * @param email - user email
+     * @param token - user token
+     * @returns void
+     */
     activateAccount(email, token) {
         this.httpService.post('account/activate/'+ email +'/' + token).subscribe(
             response => {
@@ -143,5 +175,72 @@ export class AuthService {
             },
             error => console.log(error)
         );
+    }
+
+    /**
+     * Get logged user from api and
+     * send it back as a Promise.
+     * User for canActivate guard
+     *
+     * @returns {Promise<T>|Promise}
+     */
+    isUserLogged(): Promise<boolean> | boolean {
+        let userInstance = this.getLoggedUser();
+
+        if (userInstance != null) {
+            return true;
+        }
+
+        let authService = this;
+
+        return new Promise(function (resolve, reject) {
+            authService.httpService.get('get-logged-user').subscribe(
+                response => {
+                    if (response.success) {
+                        authService.toggleAuthentication(true, response.user, response.loginToken);
+                    } else {
+                        authService.toggleAuthentication(false);
+                    }
+
+                    resolve(response.success);
+                },
+                error => reject(error)
+            );
+        });
+    }
+
+    /**
+     * Check if the user is admin via API and
+     * send it back as a Promise.
+     * User for canActivate admin guard
+     *
+     * @returns {Promise<T>|Promise}
+     */
+    isUserAdmin(): Promise<boolean> | boolean {
+        let userInstance = this.getLoggedUser();
+
+        if (userInstance != null) {
+            return userInstance.isAdmin();
+        }
+
+        let authService = this;
+
+        return new Promise(function (resolve, reject) {
+            authService.httpService.get('get-logged-user').subscribe(
+                response => {
+                    if (response.success) {
+                        authService.toggleAuthentication(true, response.user, response.loginToken);
+
+                        let adminGuardUser: User = User.newUser(response.user);
+                        resolve(adminGuardUser.isAdmin());
+                    } else {
+                        authService.toggleAuthentication(false);
+                    }
+
+                    resolve(false);
+                },
+                error => reject(error)
+            );
+        });
     }
 }

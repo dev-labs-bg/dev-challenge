@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import {Router} from "@angular/router";
 
 import { AuthService } from '../../services/auth.service';
-import { Subscription } from 'rxjs/Rx';
 
 @Component({
     selector: 'xp-login',
@@ -15,15 +14,8 @@ export class LoginComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private authService: AuthService,
-        private router: Router
-    )
-    {
-        // navigate away if user is logged
-        if (this.authService.isAuthenticated()) {
-            this.router.navigate(['dashboard']);
-        }
-    }
+        private authService: AuthService
+    ) {}
 
     ngOnInit() {
         // init form and set rules
