@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { TaskService } from "../../../services/task.service";
+import { TaskService } from "../../services/task.service";
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
-import { AssessmentTypeService } from "../../../services/assessment-type.service";
-import { CategoryService } from "../../../services/category.service";
-import { Task } from "../../../classes/task";
+import { AssessmentTypeService } from "../../services/assessment-type.service";
+import { CategoryService } from "../../services/category.service";
+import { Task } from "../../classes/task";
 import { Subscription } from "rxjs/Rx";
 
 @Component({

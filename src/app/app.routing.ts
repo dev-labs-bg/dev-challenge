@@ -7,9 +7,9 @@ import { LoginComponent } from './components/login/login.component';
 import {DashboardComponent} from "./components/dashboard/dashboard.component";
 import {RegisterComponent} from "./components/register/register.component";
 import {AccountActivationComponent} from "./components/account-activation/account-activation.component";
-import {AdminComponent} from "./components/admin/admin.component";
-import {AdminCategoriesComponent} from "./components/admin/admin-categories/admin-categories.component";
-import {AdminTasksComponent} from "./components/admin/admin-tasks/admin-tasks.component";
+import {AdminComponent} from "./admin/admin.component";
+import {AdminCategoriesComponent} from "./admin/admin-categories/admin-categories.component";
+import {AdminTasksComponent} from "./admin/admin-tasks/admin-tasks.component";
 
 const APP_ROUTES: Routes = [
     {path: '', redirectTo: '/dashboard', pathMatch: 'full'},

@@ -1,7 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
-import {CategoryService} from "../../../../services/category.service";
-import {Category} from "../../../../classes/category";
+import {CategoryService} from "../../../services/category.service";
+import {Category} from "../../../classes/category";
 import {CategoryFormService} from "./category-form.service";
 
 @Component({
