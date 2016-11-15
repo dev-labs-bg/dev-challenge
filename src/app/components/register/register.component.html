@@ -3,13 +3,13 @@
     <div class="form-group">
       <label for="email">Email address</label>
       <input
-              type="email"
-              name="email"
-              class="form-control"
-              id="email"
-              formControlName="email"
-              placeholder="Email"
-              required
+          type="email"
+          name="email"
+          class="form-control"
+          id="email"
+          formControlName="email"
+          placeholder="Email"
+          required
       />
       <div
           *ngIf="registerForm.controls['email'].hasError('required') &&

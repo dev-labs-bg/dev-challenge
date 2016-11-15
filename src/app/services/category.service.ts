@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "./http.service";
 import { Category } from "../classes/category";
+import { Subscription } from "rxjs/Rx";
 
 var _ = require('lodash');
 
@@ -19,7 +20,13 @@ export class CategoryService {
      *
      * @returns {Subscription}
      */
-    getAll() {
+    getAll(): Subscription | Category[] {
+        let categories = this.getCategories();
+
+        if (categories != null) {
+            return categories;
+        }
+
         return this.httpService.get('category/all').subscribe(
             response => this.categories = response.categories.map(
                 el => new Category(el.id, el.name)

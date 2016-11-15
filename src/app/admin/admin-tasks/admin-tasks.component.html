@@ -1,0 +1,100 @@
+<h1>Admin Tasks</h1>
+
+<!-- Large modal -->
+<button class="btn btn-primary" (click)="showCreateTaskForm()">Create task</button>
+<button class="hidden" id="open_modal" (click)="lgModal.show()">Show modal</button>
+
+<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button id="close_modal" type="button" class="close" (click)="lgModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Task Form</h4>
+            </div>
+            <div class="modal-body task-form-modal">
+                <form [formGroup]="taskForm" (ngSubmit)="handleSubmit()">
+                    <div class="form-group">
+                        <label for="category_id">Select Category</label>
+                        <select
+                            name="category_id"
+                            formControlName="category_id"
+                            id="category_id">
+                            <option *ngFor="let category of categoryService.getCategories()"
+                                value="{{ category.id }}">
+                                {{ category.name }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input class="form-control"
+                           formControlName="title"
+                           type="text"
+                           id="title"
+                           name="title"
+                           required
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea
+                            class="form-control"
+                            formControlName="description"
+                            name="description"
+                            id="description"
+                            required>
+                        </textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="time_estimation">Estimate completion time</label>
+                        <input class="form-control"
+                           formControlName="time_estimation"
+                           type="text"
+                           name="time_estimation"
+                           id="time_estimation"
+                           required
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="assessment_type_id">Select Assessment Type</label>
+                        <select
+                            name="assessment_type_id"
+                            id="assessment_type_id"
+                            formControlName="assessment_type_id">
+                            <option *ngFor="let type of assessmentTypeService.getAssessmentTypes()"
+                                value="{{ type.id }}">
+                                {{ type.type }}
+                            </option>
+                        </select>
+                    </div>
+                    <button
+                        type="submit"
+                        class="btn btn-default"
+                        [disabled]="!taskForm.valid">
+                        Submit
+                    </button>
+                    <div
+                        *ngIf="(selectedTask != null)"
+                        (click)="deleteTask()"
+                        class="btn btn-default">
+                        Delete
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="task-management-holder">
+    <ul>
+        <li *ngFor="let task of taskService.getTasks()">
+            <a (click)="openUpdateForm(task)" href="javascript:;">{{ task.title }}</a>
+        </li>
+    </ul>
+</div>

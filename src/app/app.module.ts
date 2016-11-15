@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import {AlertModule, DatepickerModule} from 'ng2-bootstrap/ng2-bootstrap';
+import {AlertModule, DatepickerModule, ModalModule} from 'ng2-bootstrap/ng2-bootstrap';
 
 import { routing } from './app.routing';
 import { AuthService } from './services/auth.service';
@@ -17,13 +17,15 @@ import { HeaderComponent } from './components/header/header.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AccountActivationComponent } from './components/account-activation/account-activation.component';
-import { AdminComponent } from './components/admin/admin.component';
-import {AdminGuard} from "./core/admin.guard";
-import { AdminCategoriesComponent } from './components/admin/admin-categories/admin-categories.component';
-import { AdminTasksComponent } from './components/admin/admin-tasks/admin-tasks.component';
+import { AdminComponent } from './admin/admin.component';
+import { AdminGuard } from "./core/admin.guard";
+import { AdminCategoriesComponent } from './admin/admin-categories/admin-categories.component';
+import { AdminTasksComponent } from './admin/admin-tasks/admin-tasks.component';
 import { CategoryService } from "./services/category.service";
-import { CategoryFormComponent } from './components/admin/admin-categories/category-form/category-form.component';
-import { CategoryFormService } from './components/admin/admin-categories/category-form/category-form.service';
+import { CategoryFormComponent } from './admin/admin-categories/category-form/category-form.component';
+import { CategoryFormService } from './admin/admin-categories/category-form/category-form.service';
+import { TaskService } from './services/task.service';
+import { AssessmentTypeService } from './services/assessment-type.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import { CategoryFormService } from './components/admin/admin-categories/categor
     HttpModule,
     routing,
     AlertModule,
-    DatepickerModule
+    DatepickerModule,
+    ModalModule
   ],
   providers: [
     AuthService,
@@ -54,7 +57,9 @@ import { CategoryFormService } from './components/admin/admin-categories/categor
     AdminService,
     AdminGuard,
     CategoryService,
-    CategoryFormService
+    CategoryFormService,
+    TaskService,
+    AssessmentTypeService
   ],
   bootstrap: [AppComponent]
 })
