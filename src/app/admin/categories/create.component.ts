@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../classes/category';
@@ -9,6 +9,7 @@ import { Category } from '../../classes/category';
     styles: []
 })
 export class CreateComponent {
+    @Output() onCancel = new EventEmitter();
 
     constructor(private categoryService: CategoryService) { }
 
@@ -27,6 +28,10 @@ export class CreateComponent {
                 }
             }
         );
+    }
+
+    cancelAction() {
+        this.onCancel.emit();
     }
 
 }

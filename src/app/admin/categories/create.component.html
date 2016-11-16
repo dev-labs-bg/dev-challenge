@@ -1,2 +1,6 @@
 <h2>Create Category</h2>
-<xp-category-form (onFormSubmit)="submitAction($event)"></xp-category-form>
+
+<xp-category-form
+    (onCancel)="cancelAction($event)"
+    (onFormSubmit)="submitAction($event)">
+</xp-category-form>
