@@ -18,21 +18,22 @@
             required
         />
     </div>
-    <div
+    <button
+        type="button"
         class="btn btn-default"
         (click)="handleCancel()">
         Cancel
-    </div>
+    </button>
     <button
         type="submit"
-        class="btn btn-default"
+        class="btn btn-primary"
         [disabled]="! form.valid">
         Submit
     </button>
     <div
         *ngIf="(category != null)"
         (click)="deleteCategory(category)"
-        class="btn btn-default">
+        class="btn btn-danger">
         Delete
     </div>
     <div
