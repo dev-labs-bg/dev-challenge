@@ -26,6 +26,8 @@ import { CategoryFormComponent } from './admin/categories/form/category-form.com
 import { CategoryFormService } from './admin/categories/form/category-form.service';
 import { TaskService } from './services/task.service';
 import { AssessmentTypeService } from './services/assessment-type.service';
+import { ListComponent } from './admin/categories/list.component';
+import { CreateComponent } from './admin/categories/create.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { AssessmentTypeService } from './services/assessment-type.service';
     AdminComponent,
     AdminCategoriesComponent,
     AdminTasksComponent,
-    CategoryFormComponent
+    CategoryFormComponent,
+    ListComponent,
+    CreateComponent
   ],
   imports: [
     BrowserModule,
