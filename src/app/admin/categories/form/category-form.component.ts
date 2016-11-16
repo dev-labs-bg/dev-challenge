@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {CategoryService} from "../../../services/category.service";
 import {Category} from "../../../classes/category";
@@ -10,22 +10,19 @@ import {CategoryFormService} from "./category-form.service";
   styleUrls: ['./category-form.component.scss'],
 })
 export class CategoryFormComponent implements OnInit {
+    @Input() category: Category;
+    @Output() onFormSubmit = new EventEmitter();
 
     /**
      * @var category form
      */
-    public categoryForm: FormGroup;
+    public form: FormGroup;
 
     /**
      * @var Category Creation success after submit
      * @type {boolean}
      */
     public showCreationSuccess: boolean = false;
-
-    /**
-     * @var Parent component variable
-     */
-    @Input() category: Category;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -41,7 +38,7 @@ export class CategoryFormComponent implements OnInit {
         let formId = (this.category != null) ? this.category.getId() : '';
         let formName = (this.category != null) ? this.category.getName() : '';
 
-        this.categoryForm = this.formBuilder.group({
+        this.form = this.formBuilder.group({
             'id': [formId],
             'name': [formName, Validators.required]
         });
@@ -53,7 +50,7 @@ export class CategoryFormComponent implements OnInit {
     onCreate() {
         this.showCreationSuccess = false;
 
-        const { name } = this.categoryForm.value;
+        const { name } = this.form.value;
 
         this.categoryService.createCategory({name: name}).subscribe(
             response => {
@@ -65,7 +62,7 @@ export class CategoryFormComponent implements OnInit {
                         )
                     );
                     this.showCreationSuccess = true;
-                    this.categoryForm.reset();
+                    this.form.reset();
                 }
             }
         );
@@ -75,7 +72,7 @@ export class CategoryFormComponent implements OnInit {
      * Form submission on category update
      */
     onUpdate() {
-        const { id, name } = this.categoryForm.value;
+        const { id, name } = this.form.value;
 
         this.categoryService.updateCategory(id, name).subscribe(
             response => {
@@ -100,7 +97,7 @@ export class CategoryFormComponent implements OnInit {
         let confirmation = "Are you sure to want to delete category with name: " + category.getName();
 
         if (confirm(confirmation)) {
-            const { id } = this.categoryForm.value;
+            const { id } = this.form.value;
 
             this.categoryService.deleteCategory(id).subscribe(
                 response => {
@@ -112,17 +109,8 @@ export class CategoryFormComponent implements OnInit {
         }
     }
 
-    /**
-     * Handle form submission depending on the fact
-     * do we have a category or not
-     *
-     * @param category
-     */
-    handleForm(category) {
-        if (category == null)
-            this.onCreate();
-        else
-            this.onUpdate();
+    handleSubmit() {
+        this.onFormSubmit.emit(this.form.value);
     }
 
 }

@@ -1,0 +1,11 @@
+<ul class="list-group">
+    <li
+        class="list-group-item"
+        *ngFor="let category of categoryService.getCategories()">
+        <a
+            href="javascript:;"
+            (click)="categoryFormService.showCategoryEditTab(category)">
+            {{ category.name }}
+        </a>
+    </li>
+</ul>

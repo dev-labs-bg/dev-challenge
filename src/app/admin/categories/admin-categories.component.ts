@@ -8,6 +8,7 @@ import { CategoryFormService } from "./form/category-form.service";
     styleUrls: ['./admin-categories.component.scss']
 })
 export class AdminCategoriesComponent implements OnInit {
+    private state = 'DISPLAY';
 
     constructor(
         private categoryService: CategoryService,
@@ -18,6 +19,10 @@ export class AdminCategoriesComponent implements OnInit {
 
     ngOnInit() {
         //
+    }
+
+    toggleState(nextState: string) {
+        this.state = nextState;
     }
 
 }

@@ -1,4 +1,4 @@
-<form [formGroup]="categoryForm" (ngSubmit)="handleForm(category)">
+<form [formGroup]="form" (ngSubmit)="handleSubmit()">
     <input
         type="hidden"
         name="id"
@@ -26,7 +26,7 @@
     <button
         type="submit"
         class="btn btn-default"
-        [disabled]="!categoryForm.valid">
+        [disabled]="! form.valid">
         Submit
     </button>
     <div
