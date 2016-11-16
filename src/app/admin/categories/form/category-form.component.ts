@@ -11,7 +11,7 @@ import {CategoryFormService} from "./category-form.service";
 })
 export class CategoryFormComponent implements OnInit {
     @Input() category: Category;
-    @Output() onFormSubmit = new EventEmitter();
+    @Output() onSubmit = new EventEmitter();
     @Output() onCancel = new EventEmitter();
 
     /**
@@ -87,7 +87,7 @@ export class CategoryFormComponent implements OnInit {
     }
 
     handleSubmit() {
-        this.onFormSubmit.emit(this.form.value);
+        this.onSubmit.emit(this.form.value);
     }
 
     handleCancel() {
