@@ -13,7 +13,7 @@ export class CreateComponent {
 
     constructor(private categoryService: CategoryService) { }
 
-    submitAction(values) {
+    handleSubmit(values) {
         const { name } = values;
 
         this.categoryService.createCategory({name: name}).subscribe(
@@ -30,7 +30,7 @@ export class CreateComponent {
         );
     }
 
-    cancelAction() {
+    handleCancel() {
         this.onCancel.emit();
     }
 
