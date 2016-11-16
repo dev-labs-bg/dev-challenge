@@ -36,3 +36,6 @@ Thumbs.db
 # Sublime project configuration files
 *.sublime-workspace
 *.sublime-project
+
+# Project specific configuration
+/src/app/config.ts
