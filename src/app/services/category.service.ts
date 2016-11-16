@@ -113,4 +113,17 @@ export class CategoryService {
         return _.remove(this.categories, { id });
     }
 
+    findCategory(id) {
+        let foundCategory = null;
+
+        _.forEach(this.categories,
+            category => {
+                if (category.getId() == id)
+                    foundCategory = category;
+            }
+        )
+
+        return foundCategory;
+    }
+
 }
