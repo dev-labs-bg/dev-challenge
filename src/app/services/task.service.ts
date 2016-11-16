@@ -109,4 +109,17 @@ export class TaskService {
         return this.tasks.push(task);
     }
 
+    getFromCategory(category_id: number) {
+        let categoryTasks: Task[] = [];
+
+        _.forEach(this.tasks,
+            task => {
+                if (task.category_id == category_id)
+                    categoryTasks.push(task);
+            }
+        );
+
+        return categoryTasks;
+    }
+
 }

@@ -7,6 +7,7 @@ import { AssessmentTypeService } from "../../services/assessment-type.service";
 import { CategoryService } from "../../services/category.service";
 import { Task } from "../../classes/task";
 import { Subscription } from "rxjs/Rx";
+import { Category } from "../../classes/category";
 
 @Component({
   selector: 'xp-admin-tasks',
@@ -16,19 +17,21 @@ import { Subscription } from "rxjs/Rx";
 export class AdminTasksComponent implements OnInit {
     private taskForm: FormGroup;
     private selectedTask: Task = null;
+    private selectedCategory: Category = null;
+    private categoryTasks: Task[] = [];
 
     constructor(
         private taskService: TaskService,
         private categoryService: CategoryService,
         private assessmentTypeService: AssessmentTypeService,
         private formBuilder: FormBuilder
-    ) {
+    ) {}
+
+    ngOnInit() {
         this.categoryService.getAll();
         this.taskService.getAll();
         this.assessmentTypeService.getAll();
-    }
 
-    ngOnInit() {
         this.taskForm = this.formBuilder.group({
             "category_id": ['', Validators.required],
             "assessment_type_id": ['', Validators.required],
@@ -51,6 +54,7 @@ export class AdminTasksComponent implements OnInit {
                 if (response.success) {
                     this.taskService.addTask(Task.newTask(response.task));
                     this.taskForm.reset();
+                    this.onCategoryChange(response.task.category_id);
                     document.getElementById("close_modal").click();
                 }
             }
@@ -68,8 +72,10 @@ export class AdminTasksComponent implements OnInit {
         return this.taskService.updateTask(this.selectedTask.id, values).subscribe(
             response => {
                 if (response.success) {
-                    this.taskService.updateMainArray(Task.newTask(response.task));
+                    let newTask = Task.newTask(response.task);
+                    this.taskService.updateMainArray(newTask);
                     this.taskForm.reset();
+                    this.onCategoryChange(newTask.category_id);
                     document.getElementById("close_modal").click();
                 }
             }
@@ -117,11 +123,20 @@ export class AdminTasksComponent implements OnInit {
             response => {
                 if (response.success) {
                     this.taskService.removeTask(this.selectedTask.id);
+                    this.onCategoryChange(this.selectedTask.category_id);
                     this.selectedTask = null;
                     document.getElementById('close_modal').click();
                 }
             }
         );
+    }
+
+    onCategoryChange(val) {
+        let categoryId = val;
+
+        this.selectedCategory = this.categoryService.findCategory(categoryId);
+
+        this.categoryTasks = this.taskService.getFromCategory(categoryId);
     }
 
 }
