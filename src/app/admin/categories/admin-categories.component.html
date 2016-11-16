@@ -3,7 +3,7 @@
 <button (click)="toggleState('CREATE')">New category</button>
 
 <div *ngIf="state === 'CREATE'">
-    <xp-category-form [category]=null></xp-category-form>
+    <xp-admin-category-create></xp-admin-category-create>
 </div>
 
 <xp-admin-categories-list></xp-admin-categories-list>

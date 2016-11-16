@@ -1,23 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../classes/category';
 
 @Component({
-    selector: 'xp-create',
+    selector: 'xp-admin-category-create',
     templateUrl: './create.component.html',
     styles: []
 })
-export class CreateComponent implements OnInit {
+export class CreateComponent {
 
     constructor(private categoryService: CategoryService) { }
 
-    ngOnInit() {
-
-    }
-
     submitAction(values) {
-        alert('hello!');
         const { name } = values;
 
         this.categoryService.createCategory({name: name}).subscribe(

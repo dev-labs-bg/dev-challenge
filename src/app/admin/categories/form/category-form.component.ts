@@ -45,30 +45,6 @@ export class CategoryFormComponent implements OnInit {
     }
 
     /**
-     * Form submission on new category creation
-     */
-    onCreate() {
-        this.showCreationSuccess = false;
-
-        const { name } = this.form.value;
-
-        this.categoryService.createCategory({name: name}).subscribe(
-            response => {
-                if (response.success) {
-                    this.categoryService.addCategory(
-                        new Category(
-                            response.category.id,
-                            response.category.name
-                        )
-                    );
-                    this.showCreationSuccess = true;
-                    this.form.reset();
-                }
-            }
-        );
-    }
-
-    /**
      * Form submission on category update
      */
     onUpdate() {
