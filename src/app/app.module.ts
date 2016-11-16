@@ -19,11 +19,11 @@ import { RegisterComponent } from './components/register/register.component';
 import { AccountActivationComponent } from './components/account-activation/account-activation.component';
 import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from "./core/admin.guard";
-import { AdminCategoriesComponent } from './admin/admin-categories/admin-categories.component';
+import { AdminCategoriesComponent } from './admin/categories/admin-categories.component';
 import { AdminTasksComponent } from './admin/admin-tasks/admin-tasks.component';
 import { CategoryService } from "./services/category.service";
-import { CategoryFormComponent } from './admin/admin-categories/category-form/category-form.component';
-import { CategoryFormService } from './admin/admin-categories/category-form/category-form.service';
+import { CategoryFormComponent } from './admin/categories/form/category-form.component';
+import { CategoryFormService } from './admin/categories/form/category-form.service';
 import { TaskService } from './services/task.service';
 import { AssessmentTypeService } from './services/assessment-type.service';
 
