@@ -8,7 +8,7 @@ import { CategoryFormService } from "./form/category-form.service";
     styleUrls: ['./admin-categories.component.scss']
 })
 export class AdminCategoriesComponent implements OnInit {
-    private state = 'DISPLAY';
+    private mode = 'DISPLAY';
 
     constructor(
         private categoryService: CategoryService,
@@ -21,8 +21,8 @@ export class AdminCategoriesComponent implements OnInit {
         //
     }
 
-    toggleState(nextState: string) {
-        this.state = nextState;
+    toggleMode(nextState: string) {
+        this.mode = nextState;
     }
 
 }

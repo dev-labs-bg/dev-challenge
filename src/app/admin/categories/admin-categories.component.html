@@ -1,9 +1,9 @@
 <h1>Category creation</h1>
 
-<button (click)="toggleState('CREATE')">New category</button>
+<button (click)="toggleMode('CREATE')">New category</button>
 
-<div *ngIf="state === 'CREATE'">
-    <xp-admin-category-create (onCancel)="toggleState('DISPLAY')"></xp-admin-category-create>
+<div *ngIf="mode === 'CREATE'">
+    <xp-admin-category-create (onCancel)="toggleMode('DISPLAY')"></xp-admin-category-create>
 </div>
 
 <xp-admin-categories-list></xp-admin-categories-list>
