@@ -6,12 +6,12 @@ import {CategoryFormService} from "./category-form.service";
 
 @Component({
   selector: 'xp-category-form',
-  templateUrl: './category-form.component.html',
-  styleUrls: ['./category-form.component.scss'],
+  templateUrl: './category-form.component.html'
 })
 export class CategoryFormComponent implements OnInit {
     @Input() category: Category;
     @Output() onSubmit = new EventEmitter();
+    @Output() onDelete = new EventEmitter();
     @Output() onCancel = new EventEmitter();
 
     /**
@@ -45,24 +45,11 @@ export class CategoryFormComponent implements OnInit {
         });
     }
 
-    /**
-     * Handle for delete category button event
-     *
-     * @param category
-     */
-    deleteCategory(category) {
-        let confirmation = "Are you sure to want to delete category with name: " + category.getName();
+    handleDelete(category: Category) {
+        let confirmation = `Are you sure to want to delete category with name: ${category.getName()}`;
 
         if (confirm(confirmation)) {
-            const { id } = this.form.value;
-
-            this.categoryService.deleteCategory(id).subscribe(
-                response => {
-                    if (response.success) {
-                        this.categoryService.removeCategory(id);
-                    }
-                }
-            );
+            this.onDelete.emit(category);
         }
     }
 

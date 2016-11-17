@@ -13,6 +13,7 @@ import { CategoryService } from '../../services/category.service';
                 <xp-category-form
                     [category]=category
                     (onCancel)="handleCancel($event)"
+                    (onDelete)="handleDelete($event)"
                     (onSubmit)="handleSubmit($event)">
                 </xp-category-form>
             </div>
@@ -27,6 +28,18 @@ export class EditComponent {
 
     handleCancel() {
         this.onCancel.emit();
+    }
+
+    handleDelete(category: Category) {
+        const categoryId = category.getId();
+
+        this.categoryService.deleteCategory(categoryId).subscribe(
+            response => {
+                if (response.success) {
+                    this.categoryService.removeCategory(categoryId);
+                }
+            }
+        );
     }
 
     handleSubmit(values) {

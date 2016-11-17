@@ -31,8 +31,8 @@
         Submit
     </button>
     <div
-        *ngIf="(category != null)"
-        (click)="deleteCategory(category)"
+        *ngIf="category"
+        (click)="handleDelete(category)"
         class="btn btn-danger">
         Delete
     </div>
