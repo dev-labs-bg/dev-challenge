@@ -8,16 +8,3 @@
 </div>
 
 <xp-admin-categories-list></xp-admin-categories-list>
-
-<hr />
-
-<div class="category-management-holder">
-    <ul>
-        <li *ngFor="let category of categoryService.getCategories()">
-            <a (click)="categoryFormService.showCategoryEditTab(category)" href="javascript:;">{{ category.name }}</a>
-            <div *ngIf="categoryFormService.isSelected(category)">
-                <xp-category-form [category]=category></xp-category-form>
-            </div>
-        </li>
-    </ul>
-</div>
