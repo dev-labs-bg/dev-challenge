@@ -1,24 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '../../services/category.service';
-import { CategoryFormService } from './form/category-form.service';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'xp-admin-categories',
     templateUrl: './categories.component.html'
 })
-export class AdminCategoriesComponent implements OnInit {
+export class AdminCategoriesComponent {
     private mode = 'DISPLAY';
 
-    constructor(
-        private categoryService: CategoryService,
-        private categoryFormService: CategoryFormService
-    ) {
-        this.categoryService.getAll();
-    }
-
-    ngOnInit() {
-        //
-    }
+    constructor() { }
 
     toggleMode(nextState: string) {
         this.mode = nextState;

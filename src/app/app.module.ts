@@ -23,7 +23,6 @@ import { AdminCategoriesComponent } from './admin/categories/categories.componen
 import { AdminTasksComponent } from './admin/admin-tasks/admin-tasks.component';
 import { CategoryService } from "./services/category.service";
 import { CategoryFormComponent } from './admin/categories/form/category-form.component';
-import { CategoryFormService } from './admin/categories/form/category-form.service';
 import { TaskService } from './services/task.service';
 import { AssessmentTypeService } from './services/assessment-type.service';
 import { ListComponent } from './admin/categories/list.component';
@@ -63,7 +62,6 @@ import { EditComponent } from './admin/categories/edit.component';
     AdminService,
     AdminGuard,
     CategoryService,
-    CategoryFormService,
     TaskService,
     AssessmentTypeService
   ],

@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {CategoryService} from "../../../services/category.service";
 import {Category} from "../../../classes/category";
-import {CategoryFormService} from "./category-form.service";
 
 @Component({
   selector: 'xp-category-form',
@@ -27,9 +26,7 @@ export class CategoryFormComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private categoryService: CategoryService,
-        /* we use this in html, so never mind the highlight */
-        private categoryFormService: CategoryFormService
+        private categoryService: CategoryService
     ) { }
 
     /**
