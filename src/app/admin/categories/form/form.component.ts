@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Category } from '../../../classes/category';
+import { Category } from '../category';
 
 @Component({
   selector: 'xp-admin-category-form',

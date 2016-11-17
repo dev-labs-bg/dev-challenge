@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '../../services/category.service';
-import { Category } from '../../classes/category';
+import { CategoryService } from './category.service';
+import { Category } from './category';
 
 @Component({
     selector: 'xp-admin-categories-list',

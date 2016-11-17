@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { Category } from '../../classes/category';
-import { CategoryService } from '../../services/category.service';
+import { Category } from './category';
+import { CategoryService } from './category.service';
 
 @Component({
     selector: 'xp-admin-categories-edit',
