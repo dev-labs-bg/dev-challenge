@@ -1,11 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from "@angular/forms";
-import {CategoryService} from "../../../services/category.service";
-import {Category} from "../../../classes/category";
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Category } from '../../../classes/category';
 
 @Component({
-  selector: 'xp-category-form',
-  templateUrl: './category-form.component.html'
+  selector: 'xp-admin-category-form',
+  templateUrl: './form.component.html'
 })
 export class CategoryFormComponent implements OnInit {
     @Input() category: Category;
@@ -13,25 +12,12 @@ export class CategoryFormComponent implements OnInit {
     @Output() onDelete = new EventEmitter();
     @Output() onCancel = new EventEmitter();
 
-    /**
-     * @var category form
-     */
-    public form: FormGroup;
-
-    /**
-     * @var Category Creation success after submit
-     * @type {boolean}
-     */
-    public showCreationSuccess: boolean = false;
+    form: FormGroup;
 
     constructor(
-        private formBuilder: FormBuilder,
-        private categoryService: CategoryService
+        private formBuilder: FormBuilder
     ) { }
 
-    /**
-     * Init category form
-     */
     ngOnInit() {
         let formId = (this.category != null) ? this.category.getId() : '';
         let formName = (this.category != null) ? this.category.getName() : '';

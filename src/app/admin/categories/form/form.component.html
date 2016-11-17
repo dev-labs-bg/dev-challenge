@@ -24,21 +24,16 @@
         (click)="handleCancel()">
         Cancel
     </button>
-    <button
-        type="submit"
-        class="btn btn-primary"
-        [disabled]="! form.valid">
-        Submit
-    </button>
     <div
         *ngIf="category"
         (click)="handleDelete(category)"
         class="btn btn-danger">
         Delete
     </div>
-    <div
-        *ngIf="showCreationSuccess"
-        class="alert alert-success">
-        Category created successfully.
-    </div>
+    <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="! form.valid">
+        Submit
+    </button>
 </form>

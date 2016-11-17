@@ -10,10 +10,10 @@ import { Category } from '../../classes/category';
             <div class="panel-heading">Create Category</div>
 
             <div class="panel-body">
-                <xp-category-form
+                <xp-admin-category-form
                     (onCancel)="handleCancel($event)"
                     (onSubmit)="handleSubmit($event)">
-                </xp-category-form>
+                </xp-admin-category-form>
             </div>
         </div>
     `

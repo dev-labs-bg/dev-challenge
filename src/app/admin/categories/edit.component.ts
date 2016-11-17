@@ -10,12 +10,12 @@ import { CategoryService } from '../../services/category.service';
             <div class="panel-heading">Edit Category</div>
 
             <div class="panel-body">
-                <xp-category-form
+                <xp-admin-category-form
                     [category]=category
                     (onCancel)="handleCancel($event)"
                     (onDelete)="handleDelete($event)"
                     (onSubmit)="handleSubmit($event)">
-                </xp-category-form>
+                </xp-admin-category-form>
             </div>
         </div>
     `
