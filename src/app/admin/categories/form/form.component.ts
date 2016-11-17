@@ -7,7 +7,7 @@ import { Category } from '../category';
   templateUrl: './form.component.html'
 })
 export class CategoryFormComponent implements OnInit {
-    @Input() category: Category;
+    @Input() category: Category = new Category();
     @Output() onSubmit = new EventEmitter();
     @Output() onDelete = new EventEmitter();
     @Output() onCancel = new EventEmitter();
@@ -19,12 +19,9 @@ export class CategoryFormComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        let formId = (this.category != null) ? this.category.getId() : '';
-        let formName = (this.category != null) ? this.category.getName() : '';
-
         this.form = this.formBuilder.group({
-            'id': [formId],
-            'name': [formName, Validators.required]
+            'id': this.category.getId(),
+            'name': [this.category.getName(), Validators.required]
         });
     }
 
