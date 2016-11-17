@@ -46,26 +46,6 @@ export class CategoryFormComponent implements OnInit {
     }
 
     /**
-     * Form submission on category update
-     */
-    onUpdate() {
-        const { id, name } = this.form.value;
-
-        this.categoryService.updateCategory(id, name).subscribe(
-            response => {
-                if (response.success) {
-                    let updatedCategory = new Category(
-                        response.category.id,
-                        response.category.name
-                    );
-
-                    this.categoryService.updateMainArray(updatedCategory);
-                }
-            }
-        );
-    }
-
-    /**
      * Handle for delete category button event
      *
      * @param category
