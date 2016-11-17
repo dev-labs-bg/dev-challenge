@@ -1,10 +1,11 @@
-<div [formGroup]="form" class="holder">
+<form [formGroup]="form" (ngSubmit)="handleSubmit()">
     <div class="form-group">
         <label for="open_question">State your question / project</label>
         <textarea
             formControlName="body"
             class="form-control"
             name="open_question"
+            rows="5"
             id="open_question"></textarea>
     </div>
     <div class="form-group">
@@ -14,4 +15,4 @@
             Submit
         </button>
     </div>
-</div>
+</form>

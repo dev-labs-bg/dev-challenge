@@ -29,6 +29,7 @@ import { QuestionService } from './services/question.service';
 import { AssessmentTypeService } from './services/assessment-type.service';
 import { AssessmentsComponent } from './admin/assessments/assessments.component';
 import { OpenAnswerFormComponent } from './admin/assessments/open-answer-form/open-answer-form.component';
+import { ExamAnswerFormComponent } from './admin/assessments/exam-answer-form/exam-answer-form.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { OpenAnswerFormComponent } from './admin/assessments/open-answer-form/op
     AdminTasksComponent,
     CategoryFormComponent,
     AssessmentsComponent,
-    OpenAnswerFormComponent
+    OpenAnswerFormComponent,
+    ExamAnswerFormComponent
   ],
   imports: [
     BrowserModule,

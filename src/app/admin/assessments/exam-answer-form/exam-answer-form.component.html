@@ -1,0 +1,68 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="question-group-holder" *ngFor="let question of questions; let i = index;">
+        <div class="form-group">
+            <label for="exam_question">Question #{{ i + 1 }}</label>
+            <input
+                class="form-control"
+                name="exam_question"
+                formControlName="body[{{ index }}]"
+                id="exam_question"
+            />
+        </div>
+        <div class="form-group">
+            <label for="correct_answer">Correct Answer</label>
+            <input
+                class="form-control"
+                name="correct_answer"
+                id="correct_answer"
+            />
+        </div>
+        <div class="form-group">
+            <label for="answer_explanation">Why is the answer correct?</label>
+            <input
+                    class="form-control"
+                    name="answer_explanation"
+                    id="answer_explanation"
+            />
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <label class="col-lg-12">3 wrong answers</label>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <input
+                        class="form-control"
+                        name="wrong_answer_one"
+                    />
+                </div>
+                <div class="col-lg-4">
+                    <input
+                        class="form-control"
+                        name="wrong_answer_two"
+                    />
+                </div>
+                <div class="col-lg-4">
+                    <input
+                        class="form-control"
+                        name="wrong_answer_three"
+                    />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button
+                type="submit"
+                class="btn btn-default">
+                Save question
+            </button>
+        </div>
+    </div>
+
+    <div
+        class="btn btn-default"
+        (click)="addQuestion()">
+        Add question
+    </div>
+</form>
