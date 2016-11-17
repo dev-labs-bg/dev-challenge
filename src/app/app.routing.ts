@@ -10,6 +10,7 @@ import {AccountActivationComponent} from "./components/account-activation/accoun
 import {AdminComponent} from "./admin/admin.component";
 import {AdminCategoriesComponent} from "./admin/admin-categories/admin-categories.component";
 import {AdminTasksComponent} from "./admin/admin-tasks/admin-tasks.component";
+import {AssessmentsComponent} from "./admin/assessments/assessments.component";
 
 const APP_ROUTES: Routes = [
     {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
@@ -20,6 +21,7 @@ const APP_ROUTES: Routes = [
     {path: 'admin', component: AdminComponent, canActivate: [AdminGuard]},
     {path: 'admin/categories', component: AdminCategoriesComponent, canActivate: [AdminGuard]},
     {path: 'admin/tasks', component: AdminTasksComponent, canActivate: [AdminGuard]},
+    {path: 'admin/assessments', component: AssessmentsComponent, canActivate: [AdminGuard]},
 ];
 
 export const routing = RouterModule.forRoot(APP_ROUTES);

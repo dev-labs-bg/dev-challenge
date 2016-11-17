@@ -75,7 +75,7 @@ export class AdminTasksComponent implements OnInit {
                     let newTask = Task.newTask(response.task);
                     this.taskService.updateMainArray(newTask);
                     this.taskForm.reset();
-                    this.onCategoryChange(newTask.category_id);
+                    this.onCategoryChange(newTask.category.getId());
                     document.getElementById("close_modal").click();
                 }
             }
@@ -123,7 +123,7 @@ export class AdminTasksComponent implements OnInit {
             response => {
                 if (response.success) {
                     this.taskService.removeTask(this.selectedTask.id);
-                    this.onCategoryChange(this.selectedTask.category_id);
+                    this.onCategoryChange(this.selectedTask.category.getId());
                     this.selectedTask = null;
                     document.getElementById('close_modal').click();
                 }

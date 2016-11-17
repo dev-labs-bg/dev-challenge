@@ -25,7 +25,10 @@ import { CategoryService } from "./services/category.service";
 import { CategoryFormComponent } from './admin/admin-categories/category-form/category-form.component';
 import { CategoryFormService } from './admin/admin-categories/category-form/category-form.service';
 import { TaskService } from './services/task.service';
+import { QuestionService } from './services/question.service';
 import { AssessmentTypeService } from './services/assessment-type.service';
+import { AssessmentsComponent } from './admin/assessments/assessments.component';
+import { OpenAnswerFormComponent } from './admin/assessments/open-answer-form/open-answer-form.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,9 @@ import { AssessmentTypeService } from './services/assessment-type.service';
     AdminComponent,
     AdminCategoriesComponent,
     AdminTasksComponent,
-    CategoryFormComponent
+    CategoryFormComponent,
+    AssessmentsComponent,
+    OpenAnswerFormComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +64,8 @@ import { AssessmentTypeService } from './services/assessment-type.service';
     CategoryService,
     CategoryFormService,
     TaskService,
-    AssessmentTypeService
+    AssessmentTypeService,
+    QuestionService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,17 @@
+<div [formGroup]="form" class="holder">
+    <div class="form-group">
+        <label for="open_question">State your question / project</label>
+        <textarea
+            formControlName="body"
+            class="form-control"
+            name="open_question"
+            id="open_question"></textarea>
+    </div>
+    <div class="form-group">
+        <button
+            type="submit"
+            class="btn btn-default">
+            Submit
+        </button>
+    </div>
+</div>

@@ -7,7 +7,7 @@ var _ = require('lodash');
 
 @Injectable()
 export class TaskService {
-    private tasks: Task[];
+    private tasks: Task[] = [];
 
     constructor(
         private httpService: HttpService
@@ -20,10 +20,8 @@ export class TaskService {
      * @returns {any}
      */
     getAll(): Subscription | Task[] {
-        let tasks = this.getTasks();
-
-        if (tasks != null) {
-            return tasks;
+        if (this.tasks.length > 0) {
+            return this.tasks;
         }
 
         return this.httpService.get('task/all').subscribe(
@@ -71,7 +69,7 @@ export class TaskService {
      * @returns {Task[]}
      */
     updateMainArray(task: Task) {
-        let id = task.getId();
+        let id = task.id;
         let taskIndex = _.findIndex(this.tasks, { id });
 
         this.tasks[taskIndex] = task;
@@ -120,6 +118,19 @@ export class TaskService {
         );
 
         return categoryTasks;
+    }
+
+    find(id) {
+        let foundTask = null;
+
+        _.forEach(this.tasks,
+            task => {
+                if (task.id == id)
+                    foundTask = task;
+            }
+        )
+
+        return foundTask;
     }
 
 }
