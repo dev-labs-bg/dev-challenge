@@ -5,8 +5,18 @@ import { Category } from '../../classes/category';
 
 @Component({
     selector: 'xp-admin-category-create',
-    templateUrl: './create.component.html',
-    styles: []
+    template: `
+        <div class="panel panel-primary">
+            <div class="panel-heading">Create Category</div>
+
+            <div class="panel-body">
+                <xp-category-form
+                    (onCancel)="handleCancel($event)"
+                    (onSubmit)="handleSubmit($event)">
+                </xp-category-form>
+            </div>
+        </div>
+    `
 })
 export class CreateComponent {
     @Output() onCancel = new EventEmitter();
