@@ -8,7 +8,7 @@ import {DashboardComponent} from "./components/dashboard/dashboard.component";
 import {RegisterComponent} from "./components/register/register.component";
 import {AccountActivationComponent} from "./components/account-activation/account-activation.component";
 import {AdminComponent} from "./admin/admin.component";
-import {AdminCategoriesComponent} from "./admin/categories/admin-categories.component";
+import {AdminCategoriesComponent} from "./admin/categories/categories.component";
 import {AdminTasksComponent} from "./admin/admin-tasks/admin-tasks.component";
 
 const APP_ROUTES: Routes = [

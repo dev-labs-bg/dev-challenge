@@ -4,8 +4,8 @@ import { CategoryFormService } from "./form/category-form.service";
 
 @Component({
     selector: 'xp-admin-categories',
-    templateUrl: './admin-categories.component.html',
-    styleUrls: ['./admin-categories.component.scss']
+    templateUrl: './categories.component.html',
+    styleUrls: ['./categories.component.scss']
 })
 export class AdminCategoriesComponent implements OnInit {
     private mode = 'DISPLAY';
