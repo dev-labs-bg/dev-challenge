@@ -19,17 +19,19 @@ import { RegisterComponent } from './components/register/register.component';
 import { AccountActivationComponent } from './components/account-activation/account-activation.component';
 import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from "./core/admin.guard";
-import { AdminCategoriesComponent } from './admin/admin-categories/admin-categories.component';
+import { AdminCategoriesComponent } from './admin/categories/categories.component';
 import { AdminTasksComponent } from './admin/admin-tasks/admin-tasks.component';
-import { CategoryService } from "./services/category.service";
-import { CategoryFormComponent } from './admin/admin-categories/category-form/category-form.component';
-import { CategoryFormService } from './admin/admin-categories/category-form/category-form.service';
+import { CategoryService } from "./admin/categories/category.service";
+import { CategoryFormComponent } from './admin/categories/form/form.component';
 import { TaskService } from './services/task.service';
 import { QuestionService } from './services/question.service';
 import { AssessmentTypeService } from './services/assessment-type.service';
 import { AssessmentsComponent } from './admin/assessments/assessments.component';
 import { OpenAnswerFormComponent } from './admin/assessments/open-answer-form/open-answer-form.component';
 import { ExamAnswerFormComponent } from './admin/assessments/exam-answer-form/exam-answer-form.component';
+import { ListComponent } from './admin/categories/list.component';
+import { CreateComponent } from './admin/categories/create.component';
+import { EditComponent } from './admin/categories/edit.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,10 @@ import { ExamAnswerFormComponent } from './admin/assessments/exam-answer-form/ex
     CategoryFormComponent,
     AssessmentsComponent,
     OpenAnswerFormComponent,
-    ExamAnswerFormComponent
+    ExamAnswerFormComponent,
+    ListComponent,
+    CreateComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +69,6 @@ import { ExamAnswerFormComponent } from './admin/assessments/exam-answer-form/ex
     AdminService,
     AdminGuard,
     CategoryService,
-    CategoryFormService,
     TaskService,
     AssessmentTypeService,
     QuestionService

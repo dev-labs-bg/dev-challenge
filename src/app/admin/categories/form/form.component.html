@@ -1,4 +1,4 @@
-<form [formGroup]="categoryForm" (ngSubmit)="handleForm(category)">
+<form [formGroup]="form" (ngSubmit)="handleSubmit()">
     <input
         type="hidden"
         name="id"
@@ -18,26 +18,22 @@
             required
         />
     </div>
-    <div
+    <button
+        type="button"
         class="btn btn-default"
-        (click)="categoryFormService.hideCategoryCreationTab(category)">
+        (click)="handleCancel()">
         Cancel
+    </button>
+    <div
+        *ngIf="category"
+        (click)="handleDelete(category)"
+        class="btn btn-danger">
+        Delete
     </div>
     <button
         type="submit"
-        class="btn btn-default"
-        [disabled]="!categoryForm.valid">
+        class="btn btn-primary"
+        [disabled]="! form.valid">
         Submit
     </button>
-    <div
-        *ngIf="(category != null)"
-        (click)="deleteCategory(category)"
-        class="btn btn-default">
-        Delete
-    </div>
-    <div
-        *ngIf="showCreationSuccess"
-        class="alert alert-success">
-        Category created successfully.
-    </div>
 </form>
