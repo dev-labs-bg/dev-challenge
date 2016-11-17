@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 
+import { NotificationService } from '../../shared/notification.service';
 import { CategoryService } from './category.service';
 import { Category } from './category';
 
@@ -21,7 +22,10 @@ import { Category } from './category';
 export class CreateComponent {
     @Output() onCancel = new EventEmitter();
 
-    constructor(private categoryService: CategoryService) { }
+    constructor(
+        private categoryService: CategoryService,
+        private notificationService: NotificationService
+    ) { }
 
     handleSubmit(values) {
         const { name } = values;
@@ -37,6 +41,7 @@ export class CreateComponent {
                     );
 
                     this.onCancel.emit();
+                    this.notificationService.fireSuccess('Category added!');
                 }
             }
         );
