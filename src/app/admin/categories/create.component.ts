@@ -35,6 +35,8 @@ export class CreateComponent {
                             response.category.name
                         )
                     );
+
+                    this.onCancel.emit();
                 }
             }
         );
