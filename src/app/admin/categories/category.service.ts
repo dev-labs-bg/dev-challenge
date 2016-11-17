@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from "./http.service";
-import { Category } from "../classes/category";
 import { Subscription } from "rxjs/Rx";
+
+import { HttpService } from "../../services/http.service";
+import { Category } from "./category";
 
 var _ = require('lodash');
 

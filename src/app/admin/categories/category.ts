@@ -1,8 +1,8 @@
 export class Category {
 
     constructor(
-       private id: number,
-       private name: string
+       private id: number = -1,
+       private name:string = ''
     ) {}
 
     /**

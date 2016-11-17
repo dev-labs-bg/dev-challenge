@@ -19,13 +19,15 @@ import { RegisterComponent } from './components/register/register.component';
 import { AccountActivationComponent } from './components/account-activation/account-activation.component';
 import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from "./core/admin.guard";
-import { AdminCategoriesComponent } from './admin/admin-categories/admin-categories.component';
+import { AdminCategoriesComponent } from './admin/categories/categories.component';
 import { AdminTasksComponent } from './admin/admin-tasks/admin-tasks.component';
-import { CategoryService } from "./services/category.service";
-import { CategoryFormComponent } from './admin/admin-categories/category-form/category-form.component';
-import { CategoryFormService } from './admin/admin-categories/category-form/category-form.service';
+import { CategoryService } from "./admin/categories/category.service";
+import { CategoryFormComponent } from './admin/categories/form/form.component';
 import { TaskService } from './services/task.service';
 import { AssessmentTypeService } from './services/assessment-type.service';
+import { ListComponent } from './admin/categories/list.component';
+import { CreateComponent } from './admin/categories/create.component';
+import { EditComponent } from './admin/categories/edit.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,10 @@ import { AssessmentTypeService } from './services/assessment-type.service';
     AdminComponent,
     AdminCategoriesComponent,
     AdminTasksComponent,
-    CategoryFormComponent
+    CategoryFormComponent,
+    ListComponent,
+    CreateComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +62,6 @@ import { AssessmentTypeService } from './services/assessment-type.service';
     AdminService,
     AdminGuard,
     CategoryService,
-    CategoryFormService,
     TaskService,
     AssessmentTypeService
   ],

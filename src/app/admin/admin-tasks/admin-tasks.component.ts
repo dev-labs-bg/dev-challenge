@@ -4,10 +4,10 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { AssessmentTypeService } from "../../services/assessment-type.service";
-import { CategoryService } from "../../services/category.service";
+import { CategoryService } from "../categories/category.service";
+import { Category } from "../categories/category";
 import { Task } from "../../classes/task";
 import { Subscription } from "rxjs/Rx";
-import { Category } from "../../classes/category";
 
 @Component({
   selector: 'xp-admin-tasks',
