@@ -30,29 +30,30 @@ export class ExamAnswerFormComponent implements OnInit {
         this.questions.forEach(function (question,  index) {
             formQuestions.push(new FormControl(question.body, Validators.required));
 
-            let wrongAnswersBody = new FormGroup({});
+            let wrongAnswersBody = new FormArray([]);
 
             question.examAnswers.forEach(function (answer, index) {
                 if (answer.is_correct)
                     correctAnswers.push(new FormControl(answer.body, Validators.required));
                 else
-                    wrongAnswersBody.addControl('body-' + index, new FormControl(answer.body, Validators.required));
+                    wrongAnswersBody.push(new FormControl(answer.body, Validators.required));
             });
 
             wrongAnswers.push(wrongAnswersBody);
         });
 
-        let innerWrongAnswers = wrongAnswers.at(0) as FormGroup;
+        let innerWrongAnswers = wrongAnswers.at(0) as FormArray;
 
         if (formQuestions.length == 0) formQuestions.push(new FormControl('', Validators.required));
         if (correctAnswers.length == 0) correctAnswers.push(new FormControl('', Validators.required));
-        if (!innerWrongAnswers.contains('body-0')) wrongAnswers = new FormArray([
-            new FormGroup({
-                'body-0': new FormControl('', Validators.required),
-                'body-1': new FormControl('', Validators.required),
-                'body-2': new FormControl('', Validators.required)
-            })
-        ]);
+        if (wrongAnswers.length == 0 || innerWrongAnswers.length == 0)
+            wrongAnswers = new FormArray([
+                new FormArray([
+                    new FormControl('', Validators.required),
+                    new FormControl('', Validators.required),
+                    new FormControl('', Validators.required)
+                ])
+            ]);
 
         this.form = this.formBuilder.group({
             "task_id": [this.task.id, Validators.required],
@@ -60,13 +61,18 @@ export class ExamAnswerFormComponent implements OnInit {
             "correctAnswers": correctAnswers,
             "wrongAnswers": wrongAnswers,
         });
-
-        console.log(this.form.value);
     }
 
     addQuestion() {
         this.correctAnswers.push(new FormControl('', Validators.required));
         this.formQuestions.push(new FormControl('', Validators.required));
+        this.wrongAnswers.push(
+            new FormArray([
+                new FormControl('', Validators.required),
+                new FormControl('', Validators.required),
+                new FormControl('', Validators.required)
+            ])
+        );
     }
 
     /**
@@ -80,10 +86,6 @@ export class ExamAnswerFormComponent implements OnInit {
     get correctAnswers(): FormArray { return this.form.get('correctAnswers') as FormArray; }
 
     get wrongAnswers(): FormArray { return this.form.get('wrongAnswers') as FormArray; }
-
-    questionWrongAnswers(index) {
-        return this.wrongAnswers.at(index) as FormArray;
-    }
 
     onSubmit() {
         console.log(this.form.value);
