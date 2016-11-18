@@ -1,11 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import {Http, Response, Headers, URLSearchParams} from '@angular/http';
+import { Observable } from 'rxjs/Rx';
+
 import {
     API_ENDPOINT, API_AUTH_ENDPOINT, CLIENT_SECRET, CLIENT_ID
 } from '../config';
+import { NotificationService } from '../shared/notification.service';
 
 @Injectable()
-export class HttpService {
+export class HttpService implements OnInit {
     private accessToken;
 
     public headers: Headers = new Headers({
@@ -15,8 +18,14 @@ export class HttpService {
     });
 
     constructor(
-        private http: Http
+        private http: Http,
+        private notificationService: NotificationService
     ) {
+        // Bind the `this` context
+        this.handleError = this.handleError.bind(this);
+    }
+
+    ngOnInit() {
         this.setAccessToken();
     }
 
@@ -28,12 +37,23 @@ export class HttpService {
      * @returns {Observable<R>}
      */
     get(endPoint: string, params?: Object) {
-
         return this.http.get(API_ENDPOINT + endPoint, { headers: this.headers })
             .map((response: Response) => response.json())
-            .map( (response: any) => {
+            .map(response => {
+                /**
+                 * The Server might return 200, but with `success = false`,
+                 * example: requesting a missing item.
+                 * This is an error case too. Throw an error,
+                 * so the request does not continue!
+                 * Stop the further execution, go directly to the catch state.
+                 */
+                if (! response.success) {
+                    throw(new Error(response.error));
+                }
+
                 return response;
-            });
+            })
+            .catch(this.handleError);
     }
 
     /**
@@ -152,5 +172,12 @@ export class HttpService {
                 this.accessToken = response.access_token;
             }
         );
+    }
+
+    handleError(error: any) {
+        const errorMsg = 'An error occurred. Please refresh and try again.';
+        this.notificationService.fireError(errorMsg);
+
+        return Observable.throw(errorMsg);
     }
 }

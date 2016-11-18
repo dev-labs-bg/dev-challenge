@@ -31,7 +31,8 @@ export class CategoryService {
         return this.httpService.get('category/all').subscribe(
             response => this.categories = response.categories.map(
                 el => new Category(el.id, el.name)
-            )
+            ),
+            error => (console.log('TODO: Handle categories error!', error))
         );
     }
 
