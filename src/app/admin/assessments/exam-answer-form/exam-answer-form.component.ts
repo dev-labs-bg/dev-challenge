@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, OnChanges} from '@angular/core';
 import {FormGroup, FormBuilder, Validators, FormArray} from '@angular/forms';
 import {Question} from '../../../classes/question';
 import {Task} from '../../../classes/task';
@@ -9,7 +9,7 @@ import {QuestionService} from '../../../services/question.service';
   templateUrl: './exam-answer-form.component.html',
   styleUrls: ['./exam-answer-form.component.scss']
 })
-export class ExamAnswerFormComponent implements OnInit {
+export class ExamAnswerFormComponent implements OnInit, OnChanges {
     @Input() private task: Task;
     private questions: Question[] = [];
     private form: FormGroup;
@@ -20,11 +20,11 @@ export class ExamAnswerFormComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.form = this.buildExamForm();
+        this.buildExamForm();
+    }
 
-        if (this.formQuestions.length === 0) {
-            this.addQuestion();
-        }
+    ngOnChanges() {
+        this.buildExamForm();
     }
 
     addQuestion() {
@@ -93,7 +93,7 @@ export class ExamAnswerFormComponent implements OnInit {
 
                     });
 
-                    thisInstance.form = thisInstance.buildExamForm();
+                    thisInstance.buildExamForm();
                 }
             }
         );
@@ -141,12 +141,16 @@ export class ExamAnswerFormComponent implements OnInit {
             wrongAnswers.push(wrongAnswersBody);
         });
 
-        return this.form = this.formBuilder.group({
+        this.form = this.formBuilder.group({
             'task_id': [this.task.id, Validators.required],
             'formQuestions': formQuestions,
             'correctAnswers': correctAnswers,
             'wrongAnswers': wrongAnswers,
         });
+
+        if (this.formQuestions.length === 0) {
+            this.addQuestion();
+        }
     }
 
 }

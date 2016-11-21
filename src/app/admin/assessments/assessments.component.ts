@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../classes/task';
 import { QuestionService } from '../../services/question.service';
-import { Question } from '../../classes/question';
-import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
 
 @Component({
   selector: 'xp-assessments',
@@ -12,12 +10,10 @@ import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
 })
 export class AssessmentsComponent implements OnInit {
     private selectedTask: Task = null;
-    private question: Question;
 
     constructor(
         private taskService: TaskService,
-        private questionService: QuestionService,
-        private formBuilder: FormBuilder
+        private questionService: QuestionService
     ) { }
 
     ngOnInit() {
@@ -26,8 +22,9 @@ export class AssessmentsComponent implements OnInit {
     }
 
     onTaskChange(value): null | void {
-        if (value == null || value == 0)
+        if (value == null || value === 0) {
             return null;
+        }
 
         // find selected task out of tasks array
         this.selectedTask = this.taskService.find(value);
@@ -35,7 +32,7 @@ export class AssessmentsComponent implements OnInit {
 
     isType(type) {
         return (this.selectedTask != null &&
-        this.selectedTask.assessment.mappedType() == type);
+        this.selectedTask.assessment.mappedType() === type);
     }
 
 }
