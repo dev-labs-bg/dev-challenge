@@ -1,21 +1,21 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="question-group-holder" *ngFor="let question of formQuestions.controls; let i = index;">
-        <span formArrayName="questionIds">
-            <input
-                [formControlName]="i"
-                type="hidden"
-            >
-        </span>
         <div class="form-group"
              formArrayName="formQuestions">
-            <label>
-                <span>Question #{{ i + 1 }}</span>
+            <div [formGroupName]="i">
                 <input
-                    type="text"
-                    class="form-control"
-                    [formControlName]="i"
-                />
-            </label>
+                    formControlName="id"
+                    type="hidden"
+                >
+                <label>
+                    <span>Question #{{ i + 1 }}</span>
+                    <input
+                        type="text"
+                        class="form-control"
+                        formControlName="body"
+                    />
+                </label>
+            </div>
         </div>
         <div class="holder">
             <div class="form-group"
@@ -36,14 +36,17 @@
                 </div>
             </div>
             <div class="form-group"
-                 formArrayName="answerExplanation">
-                <label for="answer_explanation">Why is the answer correct?</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    [formControlName]="i"
-                    id="answer_explanation"
-                />
+                 formArrayName="correctAnswers">
+                <div [formGroupName]="i">
+                    <label>
+                        <span>Why is the answer correct?</span>
+                        <input
+                            type="text"
+                            class="form-control"
+                            formControlName="explanation"
+                        />
+                    </label>
+                </div>
             </div>
             <div class="form-group">
                 <div class="row">

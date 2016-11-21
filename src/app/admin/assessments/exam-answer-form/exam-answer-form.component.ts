@@ -1,5 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {FormGroup, FormBuilder, Validators, FormControl, FormArray} from '@angular/forms';
+import {FormGroup, FormBuilder, Validators, FormArray} from '@angular/forms';
 import {Question} from '../../../classes/question';
 import {Task} from '../../../classes/task';
 import {QuestionService} from '../../../services/question.service';
@@ -20,54 +20,19 @@ export class ExamAnswerFormComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        // find questions related to task
-        this.questions = this.questionService.findByTaskId(this.task.id);
+        this.form = this.buildExamForm();
 
-        let formQuestions = new FormArray([]);
-        let correctAnswers = new FormArray([]);
-        let answerExplanation = new FormArray([]);
-        let wrongAnswers = new FormArray([]);
-        let questionIds = new FormArray([]);
-
-        this.questions.forEach(function (question) {
-            formQuestions.push(new FormControl(question.body, Validators.required));
-            questionIds.push(new FormControl(question.id));
-
-            let wrongAnswersBody = new FormArray([]);
-
-            question.examAnswers.forEach(function (answer) {
-                let answerGroup = this.formBuilder.group({
-                    id: [answer.id],
-                    body: [answer.body, Validators.required]
-                });
-
-                if (answer.is_correct) {
-                    correctAnswers.push(answerGroup);
-                } else {
-                    wrongAnswersBody.push(answerGroup);
-                }
-            });
-
-            wrongAnswers.push(wrongAnswersBody);
-        });
-
-        this.form = this.formBuilder.group({
-            "task_id": [this.task.id, Validators.required],
-            "questionIds": questionIds,
-            "formQuestions": formQuestions,
-            "correctAnswers": correctAnswers,
-            "answerExplanation": answerExplanation,
-            "wrongAnswers": wrongAnswers,
-        });
-
-        if (formQuestions.length == 0)
+        if (this.formQuestions.length == 0)
             this.addQuestion();
     }
 
     addQuestion() {
-        this.questionIds.push(new FormControl(''));
-        this.answerExplanation.push(new FormControl('', Validators.required));
-        this.formQuestions.push(new FormControl('', Validators.required));
+        this.formQuestions.push(
+            this.formBuilder.group({
+                id: [''],
+                body: ['', Validators.required],
+            }
+        ));
         this.wrongAnswers.push(
             new FormArray([
                 this.formBuilder.group({
@@ -87,7 +52,8 @@ export class ExamAnswerFormComponent implements OnInit {
         this.correctAnswers.push(
             this.formBuilder.group({
                 id: [''],
-                body: ['', Validators.required]
+                body: ['', Validators.required],
+                explanation: ['', Validators.required],
             })
         );
     }
@@ -104,18 +70,82 @@ export class ExamAnswerFormComponent implements OnInit {
 
     get wrongAnswers(): FormArray { return this.form.get('wrongAnswers') as FormArray; }
 
-    get answerExplanation(): FormArray { return this.form.get('answerExplanation') as FormArray; }
-
-    get questionIds(): FormArray { return this.form.get('questionIds') as FormArray; }
-
     onSubmit() {
         let formValue = this.form.value;
 
-        console.log(formValue);
+        let thisInstance = this;
 
-        // return this.questionService.saveExam(formValue).subscribe(
-        //     response => console.log(response)
-        // );
+        return this.questionService.saveExam(formValue).subscribe(
+            response => {
+                if (response.success) {
+                    response.allQuestions.forEach(function (question) {
+                        let foundQuestion = thisInstance.questionService.find(question.id);
+
+                        if (foundQuestion == null) {
+                            thisInstance.questionService.add(new Question(
+                                question.id,
+                                question.task_id,
+                                question.body,
+                                question.answers,
+                            ));
+                        }
+
+                    });
+
+                    thisInstance.form = thisInstance.buildExamForm();
+                }
+            }
+        );
+    }
+
+    buildExamForm() {
+        // find questions related to task
+        this.questions = this.questionService.findByTaskId(this.task.id);
+
+        let formQuestions = new FormArray([]);
+        let correctAnswers = new FormArray([]);
+        let wrongAnswers = new FormArray([]);
+
+        let innerFormBuilder = this.formBuilder;
+
+        this.questions.forEach(function (question) {
+            formQuestions.push(
+                innerFormBuilder.group({
+                        id: [question.id],
+                        body: [question.body, Validators.required],
+                    }
+                ));
+
+            let wrongAnswersBody = new FormArray([]);
+
+            question.examAnswers.forEach(function (answer) {
+                if (answer.is_correct) {
+                    correctAnswers.push(
+                        innerFormBuilder.group({
+                            id: [answer.id],
+                            body: [answer.body, Validators.required],
+                            explanation: [answer.why_correct, Validators.required],
+                        })
+                    );
+                } else {
+                    wrongAnswersBody.push(
+                        innerFormBuilder.group({
+                            id: [answer.id],
+                            body: [answer.body, Validators.required]
+                        })
+                    );
+                }
+            });
+
+            wrongAnswers.push(wrongAnswersBody);
+        });
+
+        return this.form = this.formBuilder.group({
+            "task_id": [this.task.id, Validators.required],
+            "formQuestions": formQuestions,
+            "correctAnswers": correctAnswers,
+            "wrongAnswers": wrongAnswers,
+        });
     }
 
 }

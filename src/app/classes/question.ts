@@ -1,5 +1,3 @@
-import { Task } from './task';
-
 export class Question {
 
     constructor(

@@ -59,6 +59,10 @@ export class QuestionService {
         return this.httpService.put('question/' + id, data);
     }
 
+    find(id) {
+        return _.find(this.questions, { id });
+    }
+
     updateMainArray(question: Question) {
         let id = question.id;
         let questionIndex = _.findIndex(this.questions, { id });
