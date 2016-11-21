@@ -115,11 +115,12 @@ export class CategoryService {
     }
 
     findCategory(id) {
+        let categoryId = parseInt(id, 10);
         let foundCategory = null;
 
         _.forEach(this.categories,
             category => {
-                if (category.getId() === id) {
+                if (category.getId() === categoryId) {
                     foundCategory = category;
                 }
             }

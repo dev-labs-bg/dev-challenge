@@ -58,7 +58,7 @@ export class AdminTasksComponent implements OnInit {
                     document.getElementById('close_modal').click();
                 }
             }
-        )
+        );
     }
 
     /**
@@ -79,7 +79,7 @@ export class AdminTasksComponent implements OnInit {
                     document.getElementById('close_modal').click();
                 }
             }
-        )
+        );
     }
 
     /**

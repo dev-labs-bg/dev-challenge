@@ -107,13 +107,15 @@ export class TaskService {
         return this.tasks.push(task);
     }
 
-    getFromCategory(category_id: number) {
+    getFromCategory(category_id) {
         let categoryTasks: Task[] = [];
+        let categoryId = parseInt(category_id, 10);
 
         _.forEach(this.tasks,
             task => {
-                if (task.category_id == category_id)
+                if (task.category.id === categoryId) {
                     categoryTasks.push(task);
+                }
             }
         );
 
@@ -122,13 +124,15 @@ export class TaskService {
 
     find(id) {
         let foundTask = null;
+        let taskId = parseInt(id, 10);
 
         _.forEach(this.tasks,
             task => {
-                if (task.id == id)
+                if (task.id === taskId) {
                     foundTask = task;
+                }
             }
-        )
+        );
 
         return foundTask;
     }
