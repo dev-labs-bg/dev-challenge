@@ -25,53 +25,70 @@ export class ExamAnswerFormComponent implements OnInit {
 
         let formQuestions = new FormArray([]);
         let correctAnswers = new FormArray([]);
+        let answerExplanation = new FormArray([]);
         let wrongAnswers = new FormArray([]);
+        let questionIds = new FormArray([]);
 
-        this.questions.forEach(function (question,  index) {
+        this.questions.forEach(function (question) {
             formQuestions.push(new FormControl(question.body, Validators.required));
+            questionIds.push(new FormControl(question.id));
 
             let wrongAnswersBody = new FormArray([]);
 
-            question.examAnswers.forEach(function (answer, index) {
-                if (answer.is_correct)
-                    correctAnswers.push(new FormControl(answer.body, Validators.required));
-                else
-                    wrongAnswersBody.push(new FormControl(answer.body, Validators.required));
+            question.examAnswers.forEach(function (answer) {
+                let answerGroup = this.formBuilder.group({
+                    id: [answer.id],
+                    body: [answer.body, Validators.required]
+                });
+
+                if (answer.is_correct) {
+                    correctAnswers.push(answerGroup);
+                } else {
+                    wrongAnswersBody.push(answerGroup);
+                }
             });
 
             wrongAnswers.push(wrongAnswersBody);
         });
 
-        let innerWrongAnswers = wrongAnswers.at(0) as FormArray;
-
-        if (formQuestions.length == 0) formQuestions.push(new FormControl('', Validators.required));
-        if (correctAnswers.length == 0) correctAnswers.push(new FormControl('', Validators.required));
-        if (wrongAnswers.length == 0 || innerWrongAnswers.length == 0)
-            wrongAnswers = new FormArray([
-                new FormArray([
-                    new FormControl('', Validators.required),
-                    new FormControl('', Validators.required),
-                    new FormControl('', Validators.required)
-                ])
-            ]);
-
         this.form = this.formBuilder.group({
             "task_id": [this.task.id, Validators.required],
+            "questionIds": questionIds,
             "formQuestions": formQuestions,
             "correctAnswers": correctAnswers,
+            "answerExplanation": answerExplanation,
             "wrongAnswers": wrongAnswers,
         });
+
+        if (formQuestions.length == 0)
+            this.addQuestion();
     }
 
     addQuestion() {
-        this.correctAnswers.push(new FormControl('', Validators.required));
+        this.questionIds.push(new FormControl(''));
+        this.answerExplanation.push(new FormControl('', Validators.required));
         this.formQuestions.push(new FormControl('', Validators.required));
         this.wrongAnswers.push(
             new FormArray([
-                new FormControl('', Validators.required),
-                new FormControl('', Validators.required),
-                new FormControl('', Validators.required)
+                this.formBuilder.group({
+                    id: [''],
+                    body: ['', Validators.required],
+                }),
+                this.formBuilder.group({
+                    id: [''],
+                    body: ['', Validators.required],
+                }),
+                this.formBuilder.group({
+                    id: [''],
+                    body: ['', Validators.required],
+                })
             ])
+        );
+        this.correctAnswers.push(
+            this.formBuilder.group({
+                id: [''],
+                body: ['', Validators.required]
+            })
         );
     }
 
@@ -87,8 +104,18 @@ export class ExamAnswerFormComponent implements OnInit {
 
     get wrongAnswers(): FormArray { return this.form.get('wrongAnswers') as FormArray; }
 
+    get answerExplanation(): FormArray { return this.form.get('answerExplanation') as FormArray; }
+
+    get questionIds(): FormArray { return this.form.get('questionIds') as FormArray; }
+
     onSubmit() {
-        console.log(this.form.value);
+        let formValue = this.form.value;
+
+        console.log(formValue);
+
+        // return this.questionService.saveExam(formValue).subscribe(
+        //     response => console.log(response)
+        // );
     }
 
 }

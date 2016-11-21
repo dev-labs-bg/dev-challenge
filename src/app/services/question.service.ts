@@ -43,6 +43,10 @@ export class QuestionService {
         return questions;
     }
 
+    saveExam(data) {
+        return this.httpService.post('save-exam', data);
+    }
+
     create(data) {
         return this.httpService.post('question', data);
     }
