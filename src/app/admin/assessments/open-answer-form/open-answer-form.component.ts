@@ -19,14 +19,25 @@ export class OpenAnswerFormComponent implements OnInit, OnChanges {
         private questionService: QuestionService
     ) { }
 
+    /**
+     * Init form
+     */
     ngOnInit() {
         this.form = this.buildForm();
     }
 
+    /**
+     * Recompile form on each @Input() task change;
+     */
     ngOnChanges() {
         this.form = this.buildForm();
     }
 
+    /**
+     * Build the form component
+     *
+     * @returns {FormGroup}
+     */
     buildForm() {
         // find questions related to task
         let questions = this.questionService.findByTaskId(this.task.id);
@@ -40,21 +51,30 @@ export class OpenAnswerFormComponent implements OnInit, OnChanges {
         });
     }
 
+    /**
+     * Handle form submit
+     *
+     * @returns {Subscription}
+     */
     handleSubmit() {
-        if (this.question == null) {
+        if (this.question.id === -1) {
             return this.onSubmit();
         }
 
         return this.onUpdate(this.question.id);
     }
 
+    /**
+     * Handle form create
+     */
     onSubmit() {
         let value = this.form.value;
 
-        this.questionService.create(value).subscribe(
+        return this.questionService.create(value).subscribe(
             response => {
                 if (response.success) {
                     this.questionService.add(Question.newQuestion(response.question));
+                    this.form = this.buildForm();
                 } else {
                     console.log(response);
                 }
@@ -62,10 +82,15 @@ export class OpenAnswerFormComponent implements OnInit, OnChanges {
         );
     }
 
+    /**
+     * Handle form update
+     *
+     * @param id - question id
+     */
     onUpdate(id) {
         let value = this.form.value;
 
-        this.questionService.update(id, value).subscribe(
+        return this.questionService.update(id, value).subscribe(
             response => {
                 if (response.success) {
                     this.questionService.updateMainArray(Question.newQuestion(response.question));

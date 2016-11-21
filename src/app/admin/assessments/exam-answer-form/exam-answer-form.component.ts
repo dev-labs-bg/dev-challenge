@@ -19,14 +19,24 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
         private formBuilder: FormBuilder
     ) { }
 
+    /**
+     * Init form on component init
+     */
     ngOnInit() {
         this.buildExamForm();
     }
 
+    /**
+     * Look for changes on @Input() task
+     * and reinit the form each time
+     */
     ngOnChanges() {
         this.buildExamForm();
     }
 
+    /**
+     * Add a question to the form
+     */
     addQuestion() {
         this.formQuestions.push(
             this.formBuilder.group({
@@ -60,7 +70,8 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
     }
 
     /**
-     * Creates a variable called formQuestions
+     * Form var getters
+     * Creates a variable called @varName (e.g. formQuestions)
      * and appends the return statement to it
      *
      * @returns {FormArray}
@@ -71,6 +82,11 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
 
     get wrongAnswers(): FormArray { return this.form.get('wrongAnswers') as FormArray; }
 
+    /**
+     * Send the whole form on submit
+     *
+     * @returns {Subscription}
+     */
     onSubmit() {
         let formValue = this.form.value;
 
@@ -99,6 +115,9 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
         );
     }
 
+    /**
+     * Build the exam form instance
+     */
     buildExamForm() {
         // find questions related to task
         this.questions = this.questionService.findByTaskId(this.task.id);
@@ -141,6 +160,7 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
             wrongAnswers.push(wrongAnswersBody);
         });
 
+        // Init form
         this.form = this.formBuilder.group({
             'task_id': [this.task.id, Validators.required],
             'formQuestions': formQuestions,
@@ -148,6 +168,7 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
             'wrongAnswers': wrongAnswers,
         });
 
+        // if form is empty, add a default empty question
         if (this.formQuestions.length === 0) {
             this.addQuestion();
         }
