@@ -22,8 +22,9 @@ export class ExamAnswerFormComponent implements OnInit {
     ngOnInit() {
         this.form = this.buildExamForm();
 
-        if (this.formQuestions.length == 0)
+        if (this.formQuestions.length === 0) {
             this.addQuestion();
+        }
     }
 
     addQuestion() {
@@ -141,10 +142,10 @@ export class ExamAnswerFormComponent implements OnInit {
         });
 
         return this.form = this.formBuilder.group({
-            "task_id": [this.task.id, Validators.required],
-            "formQuestions": formQuestions,
-            "correctAnswers": correctAnswers,
-            "wrongAnswers": wrongAnswers,
+            'task_id': [this.task.id, Validators.required],
+            'formQuestions': formQuestions,
+            'correctAnswers': correctAnswers,
+            'wrongAnswers': wrongAnswers,
         });
     }
 

@@ -3,7 +3,7 @@ export class Question {
     constructor(
         public id: number = -1,
         public task_id: number = -1,
-        public body: string = '',
+        public body = '',
         public examAnswers: Array<any> = [],
     ) {}
 

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { TaskService } from "../../services/task.service";
+import { TaskService } from '../../services/task.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
-import { AssessmentTypeService } from "../../services/assessment-type.service";
-import { CategoryService } from "../categories/category.service";
-import { Category } from "../categories/category";
-import { Task } from "../../classes/task";
-import { Subscription } from "rxjs/Rx";
+import { AssessmentTypeService } from '../../services/assessment-type.service';
+import { CategoryService } from '../categories/category.service';
+import { Category } from '../categories/category';
+import { Task } from '../../classes/task';
+import { Subscription } from 'rxjs/Rx';
 
 @Component({
   selector: 'xp-admin-tasks',
@@ -33,11 +33,11 @@ export class AdminTasksComponent implements OnInit {
         this.assessmentTypeService.getAll();
 
         this.taskForm = this.formBuilder.group({
-            "category_id": ['', Validators.required],
-            "assessment_type_id": ['', Validators.required],
-            "title": ['', Validators.required],
-            "description": ['', Validators.required],
-            "time_estimation": ['', Validators.required],
+            'category_id': ['', Validators.required],
+            'assessment_type_id': ['', Validators.required],
+            'title': ['', Validators.required],
+            'description': ['', Validators.required],
+            'time_estimation': ['', Validators.required],
         });
     }
 
@@ -55,7 +55,7 @@ export class AdminTasksComponent implements OnInit {
                     this.taskService.addTask(Task.newTask(response.task));
                     this.taskForm.reset();
                     this.onCategoryChange(response.task.category_id);
-                    document.getElementById("close_modal").click();
+                    document.getElementById('close_modal').click();
                 }
             }
         )
@@ -76,7 +76,7 @@ export class AdminTasksComponent implements OnInit {
                     this.taskService.updateMainArray(newTask);
                     this.taskForm.reset();
                     this.onCategoryChange(newTask.category.getId());
-                    document.getElementById("close_modal").click();
+                    document.getElementById('close_modal').click();
                 }
             }
         )
@@ -96,8 +96,9 @@ export class AdminTasksComponent implements OnInit {
      * selectedTask state
      */
     handleSubmit(): Subscription | void {
-        if (this.selectedTask == null)
+        if (this.selectedTask == null) {
             return this.onCreate();
+        }
 
         return this.onUpdate();
     }

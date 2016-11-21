@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Subscription } from "rxjs/Rx";
+import { Subscription } from 'rxjs/Rx';
 
-import { HttpService } from "../../services/http.service";
-import { Category } from "./category";
+import { HttpService } from '../../services/http.service';
+import { Category } from './category';
 
-var _ = require('lodash');
+const _ = require('lodash');
 
 @Injectable()
 export class CategoryService {
@@ -119,10 +119,11 @@ export class CategoryService {
 
         _.forEach(this.categories,
             category => {
-                if (category.getId() == id)
+                if (category.getId() === id) {
                     foundCategory = category;
+                }
             }
-        )
+        );
 
         return foundCategory;
     }

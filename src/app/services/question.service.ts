@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Question } from "../classes/question";
-import { HttpService } from "./http.service";
-import { Subscription } from "rxjs/Rx";
+import { Question } from '../classes/question';
+import { HttpService } from './http.service';
+import { Subscription } from 'rxjs/Rx';
 
-var _ = require('lodash');
+const _ = require('lodash');
 
 @Injectable()
 export class QuestionService {
@@ -14,14 +14,15 @@ export class QuestionService {
     ) { }
 
     getAll(): Subscription | Question[] {
-        if (this.questions.length > 0)
+        if (this.questions.length > 0) {
             return this.questions;
+        }
 
         return this.httpService.get('question/all').subscribe(
             response => {
                 this.questions = response.questions.map(
                     el => Question.newQuestion(el)
-                )
+                );
             }
         );
     }
@@ -35,10 +36,11 @@ export class QuestionService {
 
         _.forEach(this.questions,
             question => {
-                if (question.task_id == taskId)
+                if (question.task_id == taskId) {
                     questions.push(question);
+                }
             }
-        )
+        );
 
         return questions;
     }

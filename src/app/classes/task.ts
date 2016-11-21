@@ -1,5 +1,5 @@
-import { AssessmentType } from "./assessment-type";
-import { Category } from "../admin/categories/category";
+import { AssessmentType } from './assessment-type';
+import { Category } from '../admin/categories/category';
 
 export class Task {
 
