@@ -1,6 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import {Http, Response, Headers, URLSearchParams} from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import * as _ from 'lodash';
 
 import {
     API_ENDPOINT, API_AUTH_ENDPOINT, CLIENT_SECRET, CLIENT_ID
@@ -30,6 +31,21 @@ export class HttpService implements OnInit {
     }
 
     /**
+     * The Server might return 200, but with `success = false`,
+     * example: requesting a missing item.
+     * This is an error case too. Throw an error,
+     * so the request does not continue!
+     * Stop the further execution, go directly to the catch state.
+     */
+    checkServerSuccess(response) {
+        if (! response.success) {
+            throw(new Error(response.error));
+        }
+
+        return response;
+    }
+
+    /**
      * Get request
      *
      * @param endPoint
@@ -39,20 +55,7 @@ export class HttpService implements OnInit {
     get(endPoint: string, params?: Object) {
         return this.http.get(API_ENDPOINT + endPoint, { headers: this.headers })
             .map((response: Response) => response.json())
-            .map(response => {
-                /**
-                 * The Server might return 200, but with `success = false`,
-                 * example: requesting a missing item.
-                 * This is an error case too. Throw an error,
-                 * so the request does not continue!
-                 * Stop the further execution, go directly to the catch state.
-                 */
-                if (! response.success) {
-                    throw(new Error(response.error));
-                }
-
-                return response;
-            })
+            .map(this.checkServerSuccess)
             .catch(this.handleError);
     }
 
@@ -69,9 +72,8 @@ export class HttpService implements OnInit {
 
         return this.http.post(API_ENDPOINT + endPoint, body, { headers: this.headers })
             .map((response: Response) => response.json())
-            .map( (response: any) => {
-                return response;
-            });
+            .map(this.checkServerSuccess)
+            .catch(this.handleError);
     }
 
     /**
@@ -174,8 +176,16 @@ export class HttpService implements OnInit {
         );
     }
 
+    buildErrorMessage(error: any) {
+        if (! _.isEmpty(error.message)) {
+            return `Server response: ${error.message}`;
+        }
+
+        return 'An error occurred. Please refresh and try again.';
+    }
+
     handleError(error: any) {
-        const errorMsg = 'An error occurred. Please refresh and try again.';
+        const errorMsg = this.buildErrorMessage(error);
         this.notificationService.fireError(errorMsg);
 
         return Observable.throw(errorMsg);
