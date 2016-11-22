@@ -1,6 +1,6 @@
 import {Component, OnInit, Input, OnChanges} from '@angular/core';
-import { Question } from '../../../classes/question';
-import { Task } from '../../../classes/task';
+import {Question} from '../../../classes/question';
+import {Task} from '../../tasks/task';
 import {FormGroup, Validators, FormBuilder} from '@angular/forms';
 import {QuestionService} from '../../../services/question.service';
 

@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { TaskService } from '../../services/task.service';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
-import { AssessmentTypeService } from '../../services/assessment-type.service';
+import { AssessmentTypeService } from './assessment-type.service';
 import { CategoryService } from '../categories/category.service';
 import { Category } from '../categories/category';
-import { Task } from '../../classes/task';
 import { Subscription } from 'rxjs/Rx';
+import { Task } from './task';
+import { TaskService } from './task.service';
 
 @Component({
     selector: 'xp-admin-tasks',
-    templateUrl: './admin-tasks.component.html',
-    styleUrls: ['./admin-tasks.component.scss']
+    templateUrl: './tasks.component.html',
+    styleUrls: ['./tasks.component.scss']
 })
-export class AdminTasksComponent implements OnInit {
+export class TasksComponent implements OnInit {
     private taskForm: FormGroup;
     private selectedTask: Task = null;
     private selectedCategory: Category = null;
