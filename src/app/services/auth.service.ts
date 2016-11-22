@@ -191,20 +191,19 @@ export class AuthService {
             return true;
         }
 
-        let authService = this;
-
-        return new Promise(function (resolve, reject) {
-            authService.httpService.get('get-logged-user').subscribe(
+        return new Promise(resolve => {
+            this.httpService.get('get-logged-user').subscribe(
                 response => {
-                    if (response.success) {
-                        authService.toggleAuthentication(true, response.user, response.loginToken);
-                    } else {
-                        authService.toggleAuthentication(false);
-                    }
-
-                    resolve(response.success);
+                    this.toggleAuthentication(true, response.user, response.loginToken);
+                    resolve(true);
                 },
-                error => reject(error)
+                error => {
+                    this.toggleAuthentication(false);
+                    // `resolve`, no `reject`, since we're using this method on a guard
+                    resolve(false);
+
+                    console.log('Could not check if user is logged-in. ', error);
+                }
             );
         });
     }
@@ -223,23 +222,21 @@ export class AuthService {
             return userInstance.isAdmin();
         }
 
-        let authService = this;
-
-        return new Promise(function (resolve, reject) {
-            authService.httpService.get('get-logged-user').subscribe(
+        return new Promise((resolve, reject) => {
+            this.httpService.get('get-logged-user').subscribe(
                 response => {
-                    if (response.success) {
-                        authService.toggleAuthentication(true, response.user, response.loginToken);
+                    this.toggleAuthentication(true, response.user, response.loginToken);
 
-                        let adminGuardUser: User = User.newUser(response.user);
-                        resolve(adminGuardUser.isAdmin());
-                    } else {
-                        authService.toggleAuthentication(false);
-                    }
-
-                    resolve(false);
+                    let adminGuardUser: User = User.newUser(response.user);
+                    resolve(adminGuardUser.isAdmin());
                 },
-                error => reject(error)
+                error => {
+                    this.toggleAuthentication(false);
+                    // `resolve`, no `reject`, since we're using this method on a guard
+                    resolve(false);
+
+                    console.log('Could not check if user is admin.', error);
+                }
             );
         });
     }
