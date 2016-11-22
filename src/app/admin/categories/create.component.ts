@@ -30,20 +30,19 @@ export class CreateComponent {
     handleSubmit(values) {
         const { name } = values;
 
-        this.categoryService.createCategory({name: name}).subscribe(
-            response => {
-                if (response.success) {
-                    this.categoryService.addCategory(
-                        new Category(
-                            response.category.id,
-                            response.category.name
-                        )
-                    );
+        this.categoryService.createCategory({name: name})
+            .subscribe(response => {
+                this.categoryService.addCategory(
+                    new Category(
+                        response.category.id,
+                        response.category.name
+                    )
+                );
 
-                    this.onCancel.emit();
-                    this.notificationService.fireSuccess('Category added!');
-                }
-            }
+                this.onCancel.emit();
+                this.notificationService.fireSuccess('Category added!');
+            },
+            error => console.log('Ah, record not created!', error)
         );
     }
 

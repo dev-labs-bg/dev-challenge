@@ -37,31 +37,29 @@ export class EditComponent {
     handleDelete(category: Category) {
         const categoryId = category.getId();
 
-        this.categoryService.deleteCategory(categoryId).subscribe(
-            response => {
-                if (response.success) {
-                    this.categoryService.removeCategory(categoryId);
-                    this.notificationService.fireSuccess('Category deleted!');
-                }
-            }
+        this.categoryService.deleteCategory(categoryId)
+            .subscribe(response => {
+                this.categoryService.removeCategory(categoryId);
+                this.notificationService.fireSuccess('Category deleted!');
+            },
+            error => console.log('Ah, record not deleted!', error)
         );
     }
 
     handleSubmit(values) {
         const { id, name } = values;
 
-        this.categoryService.updateCategory(id, name).subscribe(
-            response => {
-                if (response.success) {
-                    let updatedCategory = new Category(
-                        response.category.id,
-                        response.category.name
-                    );
+        this.categoryService.updateCategory(id, name)
+            .subscribe((response) => {
+                let updatedCategory = new Category(
+                    response.category.id,
+                    response.category.name
+                );
 
-                    this.categoryService.updateMainArray(updatedCategory);
-                    this.notificationService.fireSuccess('Category updated!');
-                }
-            }
+                this.categoryService.updateMainArray(updatedCategory);
+                this.notificationService.fireSuccess('Category updated!');
+            },
+            error => console.log('Ah, record not saved!', error)
         );
     }
 }
