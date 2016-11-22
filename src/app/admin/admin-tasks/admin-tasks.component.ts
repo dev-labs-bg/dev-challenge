@@ -10,9 +10,9 @@ import { Task } from "../../classes/task";
 import { Subscription } from "rxjs/Rx";
 
 @Component({
-  selector: 'xp-admin-tasks',
-  templateUrl: './admin-tasks.component.html',
-  styleUrls: ['./admin-tasks.component.scss']
+    selector: 'xp-admin-tasks',
+    templateUrl: './admin-tasks.component.html',
+    styleUrls: ['./admin-tasks.component.scss']
 })
 export class AdminTasksComponent implements OnInit {
     private taskForm: FormGroup;
@@ -51,14 +51,13 @@ export class AdminTasksComponent implements OnInit {
 
         return this.taskService.createTask(values).subscribe(
             response => {
-                if (response.success) {
-                    this.taskService.addTask(Task.newTask(response.task));
-                    this.taskForm.reset();
-                    this.onCategoryChange(response.task.category_id);
-                    document.getElementById("close_modal").click();
-                }
-            }
-        )
+                this.taskService.addTask(Task.newTask(response.task));
+                this.taskForm.reset();
+                this.onCategoryChange(response.task.category_id);
+                document.getElementById("close_modal").click();
+            },
+            error => console.log('Ah, task not created!', error)
+        );
     }
 
     /**
@@ -71,15 +70,14 @@ export class AdminTasksComponent implements OnInit {
 
         return this.taskService.updateTask(this.selectedTask.id, values).subscribe(
             response => {
-                if (response.success) {
-                    let newTask = Task.newTask(response.task);
-                    this.taskService.updateMainArray(newTask);
-                    this.taskForm.reset();
-                    this.onCategoryChange(newTask.category_id);
-                    document.getElementById("close_modal").click();
-                }
-            }
-        )
+                let newTask = Task.newTask(response.task);
+                this.taskService.updateMainArray(newTask);
+                this.taskForm.reset();
+                this.onCategoryChange(newTask.category_id);
+                document.getElementById("close_modal").click();
+            },
+            error => console.log('Ah, task not updated!', error)
+        );
     }
 
     /**
@@ -121,13 +119,12 @@ export class AdminTasksComponent implements OnInit {
     deleteTask() {
         return this.taskService.deleteTask(this.selectedTask.id).subscribe(
             response => {
-                if (response.success) {
-                    this.taskService.removeTask(this.selectedTask.id);
-                    this.onCategoryChange(this.selectedTask.category_id);
-                    this.selectedTask = null;
-                    document.getElementById('close_modal').click();
-                }
-            }
+                this.taskService.removeTask(this.selectedTask.id);
+                this.onCategoryChange(this.selectedTask.category_id);
+                this.selectedTask = null;
+                document.getElementById('close_modal').click();
+            },
+            error => console.log('Ah, task not deleted!', error)
         );
     }
 
