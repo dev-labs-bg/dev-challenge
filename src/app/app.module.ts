@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 // 3rd party plugins
 import { ToastyModule } from 'ng2-toasty';
+import { BusyModule } from 'angular2-busy';
 import {AlertModule, DatepickerModule, ModalModule} from 'ng2-bootstrap/ng2-bootstrap';
 
 import { routing } from './app.routing';
@@ -32,6 +33,7 @@ import { CreateComponent } from './admin/categories/create.component';
 import { EditComponent } from './admin/categories/edit.component';
 
 import { NotificationService } from './shared/notification.service';
+import { LoadingIndicatorComponent } from './shared/loading-indicator.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import { NotificationService } from './shared/notification.service';
     CategoryFormComponent,
     ListComponent,
     CreateComponent,
-    EditComponent
+    EditComponent,
+    LoadingIndicatorComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +61,7 @@ import { NotificationService } from './shared/notification.service';
     AlertModule,
     DatepickerModule,
     ModalModule,
+    BusyModule,
     ToastyModule.forRoot()
   ],
   providers: [
