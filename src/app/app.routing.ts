@@ -5,7 +5,7 @@ import {AdminGuard} from "./core/admin.guard";
 
 import { LoginComponent } from './components/login/login.component';
 import {DashboardComponent} from "./components/dashboard/dashboard.component";
-import {RegisterComponent} from "./components/register/register.component";
+import { RegisterComponent } from './register/register.component';
 import {AccountActivationComponent} from "./components/account-activation/account-activation.component";
 import {AdminComponent} from "./admin/admin.component";
 import {AdminCategoriesComponent} from "./admin/categories/categories.component";
