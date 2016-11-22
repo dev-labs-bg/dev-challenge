@@ -36,16 +36,15 @@ export class AuthService {
             password
         }).subscribe(
             response => {
-                if (response.success) {
-                    authService.toggleAuthentication(true, response.user, response.loginToken);
-                    return true;
-                } else {
-                    this.loginFail = true;
-                }
-
-                return false;
+                authService.toggleAuthentication(true, response.user, response.loginToken);
+                return true;
             },
-            error => console.log(error)
+            error => {
+                console.log('Login failed!', error);
+
+                this.loginFail = true;
+                return false;
+            }
         );
     }
 
@@ -127,10 +126,9 @@ export class AuthService {
     logout() {
         this.httpService.post('logout').subscribe(
             response => {
-                if (response.success) {
-                    this.toggleAuthentication(false);
-                }
-            }
+                this.toggleAuthentication(false);
+            },
+            error => console.log('Logout failed! ', error)
         );
     }
 
@@ -146,14 +144,14 @@ export class AuthService {
     register(data) {
         this.httpService.post('register', data).subscribe(
             response => {
-                if (response.success) {
-                    this.successfulRegistration = true;
-                    this.router.navigate(['login']);
-                }
+                this.successfulRegistration = true;
+                this.router.navigate(['login']);
+            },
+            error => {
+                console.log('Registration failed!', error)
 
                 return false;
-            },
-            error => console.log(error)
+            }
         );
     }
 
@@ -165,15 +163,15 @@ export class AuthService {
      * @returns void
      */
     activateAccount(email, token) {
-        this.httpService.post('account/activate/'+ email +'/' + token).subscribe(
+        this.httpService.post(`account/activate/${email}/${token}`).subscribe(
             response => {
-                if (response.success) {
-                    this.successfulActivation = true;
-                } else {
-                    this.successfulActivation = false;
-                }
+                this.successfulActivation = true;
             },
-            error => console.log(error)
+            error => {
+                this.successfulActivation = false;
+
+                console.log('Account activation failed!', error)
+            }
         );
     }
 
