@@ -10,6 +10,11 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard } from './core/auth.guard';
 import { HttpService } from './services/http.service';
 import { AdminService } from './services/admin.service';
+import { SubmissionService } from './admin/submissions/submission.service';
+import { CategoryService } from './admin/categories/category.service';
+import { TaskService } from './services/task.service';
+import { QuestionService } from './services/question.service';
+import { AssessmentTypeService } from './services/assessment-type.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -18,20 +23,17 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AccountActivationComponent } from './components/account-activation/account-activation.component';
 import { AdminComponent } from './admin/admin.component';
-import { AdminGuard } from "./core/admin.guard";
+import { AdminGuard } from './core/admin.guard';
 import { AdminCategoriesComponent } from './admin/categories/categories.component';
 import { AdminTasksComponent } from './admin/admin-tasks/admin-tasks.component';
-import { CategoryService } from "./admin/categories/category.service";
 import { CategoryFormComponent } from './admin/categories/form/form.component';
-import { TaskService } from './services/task.service';
-import { QuestionService } from './services/question.service';
-import { AssessmentTypeService } from './services/assessment-type.service';
 import { AssessmentsComponent } from './admin/assessments/assessments.component';
 import { OpenAnswerFormComponent } from './admin/assessments/open-answer-form/open-answer-form.component';
 import { ExamAnswerFormComponent } from './admin/assessments/exam-answer-form/exam-answer-form.component';
 import { ListComponent } from './admin/categories/list.component';
 import { CreateComponent } from './admin/categories/create.component';
 import { EditComponent } from './admin/categories/edit.component';
+import { SubmissionsComponent } from './admin/submissions/submissions.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,8 @@ import { EditComponent } from './admin/categories/edit.component';
     ExamAnswerFormComponent,
     ListComponent,
     CreateComponent,
-    EditComponent
+    EditComponent,
+    SubmissionsComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +74,8 @@ import { EditComponent } from './admin/categories/edit.component';
     CategoryService,
     TaskService,
     AssessmentTypeService,
-    QuestionService
+    QuestionService,
+    SubmissionService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,28 @@
+<h1>Approval Center</h1>
+
+<p>Please choose a category</p>
+
+<div class="form-group">
+    <label for="category_id">Category</label>
+    <select
+        name="category_id"
+        id="category_id"
+        (ngModelChange)="onCategoryChange($event)"
+        [ngModel]="category">
+        <option
+            *ngFor="let category of categoryService.getCategories()"
+            value="{{ category.id }}">
+            {{ category.name }}
+        </option>
+    </select>
+</div>
+
+<div *ngFor="let task of categoryTasks">
+    <h4>{{ task.title }}</h4>
+    <a
+        href="javascript:;"
+        *ngFor="let submission of taskService.findSubmissions(task.id)">
+        {{ submission.id }}
+        <!-- submitted by: user -->
+    </a>
+</div>

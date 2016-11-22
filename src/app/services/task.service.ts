@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Task } from "../classes/task";
 import { HttpService } from "./http.service";
 import { Subscription } from "rxjs/Rx";
+import {SubmissionService} from "../admin/submissions/submission.service";
 
 var _ = require('lodash');
 
@@ -10,7 +11,8 @@ export class TaskService {
     private tasks: Task[] = [];
 
     constructor(
-        private httpService: HttpService
+        private httpService: HttpService,
+        private submissionService: SubmissionService
     ) {}
 
     /**
@@ -136,5 +138,23 @@ export class TaskService {
 
         return foundTask;
     }
+
+    findSubmissions(id) {
+        let submissions = this.submissionService.getSubmissions();
+        let taskId = parseInt(id, 10);
+
+        let taskSubmissions = [];
+
+        _.forEach(submissions,
+            submission => {
+                if (submission.task_id === taskId) {
+                    taskSubmissions.push(submission);
+                }
+            }
+        );
+
+        return taskSubmissions;
+    }
+
 
 }

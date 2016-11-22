@@ -147,8 +147,10 @@ export class HttpService {
                 return response;
             }).subscribe(
             function (response) {
+                // noinspection TypeScriptUnresolvedVariable
                 localStorage.setItem('xp_access_token', 'Bearer ' + response.access_token);
 
+                // noinspection TypeScriptUnresolvedVariable
                 this.accessToken = response.access_token;
             }
         );

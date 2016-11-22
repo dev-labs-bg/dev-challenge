@@ -1,5 +1,7 @@
 import { AssessmentType } from './assessment-type';
 import { Category } from '../admin/categories/category';
+import {SubmissionService} from '../admin/submissions/submission.service';
+import {ReflectiveInjector} from '@angular/core';
 
 export class Task {
 
@@ -13,7 +15,7 @@ export class Task {
         public created_at: string
     ) {}
 
-    public static newTask(data) {
+    static newTask(data) {
 
         let category = new Category(
             data.category.id,
@@ -36,7 +38,7 @@ export class Task {
         );
     }
 
-    public toForm() {
+    toForm() {
         return {
             category_id: this.category.getId(),
             assessment_type_id: this.assessment.id,
@@ -45,6 +47,4 @@ export class Task {
             time_estimation: this.time_estimation
         };
     }
-
-
 }
