@@ -25,15 +25,14 @@ export class AssessmentTypeService {
 
         return this.httpService.get('assessment-types/all').subscribe(
             response => {
-                if (response.success) {
-                    this.assessmentTypes = response.assessmentTypes.map(
-                        el => new AssessmentType(
-                            el.id,
-                            el.type
-                        )
+                this.assessmentTypes = response.assessmentTypes.map(
+                    el => new AssessmentType(
+                        el.id,
+                        el.type
                     )
-                }
-            }
+                )
+            },
+            error => console.log('Ah, Could not get the assessment types!', error)
         );
     }
 
