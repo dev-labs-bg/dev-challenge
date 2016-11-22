@@ -13,6 +13,8 @@ export class RegisterComponent implements OnInit {
     currentDate = new Date();
     maxDate: Date = new Date();
     private mode: string = 'PREREQUISITES';
+    // TODO: new User();
+    private user = { mainInfo: {} };
 
     constructor(
         private authService: AuthService,
@@ -33,8 +35,13 @@ export class RegisterComponent implements OnInit {
         }, {validator: this.matchingPasswords('password', 'password_confirmation')});
     }
 
-    private toggleMode(nextMode) {
+    toggleMode(nextMode) {
         this.mode = nextMode;
+    }
+
+    handleMainInfoSubmit(mainInfo) {
+        this.user.mainInfo = mainInfo;
+        this.toggleMode('CHOOSE_TIME_INVESTMENT');
     }
 
     onSubmit() {
