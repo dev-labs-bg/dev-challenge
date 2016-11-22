@@ -1,11 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import {Http, Response, Headers, URLSearchParams} from '@angular/http';
+import { Observable } from 'rxjs/Rx';
+import * as _ from 'lodash';
+
 import {
     API_ENDPOINT, API_AUTH_ENDPOINT, CLIENT_SECRET, CLIENT_ID
 } from '../config';
+import { NotificationService } from '../shared/notification.service';
 
 @Injectable()
-export class HttpService {
+export class HttpService implements OnInit {
     private accessToken;
 
     public headers: Headers = new Headers({
@@ -15,9 +19,30 @@ export class HttpService {
     });
 
     constructor(
-        private http: Http
+        private http: Http,
+        private notificationService: NotificationService
     ) {
+        // Bind the `this` context
+        this.handleError = this.handleError.bind(this);
+    }
+
+    ngOnInit() {
         this.setAccessToken();
+    }
+
+    /**
+     * The Server might return 200, but with `success = false`,
+     * example: requesting a missing item.
+     * This is an error case too. Throw an error,
+     * so the request does not continue!
+     * Stop the further execution, go directly to the catch state.
+     */
+    checkServerSuccess(response) {
+        if (! response.success) {
+            throw(new Error(response.error));
+        }
+
+        return response;
     }
 
     /**
@@ -28,12 +53,10 @@ export class HttpService {
      * @returns {Observable<R>}
      */
     get(endPoint: string, params?: Object) {
-
         return this.http.get(API_ENDPOINT + endPoint, { headers: this.headers })
             .map((response: Response) => response.json())
-            .map( (response: any) => {
-                return response;
-            });
+            .map(this.checkServerSuccess)
+            .catch(this.handleError);
     }
 
     /**
@@ -44,14 +67,12 @@ export class HttpService {
      * @returns {Observable<R>}
      */
     post(endPoint: string, params?: Object) {
-
         const body = JSON.stringify(params);
 
         return this.http.post(API_ENDPOINT + endPoint, body, { headers: this.headers })
             .map((response: Response) => response.json())
-            .map( (response: any) => {
-                return response;
-            });
+            .map(this.checkServerSuccess)
+            .catch(this.handleError);
     }
 
     /**
@@ -62,14 +83,12 @@ export class HttpService {
      * @returns {Observable<R>}
      */
     put(endPoint: string, params?: Object) {
-
         const body = JSON.stringify(params);
 
         return this.http.put(API_ENDPOINT + endPoint, body, { headers: this.headers })
             .map((response: Response) => response.json())
-            .map( (response: any) => {
-                return response;
-            });
+            .map(this.checkServerSuccess)
+            .catch(this.handleError);
     }
 
     /**
@@ -80,12 +99,10 @@ export class HttpService {
      * @returns {Observable<R>}
      */
     delete(endPoint: string, params?: Object) {
-
         return this.http.delete(API_ENDPOINT + endPoint, { headers: this.headers })
             .map((response: Response) => response.json())
-            .map( (response: any) => {
-                return response;
-            });
+            .map(this.checkServerSuccess)
+            .catch(this.handleError);
     }
 
     /**
@@ -143,10 +160,9 @@ export class HttpService {
 
         this.http.post(`${API_AUTH_ENDPOINT}/token`, body, { headers: oAuth2Headers })
             .map((response: Response) => response.json())
-            .map( (response: any) => {
-                return response;
-            }).subscribe(
-            function (response) {
+            .map(this.checkServerSuccess)
+            .catch(this.handleError)
+            .subscribe(response => {
                 // noinspection TypeScriptUnresolvedVariable
                 localStorage.setItem('xp_access_token', 'Bearer ' + response.access_token);
 
@@ -154,5 +170,20 @@ export class HttpService {
                 this.accessToken = response.access_token;
             }
         );
+    }
+
+    buildErrorMessage(error: any) {
+        if (! _.isEmpty(error.message)) {
+            return `Server response: ${error.message}`;
+        }
+
+        return 'An error occurred. Please refresh and try again.';
+    }
+
+    handleError(error: any) {
+        const errorMsg = this.buildErrorMessage(error);
+        this.notificationService.fireError(errorMsg);
+
+        return Observable.throw(errorMsg);
     }
 }

@@ -3,18 +3,22 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+// 3rd party plugins
+import { ToastyModule } from 'ng2-toasty';
 import {AlertModule, DatepickerModule, ModalModule} from 'ng2-bootstrap/ng2-bootstrap';
 
 import { routing } from './app.routing';
+
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './core/auth.guard';
 import { HttpService } from './services/http.service';
 import { AdminService } from './services/admin.service';
 import { SubmissionService } from './admin/submissions/submission.service';
 import { CategoryService } from './admin/categories/category.service';
-import { TaskService } from './services/task.service';
-import { QuestionService } from './services/question.service';
-import { AssessmentTypeService } from './services/assessment-type.service';
+import { AssessmentTypeService } from './admin/tasks/assessment-type.service';
+import { NotificationService } from './shared/notification.service';
+import { TaskService } from './admin/tasks/task.service';
+import { QuestionService } from './admin/assessments/question.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -25,7 +29,7 @@ import { AccountActivationComponent } from './components/account-activation/acco
 import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from './core/admin.guard';
 import { AdminCategoriesComponent } from './admin/categories/categories.component';
-import { AdminTasksComponent } from './admin/admin-tasks/admin-tasks.component';
+import { TasksComponent } from './admin/tasks/tasks.component';
 import { CategoryFormComponent } from './admin/categories/form/form.component';
 import { AssessmentsComponent } from './admin/assessments/assessments.component';
 import { OpenAnswerFormComponent } from './admin/assessments/open-answer-form/open-answer-form.component';
@@ -45,7 +49,7 @@ import { SubmissionsComponent } from './admin/submissions/submissions.component'
     AccountActivationComponent,
     AdminComponent,
     AdminCategoriesComponent,
-    AdminTasksComponent,
+    TasksComponent,
     CategoryFormComponent,
     AssessmentsComponent,
     OpenAnswerFormComponent,
@@ -63,7 +67,8 @@ import { SubmissionsComponent } from './admin/submissions/submissions.component'
     routing,
     AlertModule,
     DatepickerModule,
-    ModalModule
+    ModalModule,
+    ToastyModule.forRoot()
   ],
   providers: [
     AuthService,
@@ -75,7 +80,8 @@ import { SubmissionsComponent } from './admin/submissions/submissions.component'
     TaskService,
     AssessmentTypeService,
     QuestionService,
-    SubmissionService
+    SubmissionService,
+    NotificationService
   ],
   bootstrap: [AppComponent]
 })

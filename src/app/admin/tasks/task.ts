@@ -1,7 +1,5 @@
 import { AssessmentType } from './assessment-type';
-import { Category } from '../admin/categories/category';
-import {SubmissionService} from '../admin/submissions/submission.service';
-import {ReflectiveInjector} from '@angular/core';
+import { Category } from '../categories/category';
 
 export class Task {
 

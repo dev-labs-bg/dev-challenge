@@ -113,8 +113,7 @@
         {{ task.title }}
     </a>
     <div
-        *ngIf="(selectedCategory != null) &&
-        (categoryTasks.length == 0)"
+        *ngIf="! selectedCategory"
         class="alert alert-danger">
         No tasks found from chosen category.
     </div>

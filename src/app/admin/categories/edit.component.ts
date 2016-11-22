@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { Category } from './category';
+import { NotificationService } from '../../shared/notification.service';
 import { CategoryService } from './category.service';
 
 @Component({
@@ -24,7 +25,10 @@ export class EditComponent {
     @Input() category: Category;
     @Output() onCancel = new EventEmitter();
 
-    constructor(private categoryService: CategoryService) { }
+    constructor(
+        private categoryService: CategoryService,
+        private notificationService: NotificationService
+    ) { }
 
     handleCancel() {
         this.onCancel.emit();
@@ -33,29 +37,29 @@ export class EditComponent {
     handleDelete(category: Category) {
         const categoryId = category.getId();
 
-        this.categoryService.deleteCategory(categoryId).subscribe(
-            response => {
-                if (response.success) {
-                    this.categoryService.removeCategory(categoryId);
-                }
-            }
+        this.categoryService.deleteCategory(categoryId)
+            .subscribe(response => {
+                this.categoryService.removeCategory(categoryId);
+                this.notificationService.fireSuccess('Category deleted!');
+            },
+            error => console.log('Ah, record not deleted!', error)
         );
     }
 
     handleSubmit(values) {
         const { id, name } = values;
 
-        this.categoryService.updateCategory(id, name).subscribe(
-            response => {
-                if (response.success) {
-                    let updatedCategory = new Category(
-                        response.category.id,
-                        response.category.name
-                    );
+        this.categoryService.updateCategory(id, name)
+            .subscribe((response) => {
+                let updatedCategory = new Category(
+                    response.category.id,
+                    response.category.name
+                );
 
-                    this.categoryService.updateMainArray(updatedCategory);
-                }
-            }
+                this.categoryService.updateMainArray(updatedCategory);
+                this.notificationService.fireSuccess('Category updated!');
+            },
+            error => console.log('Ah, record not saved!', error)
         );
     }
 }

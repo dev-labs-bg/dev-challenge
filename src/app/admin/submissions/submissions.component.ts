@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CategoryService} from '../categories/category.service';
 import {Category} from '../categories/category';
-import {Task} from '../../classes/Task';
-import {TaskService} from '../../services/task.service';
+import {Task} from '../tasks/Task';
+import {TaskService} from '../tasks/task.service';
 import {SubmissionService} from './submission.service';
 
 @Component({

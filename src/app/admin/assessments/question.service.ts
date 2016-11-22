@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Question } from '../classes/question';
-import { HttpService } from './http.service';
 import { Subscription } from 'rxjs/Rx';
-
-const _ = require('lodash');
+import {Question} from './question';
+import {HttpService} from '../../services/http.service';
+import * as _ from 'lodash';
 
 @Injectable()
 export class QuestionService {

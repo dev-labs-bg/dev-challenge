@@ -36,16 +36,15 @@ export class AuthService {
             password
         }).subscribe(
             response => {
-                if (response.success) {
-                    authService.toggleAuthentication(true, response.user, response.loginToken);
-                    return true;
-                } else {
-                    this.loginFail = true;
-                }
-
-                return false;
+                authService.toggleAuthentication(true, response.user, response.loginToken);
+                return true;
             },
-            error => console.log(error)
+            error => {
+                console.log('Login failed!', error);
+
+                this.loginFail = true;
+                return false;
+            }
         );
     }
 
@@ -127,10 +126,9 @@ export class AuthService {
     logout() {
         this.httpService.post('logout').subscribe(
             response => {
-                if (response.success) {
-                    this.toggleAuthentication(false);
-                }
-            }
+                this.toggleAuthentication(false);
+            },
+            error => console.log('Logout failed! ', error)
         );
     }
 
@@ -146,14 +144,14 @@ export class AuthService {
     register(data) {
         this.httpService.post('register', data).subscribe(
             response => {
-                if (response.success) {
-                    this.successfulRegistration = true;
-                    this.router.navigate(['login']);
-                }
+                this.successfulRegistration = true;
+                this.router.navigate(['login']);
+            },
+            error => {
+                console.log('Registration failed!', error)
 
                 return false;
-            },
-            error => console.log(error)
+            }
         );
     }
 
@@ -165,15 +163,15 @@ export class AuthService {
      * @returns void
      */
     activateAccount(email, token) {
-        this.httpService.post('account/activate/'+ email +'/' + token).subscribe(
+        this.httpService.post(`account/activate/${email}/${token}`).subscribe(
             response => {
-                if (response.success) {
-                    this.successfulActivation = true;
-                } else {
-                    this.successfulActivation = false;
-                }
+                this.successfulActivation = true;
             },
-            error => console.log(error)
+            error => {
+                this.successfulActivation = false;
+
+                console.log('Account activation failed!', error)
+            }
         );
     }
 
@@ -191,20 +189,19 @@ export class AuthService {
             return true;
         }
 
-        let authService = this;
-
-        return new Promise(function (resolve, reject) {
-            authService.httpService.get('get-logged-user').subscribe(
+        return new Promise(resolve => {
+            this.httpService.get('get-logged-user').subscribe(
                 response => {
-                    if (response.success) {
-                        authService.toggleAuthentication(true, response.user, response.loginToken);
-                    } else {
-                        authService.toggleAuthentication(false);
-                    }
-
-                    resolve(response.success);
+                    this.toggleAuthentication(true, response.user, response.loginToken);
+                    resolve(true);
                 },
-                error => reject(error)
+                error => {
+                    this.toggleAuthentication(false);
+                    // `resolve`, no `reject`, since we're using this method on a guard
+                    resolve(false);
+
+                    console.log('Could not check if user is logged-in. ', error);
+                }
             );
         });
     }
@@ -223,23 +220,21 @@ export class AuthService {
             return userInstance.isAdmin();
         }
 
-        let authService = this;
-
-        return new Promise(function (resolve, reject) {
-            authService.httpService.get('get-logged-user').subscribe(
+        return new Promise((resolve, reject) => {
+            this.httpService.get('get-logged-user').subscribe(
                 response => {
-                    if (response.success) {
-                        authService.toggleAuthentication(true, response.user, response.loginToken);
+                    this.toggleAuthentication(true, response.user, response.loginToken);
 
-                        let adminGuardUser: User = User.newUser(response.user);
-                        resolve(adminGuardUser.isAdmin());
-                    } else {
-                        authService.toggleAuthentication(false);
-                    }
-
-                    resolve(false);
+                    let adminGuardUser: User = User.newUser(response.user);
+                    resolve(adminGuardUser.isAdmin());
                 },
-                error => reject(error)
+                error => {
+                    this.toggleAuthentication(false);
+                    // `resolve`, no `reject`, since we're using this method on a guard
+                    resolve(false);
+
+                    console.log('Could not check if user is admin.', error);
+                }
             );
         });
     }

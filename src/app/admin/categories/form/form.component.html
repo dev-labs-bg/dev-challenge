@@ -25,7 +25,7 @@
         Cancel
     </button>
     <div
-        *ngIf="category"
+        *ngIf="category.id !== -1"
         (click)="handleDelete(category)"
         class="btn btn-danger">
         Delete

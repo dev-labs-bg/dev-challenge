@@ -1,8 +1,8 @@
 import {Component, OnInit, Input, OnChanges} from '@angular/core';
 import {FormGroup, FormBuilder, Validators, FormArray} from '@angular/forms';
-import {Question} from '../../../classes/question';
-import {Task} from '../../../classes/task';
-import {QuestionService} from '../../../services/question.service';
+import {Question} from '../question';
+import {Task} from '../../tasks/task';
+import {QuestionService} from '../question.service';
 
 @Component({
   selector: 'xp-exam-answer-form',

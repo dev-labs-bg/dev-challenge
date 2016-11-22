@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Task } from "../classes/task";
-import { HttpService } from "./http.service";
-import { Subscription } from "rxjs/Rx";
-import {SubmissionService} from "../admin/submissions/submission.service";
-
-var _ = require('lodash');
+import { SubmissionService } from '../submissions/submission.service';
+import { Task } from './task';
+import { HttpService } from '../../services/http.service';
+import { Subscription } from 'rxjs/Rx';
+import * as _ from 'lodash';
 
 @Injectable()
 export class TaskService {
@@ -115,7 +114,7 @@ export class TaskService {
 
         _.forEach(this.tasks,
             task => {
-                if (task.category.id === categoryId) {
+                if (task.category.getId() === categoryId) {
                     categoryTasks.push(task);
                 }
             }
