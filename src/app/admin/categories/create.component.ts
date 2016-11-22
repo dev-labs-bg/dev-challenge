@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { Subscription } from 'rxjs/Rx';
 
 import { NotificationService } from '../../shared/notification.service';
 import { CategoryService } from './category.service';
@@ -7,20 +8,23 @@ import { Category } from './category';
 @Component({
     selector: 'xp-admin-category-create',
     template: `
-        <div class="panel panel-primary">
-            <div class="panel-heading">Create Category</div>
+        <xp-loading-indicator [wait]="subscription">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Create Category</div>
 
-            <div class="panel-body">
-                <xp-admin-category-form
-                    (onCancel)="handleCancel($event)"
-                    (onSubmit)="handleSubmit($event)">
-                </xp-admin-category-form>
+                <div class="panel-body">
+                    <xp-admin-category-form
+                        (onCancel)="handleCancel($event)"
+                        (onSubmit)="handleSubmit($event)">
+                    </xp-admin-category-form>
+                </div>
             </div>
-        </div>
+        </xp-loading-indicator>
     `
 })
 export class CreateComponent {
     @Output() onCancel = new EventEmitter();
+    private subscription: Subscription;
 
     constructor(
         private categoryService: CategoryService,
@@ -30,7 +34,7 @@ export class CreateComponent {
     handleSubmit(values) {
         const { name } = values;
 
-        this.categoryService.createCategory({name: name})
+        this.subscription = this.categoryService.createCategory({name: name})
             .subscribe(response => {
                 this.categoryService.addCategory(
                     new Category(
