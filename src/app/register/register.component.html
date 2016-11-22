@@ -1,175 +1,184 @@
-<div class="center-block register-form">
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="email">Email address</label>
-            <input
-                type="email"
-                name="email"
-                class="form-control"
-                id="email"
-                formControlName="email"
-                placeholder="Email"
-                required
-            />
-            <div
+<div [ngSwitch]="mode">
+
+    <xp-register-prerequisites
+        *ngSwitchCase="'PREREQUISITES'"
+        (onToggleMode)="toggleMode('MAIN_INFORMATION')">
+    </xp-register-prerequisites>
+
+    <div *ngSwitchCase="'MAIN_INFORMATION'" class="center-block register-form">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    id="email"
+                    formControlName="email"
+                    placeholder="Email"
+                    required
+                />
+                <div
                     *ngIf="registerForm.controls['email'].hasError('required') &&
                     registerForm.controls['email'].touched"
                     class="alert alert-danger">
-                You must specify an email.
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input
-                type="password"
-                name="password"
-                class="form-control"
-                id="password"
-                formControlName="password"
-                placeholder="Password"
-                required
-            />
-            <div
-                *ngIf="registerForm.controls['password'].hasError('required') &&
-                registerForm.controls['password'].touched"
-                class="alert alert-danger">
-                You must specify a password
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="password_confirmation">Password</label>
-            <input
-                type="password"
-                name="password_confirmation"
-                class="form-control"
-                id="password_confirmation"
-                formControlName="password_confirmation"
-                placeholder="Confirm Password"
-                required
-            />
-            <div *ngIf="registerForm.controls['password_confirmation'].touched">
-                <div
-                    *ngIf="registerForm.hasError('mismatchedPasswords')"
-                    class="alert alert-danger">
-                    Passwords do not match.
-                </div>
-                <div
-                    *ngIf="registerForm.hasError('required')"
-                    class="alert alert-danger">
-                    You must confirm your password
+                    You must specify an email.
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="first_name">First name</label>
-            <input
-                type="first_name"
-                name="first_name"
-                class="form-control"
-                id="first_name"
-                formControlName="first_name"
-                placeholder="First Name"
-                required
-            />
-            <div
-                *ngIf="registerForm.controls['first_name'].hasError('required') &&
-                registerForm.controls['first_name'].touched"
-                class="alert alert-danger">
-                You must specify a first name.
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    name="password"
+                    class="form-control"
+                    id="password"
+                    formControlName="password"
+                    placeholder="Password"
+                    required
+                />
+                <div
+                    *ngIf="registerForm.controls['password'].hasError('required') &&
+                    registerForm.controls['password'].touched"
+                    class="alert alert-danger">
+                    You must specify a password
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="last_name">Last Name</label>
-            <input
-                type="last_name"
-                name="last_name"
-                class="form-control"
-                id="last_name"
-                formControlName="last_name"
-                placeholder="Last Name"
-                required
-            />
-            <div
-                *ngIf="registerForm.controls['last_name'].hasError('required') &&
-                registerForm.controls['last_name'].touched"
-                class="alert alert-danger">
-                You must specify a last name.
+            <div class="form-group">
+                <label for="password_confirmation">Password</label>
+                <input
+                    type="password"
+                    name="password_confirmation"
+                    class="form-control"
+                    id="password_confirmation"
+                    formControlName="password_confirmation"
+                    placeholder="Confirm Password"
+                    required
+                />
+                <div *ngIf="registerForm.controls['password_confirmation'].touched">
+                    <div
+                        *ngIf="registerForm.hasError('mismatchedPasswords')"
+                        class="alert alert-danger">
+                        Passwords do not match.
+                    </div>
+                    <div
+                        *ngIf="registerForm.hasError('required')"
+                        class="alert alert-danger">
+                        You must confirm your password
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="block-display">Date of birth</label>
-            <div class="datepicker-holder">
-                <datepicker
-                    name="date_of_birth"
-                    [(ngModel)]="currentDate"
-                    [ngModelOptions]="{standalone: true}"
-                    [(maxDate)]="maxDate"
-                    required>
-                </datepicker>
+            <div class="form-group">
+                <label for="first_name">First name</label>
+                <input
+                    type="first_name"
+                    name="first_name"
+                    class="form-control"
+                    id="first_name"
+                    formControlName="first_name"
+                    placeholder="First Name"
+                    required
+                />
+                <div
+                    *ngIf="registerForm.controls['first_name'].hasError('required') &&
+                    registerForm.controls['first_name'].touched"
+                    class="alert alert-danger">
+                    You must specify a first name.
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="city">City</label>
-            <input
-                type="city"
-                name="city"
-                class="form-control"
-                id="city"
-                formControlName="city"
-                placeholder="City"
-                required
-            />
-            <div
-                *ngIf="registerForm.controls['city'].hasError('required') &&
-                registerForm.controls['city'].touched"
-                class="alert alert-danger">
-                You must specify a city.
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input
+                    type="last_name"
+                    name="last_name"
+                    class="form-control"
+                    id="last_name"
+                    formControlName="last_name"
+                    placeholder="Last Name"
+                    required
+                />
+                <div
+                    *ngIf="registerForm.controls['last_name'].hasError('required') &&
+                    registerForm.controls['last_name'].touched"
+                    class="alert alert-danger">
+                    You must specify a last name.
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="university">University</label>
-            <input
-                type="university"
-                name="university"
-                class="form-control"
-                id="university"
-                formControlName="university"
-                placeholder="University"
-            />
-        </div>
-        <div class="form-group">
-            <label for="year_of_study">Year of study</label>
-            <input
-                type="year_of_study"
-                name="year_of_study"
-                class="form-control"
-                id="year_of_study"
-                formControlName="year_of_study"
-                placeholder="Year of study"
-            />
-        </div>
-        <div class="form-group">
-            <label for="spent_time">Hours per day you could spend on dev-challenge</label>
-            <input
-                type="spent_time"
-                name="spent_time"
-                class="form-control"
-                id="spent_time"
-                formControlName="spent_time"
-                placeholder="1"
-            />
-            <div
-                *ngIf="registerForm.controls['spent_time'].hasError('required') &&
-                registerForm.controls['spent_time'].touched"
-                class="alert alert-danger">
-                    You must fill in your available hours.
+            <div class="form-group">
+                <label class="block-display">Date of birth</label>
+                <div class="datepicker-holder">
+                    <datepicker
+                        name="date_of_birth"
+                        [(ngModel)]="currentDate"
+                        [ngModelOptions]="{standalone: true}"
+                        [(maxDate)]="maxDate"
+                        required>
+                    </datepicker>
+                </div>
             </div>
-        </div>
-        <button
-            type="submit"
-            class="btn btn-default"
-            [disabled]="!registerForm.valid">
-            Submit
-        </button>
-    </form>
+            <div class="form-group">
+                <label for="city">City</label>
+                <input
+                    type="city"
+                    name="city"
+                    class="form-control"
+                    id="city"
+                    formControlName="city"
+                    placeholder="City"
+                    required
+                />
+                <div
+                    *ngIf="registerForm.controls['city'].hasError('required') &&
+                    registerForm.controls['city'].touched"
+                    class="alert alert-danger">
+                    You must specify a city.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="university">University</label>
+                <input
+                    type="university"
+                    name="university"
+                    class="form-control"
+                    id="university"
+                    formControlName="university"
+                    placeholder="University"
+                />
+            </div>
+            <div class="form-group">
+                <label for="year_of_study">Year of study</label>
+                <input
+                    type="year_of_study"
+                    name="year_of_study"
+                    class="form-control"
+                    id="year_of_study"
+                    formControlName="year_of_study"
+                    placeholder="Year of study"
+                />
+            </div>
+            <div class="form-group">
+                <label for="spent_time">Hours per day you could spend on dev-challenge</label>
+                <input
+                    type="spent_time"
+                    name="spent_time"
+                    class="form-control"
+                    id="spent_time"
+                    formControlName="spent_time"
+                    placeholder="1"
+                />
+                <div
+                    *ngIf="registerForm.controls['spent_time'].hasError('required') &&
+                    registerForm.controls['spent_time'].touched"
+                    class="alert alert-danger">
+                        You must fill in your available hours.
+                </div>
+            </div>
+            <button
+                type="submit"
+                class="btn btn-default"
+                [disabled]="!registerForm.valid">
+                Submit
+            </button>
+        </form>
+    </div>
+
 </div>

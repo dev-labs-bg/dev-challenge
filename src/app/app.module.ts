@@ -34,6 +34,7 @@ import { EditComponent } from './admin/categories/edit.component';
 
 import { NotificationService } from './shared/notification.service';
 import { LoadingIndicatorComponent } from './shared/loading-indicator.component';
+import { PrerequisitesComponent } from './register/prerequisites.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { LoadingIndicatorComponent } from './shared/loading-indicator.component'
     ListComponent,
     CreateComponent,
     EditComponent,
-    LoadingIndicatorComponent
+    LoadingIndicatorComponent,
+    PrerequisitesComponent
   ],
   imports: [
     BrowserModule,

@@ -12,6 +12,7 @@ export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     currentDate = new Date();
     maxDate: Date = new Date();
+    private mode: string = 'PREREQUISITES';
 
     constructor(
         private authService: AuthService,
@@ -30,6 +31,10 @@ export class RegisterComponent implements OnInit {
             'year_of_study': [''],
             'spent_time': ['', Validators.required]
         }, {validator: this.matchingPasswords('password', 'password_confirmation')});
+    }
+
+    private toggleMode(nextMode) {
+        this.mode = nextMode;
     }
 
     onSubmit() {
