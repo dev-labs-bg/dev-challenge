@@ -26,7 +26,6 @@ import { AdminCategoriesComponent } from './admin/categories/categories.componen
 import { TasksComponent } from './admin/tasks/tasks.component';
 import { CategoryService } from './admin/categories/category.service';
 import { CategoryFormComponent } from './admin/categories/form/form.component';
-import { QuestionService } from './services/question.service';
 import { AssessmentsComponent } from './admin/assessments/assessments.component';
 import { OpenAnswerFormComponent } from './admin/assessments/open-answer-form/open-answer-form.component';
 import { ExamAnswerFormComponent } from './admin/assessments/exam-answer-form/exam-answer-form.component';
@@ -36,6 +35,7 @@ import { EditComponent } from './admin/categories/edit.component';
 
 import { NotificationService } from './shared/notification.service';
 import {TaskService} from './admin/tasks/task.service';
+import {QuestionService} from './admin/assessments/question.service';
 
 @NgModule({
   declarations: [
