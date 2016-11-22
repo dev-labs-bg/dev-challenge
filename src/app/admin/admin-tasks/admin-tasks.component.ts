@@ -132,7 +132,7 @@ export class AdminTasksComponent implements OnInit {
     }
 
     onCategoryChange(val) {
-        let categoryId = val;
+        let categoryId = +val;
 
         this.selectedCategory = this.categoryService.findCategory(categoryId);
 
