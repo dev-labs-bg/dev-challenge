@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 
+import { NotificationService } from '../../shared/notification.service';
 import { CategoryService } from './category.service';
 import { Category } from './category';
 
@@ -21,24 +22,27 @@ import { Category } from './category';
 export class CreateComponent {
     @Output() onCancel = new EventEmitter();
 
-    constructor(private categoryService: CategoryService) { }
+    constructor(
+        private categoryService: CategoryService,
+        private notificationService: NotificationService
+    ) { }
 
     handleSubmit(values) {
         const { name } = values;
 
-        this.categoryService.createCategory({name: name}).subscribe(
-            response => {
-                if (response.success) {
-                    this.categoryService.addCategory(
-                        new Category(
-                            response.category.id,
-                            response.category.name
-                        )
-                    );
+        this.categoryService.createCategory({name: name})
+            .subscribe(response => {
+                this.categoryService.addCategory(
+                    new Category(
+                        response.category.id,
+                        response.category.name
+                    )
+                );
 
-                    this.onCancel.emit();
-                }
-            }
+                this.onCancel.emit();
+                this.notificationService.fireSuccess('Category added!');
+            },
+            error => console.log('Ah, record not created!', error)
         );
     }
 

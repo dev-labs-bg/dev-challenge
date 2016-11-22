@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Subscription } from "rxjs/Rx";
+import * as _ from 'lodash';
 
 import { HttpService } from "../../services/http.service";
 import { Category } from "./category";
-
-var _ = require('lodash');
 
 @Injectable()
 export class CategoryService {
@@ -31,7 +30,8 @@ export class CategoryService {
         return this.httpService.get('category/all').subscribe(
             response => this.categories = response.categories.map(
                 el => new Category(el.id, el.name)
-            )
+            ),
+            error => console.log('Could not get all categories!', error)
         );
     }
 
@@ -62,7 +62,7 @@ export class CategoryService {
      * @returns {Observable<R>}
      */
     updateCategory(id, name) {
-        return this.httpService.put('category/' + id, {name: name});
+        return this.httpService.put(`category/${id}`, {name: name});
     }
 
     /**
@@ -72,7 +72,7 @@ export class CategoryService {
      * @returns {Observable<R>}
      */
     deleteCategory(id: number) {
-        return this.httpService.delete('category/' + id);
+        return this.httpService.delete(`category/${id}`);
     }
 
     /**
@@ -115,14 +115,9 @@ export class CategoryService {
     }
 
     findCategory(id) {
-        let foundCategory = null;
-
-        _.forEach(this.categories,
-            category => {
-                if (category.getId() == id)
-                    foundCategory = category;
-            }
-        )
+        const foundCategory = _.find(this.categories,
+            category => category.getId() === id
+        );
 
         return foundCategory;
     }

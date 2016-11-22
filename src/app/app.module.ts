@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+// 3rd party plugins
+import { ToastyModule } from 'ng2-toasty';
 import {AlertModule, DatepickerModule, ModalModule} from 'ng2-bootstrap/ng2-bootstrap';
 
 import { routing } from './app.routing';
@@ -29,6 +31,8 @@ import { ListComponent } from './admin/categories/list.component';
 import { CreateComponent } from './admin/categories/create.component';
 import { EditComponent } from './admin/categories/edit.component';
 
+import { NotificationService } from './shared/notification.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +57,8 @@ import { EditComponent } from './admin/categories/edit.component';
     routing,
     AlertModule,
     DatepickerModule,
-    ModalModule
+    ModalModule,
+    ToastyModule.forRoot()
   ],
   providers: [
     AuthService,
@@ -63,7 +68,8 @@ import { EditComponent } from './admin/categories/edit.component';
     AdminGuard,
     CategoryService,
     TaskService,
-    AssessmentTypeService
+    AssessmentTypeService,
+    NotificationService
   ],
   bootstrap: [AppComponent]
 })
