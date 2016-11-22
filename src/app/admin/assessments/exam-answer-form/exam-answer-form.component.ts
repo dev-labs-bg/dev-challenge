@@ -28,7 +28,7 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
 
     /**
      * Look for changes on @Input() task
-     * and reinit the form each time
+     * and re init the form each time
      */
     ngOnChanges() {
         this.buildExamForm();
@@ -95,6 +95,7 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
         return this.questionService.saveExam(formValue).subscribe(
             response => {
                 if (response.success) {
+                    // noinspection TypeScriptUnresolvedVariable
                     response.allQuestions.forEach(function (question) {
                         let foundQuestion = thisInstance.questionService.find(question.id);
 
@@ -171,6 +172,31 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
         // if form is empty, add a default empty question
         if (this.formQuestions.length === 0) {
             this.addQuestion();
+        }
+    }
+
+    /**
+     * Delete a question
+     *
+     * @param index - form group index
+     */
+    deleteQuestion(index) {
+        // get question id from formQuestions
+        let questionId = parseInt(this.formQuestions.at(index).value.id, 10);
+
+        // if there's a question id, delete the question
+        if (typeof(questionId) === 'number' && questionId > 0) {
+            this.questionService.delete(questionId).subscribe(
+                response => {
+                    this.questionService.remove(questionId);
+                    this.buildExamForm();
+                }
+            );
+        // if there's no question id, just empty the fields
+        } else {
+            this.formQuestions.at(index).reset();
+            this.correctAnswers.at(index).reset();
+            this.wrongAnswers.at(index).reset();
         }
     }
 
