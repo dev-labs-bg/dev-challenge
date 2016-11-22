@@ -67,7 +67,6 @@ export class HttpService implements OnInit {
      * @returns {Observable<R>}
      */
     post(endPoint: string, params?: Object) {
-
         const body = JSON.stringify(params);
 
         return this.http.post(API_ENDPOINT + endPoint, body, { headers: this.headers })
@@ -84,14 +83,12 @@ export class HttpService implements OnInit {
      * @returns {Observable<R>}
      */
     put(endPoint: string, params?: Object) {
-
         const body = JSON.stringify(params);
 
         return this.http.put(API_ENDPOINT + endPoint, body, { headers: this.headers })
             .map((response: Response) => response.json())
-            .map( (response: any) => {
-                return response;
-            });
+            .map(this.checkServerSuccess)
+            .catch(this.handleError);
     }
 
     /**
@@ -102,12 +99,10 @@ export class HttpService implements OnInit {
      * @returns {Observable<R>}
      */
     delete(endPoint: string, params?: Object) {
-
         return this.http.delete(API_ENDPOINT + endPoint, { headers: this.headers })
             .map((response: Response) => response.json())
-            .map( (response: any) => {
-                return response;
-            });
+            .map(this.checkServerSuccess)
+            .catch(this.handleError);
     }
 
     /**
@@ -165,10 +160,9 @@ export class HttpService implements OnInit {
 
         this.http.post(`${API_AUTH_ENDPOINT}/token`, body, { headers: oAuth2Headers })
             .map((response: Response) => response.json())
-            .map( (response: any) => {
-                return response;
-            }).subscribe(
-            function (response) {
+            .map(this.checkServerSuccess)
+            .catch(this.handleError)
+            .subscribe(response => {
                 localStorage.setItem('xp_access_token', 'Bearer ' + response.access_token);
 
                 this.accessToken = response.access_token;
