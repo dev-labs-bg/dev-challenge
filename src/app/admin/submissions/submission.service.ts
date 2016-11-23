@@ -1,11 +1,13 @@
-import {Injectable} from '@angular/core';
+import {Injectable, EventEmitter} from '@angular/core';
 import {HttpService} from '../../services/http.service';
 import {Subscription} from 'rxjs/Rx';
 import {Submission} from './submission';
+import * as _ from 'lodash';
 
 @Injectable()
 export class SubmissionService {
     private submissions: Submission[] = [];
+    public submissionsChange: EventEmitter<Submission[]> = new EventEmitter<Submission[]>();
 
     constructor(
         private httpService: HttpService
@@ -17,20 +19,28 @@ export class SubmissionService {
         }
 
         return this.httpService.get('submissions/all').subscribe(
-            response => this.submissions = response.submissions.map(
-                el => new Submission(
-                    el.id,
-                    el.task_id,
-                    el.user_id,
-                    el.finished,
-                    el.approved
-                )
-            )
+            response => {
+                this.submissions = response.submissions.map(
+                    el => Submission.newSubmission(el)
+                );
+
+                this.submissionsChange.emit(this.submissions);
+            }
         );
     }
 
     getSubmissions() {
         return this.submissions;
+    }
+
+    getById(id) {
+        let submissionId = parseInt(id, 10);
+
+        const foundSubmission = _.find(this.submissions,
+            submission => submission.id === submissionId
+        );
+
+        return foundSubmission;
     }
 
 }

@@ -39,6 +39,7 @@ import { ListComponent } from './admin/categories/list.component';
 import { CreateComponent } from './admin/categories/create.component';
 import { EditComponent } from './admin/categories/edit.component';
 import { SubmissionsComponent } from './admin/submissions/submissions.component';
+import { SingleComponent } from './admin/submissions/single/single.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { SubmissionsComponent } from './admin/submissions/submissions.component'
     ListComponent,
     CreateComponent,
     EditComponent,
-    SubmissionsComponent
+    SubmissionsComponent,
+    SingleComponent
   ],
   imports: [
     BrowserModule,
