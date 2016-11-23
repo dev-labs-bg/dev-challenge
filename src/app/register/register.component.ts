@@ -43,7 +43,7 @@ export class RegisterComponent {
         ADDITIONAL_INFO: 3,
         VERIFY_EMAIL: 4
     };
-    private currentMode = this.modes.VERIFY_EMAIL;
+    private currentMode = this.modes.PREREQUISITES;
     private user: User = new User();
     // Additional user attributes
     private userProps: { password: string, spent_time: string, city: string,
