@@ -1,4 +1,4 @@
-import {Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { User } from '../classes/user';
 import { AuthService } from '../services/auth.service';
@@ -31,7 +31,7 @@ import { AuthService } from '../services/auth.service';
         </div>
     `
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
     private modes = {
         PREREQUISITES: 0,
         MAIN_INFO: 1,
@@ -40,9 +40,8 @@ export class RegisterComponent implements OnInit {
         VERIFY_EMAIL: 4
     };
     private currentMode = this.modes.PREREQUISITES;
-    // TODO: new User();
-    // private user = { mainInfo: {}, timeInvestment: {}, additionalInfo: {} };
     private user: User = new User();
+    // Additional user attributes
     private userProps: { password: string, spent_time: string, city: string,
         university: string, year_of_study: number, date_of_birth: number } = {
         password: '',
@@ -53,12 +52,7 @@ export class RegisterComponent implements OnInit {
         date_of_birth: -1
     };
 
-    constructor(
-        private authService: AuthService
-    ) {}
-
-    ngOnInit() {
-    }
+    constructor(private authService: AuthService) {}
 
     toggleMode(nextMode) {
         this.currentMode = nextMode;
