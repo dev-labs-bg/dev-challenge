@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
         TIME_INVESTMENT: 2,
         ADDITIONAL_INFO: 3
     };
-    private currentMode = this.modes.ADDITIONAL_INFO;
+    private currentMode = this.modes.PREREQUISITES;
     // TODO: new User();
     // private user = { mainInfo: {}, timeInvestment: {}, additionalInfo: {} };
     private user: User = new User();
