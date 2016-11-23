@@ -47,5 +47,9 @@ export class SubmissionService {
         return this.httpService.post('submission/' + id + '/approve');
     }
 
+    deny(id) {
+        return this.httpService.post('submission/' + id + '/deny');
+    }
+
 
 }

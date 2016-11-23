@@ -63,4 +63,12 @@ export class SingleComponent implements OnInit, OnDestroy {
         );
     }
 
+    deny(id) {
+        this.submissionService.deny(id).subscribe(
+            response => {
+                this.notificationService.fireSuccess('Submission denied!');
+                this.router.navigate(['admin/submissions']);
+            }
+        );
+    }
 }
