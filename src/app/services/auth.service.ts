@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
 
 import { HttpService } from './http.service';
-import { User } from "../classes/user";
+import { User } from '../classes/user';
 
 @Injectable()
 export class AuthService {
@@ -101,7 +100,7 @@ export class AuthService {
             this.setLoggedUser(user);
 
             // TODO: Maybe not here?
-            this.httpService.updateHeader("loginToken", loginToken);
+            this.httpService.updateHeader('loginToken', loginToken);
 
             // redirect only if current route is login
             if (this.router.url == '/login') {
@@ -112,7 +111,7 @@ export class AuthService {
             this.setLoginToken(null);
             this.loggedUser = null;
 
-            this.httpService.updateHeader("loginToken", null);
+            this.httpService.updateHeader('loginToken', null);
 
             this.router.navigate(['login']);
         }

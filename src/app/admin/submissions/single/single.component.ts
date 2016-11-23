@@ -1,11 +1,13 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Rx';
 import {Submission} from '../submission';
 import {Task} from '../../tasks/task';
 import {Question} from '../../assessments/question';
 import {User} from '../../../classes/user';
 import {HttpService} from '../../../services/http.service';
+import {SubmissionService} from '../submission.service';
+import {NotificationService} from '../../../shared/notification.service';
 
 @Component({
   selector: 'xp-single',
@@ -22,6 +24,9 @@ export class SingleComponent implements OnInit, OnDestroy {
     constructor(
         private activatedRoute: ActivatedRoute,
         private httpService: HttpService,
+        private submissionService: SubmissionService,
+        private notificationService: NotificationService,
+        private router: Router,
     ) { }
 
     ngOnInit() {
@@ -32,10 +37,12 @@ export class SingleComponent implements OnInit, OnDestroy {
                         this.httpService.get('submission/' + param['id']).subscribe(
                             response => {
                                 this.submission = Submission.newSubmission(response.submission);
-                                this.task = Task.newTask(response.submission.task);
-                                this.user = User.newUser(response.submission.user);
+                                this.task = Task.newTask(response.task);
+                                this.user = User.newUser(response.user);
+                                this.question = Question.newQuestion(response.questions[0]);
                                 resolve(response.success);
-                            }
+                            },
+                            error => console.log('Ah, submission was not found')
                         );
                     }
                 );
@@ -45,6 +52,15 @@ export class SingleComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.routeSubscription.unsubscribe();
+    }
+
+    approve(id) {
+        this.submissionService.approve(id).subscribe(
+            response => {
+                this.notificationService.fireSuccess('Submission approved!');
+                this.router.navigate(['admin/submissions']);
+            }
+        );
     }
 
 }

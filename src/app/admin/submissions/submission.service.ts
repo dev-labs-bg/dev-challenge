@@ -43,4 +43,9 @@ export class SubmissionService {
         return foundSubmission;
     }
 
+    approve(id) {
+        return this.httpService.post('submission/' + id + '/approve');
+    }
+
+
 }
