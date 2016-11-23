@@ -1,5 +1,4 @@
 import {Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { AuthService } from '../services/auth.service';
 
@@ -9,36 +8,21 @@ import { AuthService } from '../services/auth.service';
     styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-    registerForm: FormGroup;
-    currentDate = new Date();
-    maxDate: Date = new Date();
     private modes = {
         PREREQUISITES: 0,
         MAIN_INFO: 1,
         TIME_INVESTMENT: 2,
         ADDITIONAL_INFO: 3
     };
-    private currentMode = this.modes.PREREQUISITES;
+    private currentMode = this.modes.ADDITIONAL_INFO;
     // TODO: new User();
-    private user = { mainInfo: {}, timeInvestment: {} };
+    private user = { mainInfo: {}, timeInvestment: {}, additionalInfo: {} };
 
     constructor(
-        private authService: AuthService,
-        private formBuilder: FormBuilder
+        private authService: AuthService
     ) {}
 
     ngOnInit() {
-        this.registerForm = this.formBuilder.group({
-            'email': ['', Validators.required],
-            'password': ['', Validators.required],
-            'password_confirmation': ['', Validators.required],
-            'first_name': ['', Validators.required],
-            'last_name': ['', Validators.required],
-            'city': ['', Validators.required],
-            'university': [''],
-            'year_of_study': [''],
-            'spent_time': ['', Validators.required]
-        }, {validator: this.matchingPasswords('password', 'password_confirmation')});
     }
 
     toggleMode(nextMode) {
@@ -55,25 +39,14 @@ export class RegisterComponent implements OnInit {
         this.toggleMode(this.modes.ADDITIONAL_INFO);
     }
 
-    onSubmit() {
+    handleAdditionalInfoSubmit(additionalInfo) {
+        this.user.additionalInfo = additionalInfo;
+        // TODO:
         // get form data
-        let formData = this.registerForm.value;
-        formData.date_of_birth = this.currentDate;
+        // let formData = this.registerForm.value;
+        // formData.date_of_birth = this.currentDate;
 
         // register user
-        this.authService.register(formData);
-    }
-
-    matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
-        return (group: FormGroup): {[key: string]: any} => {
-            let password = group.controls[passwordKey];
-            let confirmPassword = group.controls[confirmPasswordKey];
-
-            if (password.value !== confirmPassword.value) {
-                return {
-                    mismatchedPasswords: true
-                };
-            }
-        };
+        // this.authService.register(formData);
     }
 }

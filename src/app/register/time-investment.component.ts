@@ -35,6 +35,8 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 export class TimeInvestmentComponent implements OnInit {
     @Output() onSubmit = new EventEmitter();
     form: FormGroup;
+    private currentDate = new Date();
+    private maxDate: Date = new Date();
 
     constructor(private formBuilder: FormBuilder) { }
 
