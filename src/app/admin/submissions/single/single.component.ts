@@ -2,7 +2,10 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs/Rx';
 import {Submission} from '../submission';
-import {SubmissionService} from '../submission.service';
+import {Task} from '../../tasks/task';
+import {Question} from '../../assessments/question';
+import {User} from '../../../classes/user';
+import {HttpService} from '../../../services/http.service';
 
 @Component({
   selector: 'xp-single',
@@ -12,29 +15,31 @@ import {SubmissionService} from '../submission.service';
 export class SingleComponent implements OnInit, OnDestroy {
     private routeSubscription: Subscription;
     private submission: Submission = null;
+    private task: Task = null;
+    private user: User = null;
+    private question: Question = null;
 
     constructor(
         private activatedRoute: ActivatedRoute,
-        private submissionService: SubmissionService,
+        private httpService: HttpService,
     ) { }
 
     ngOnInit() {
-        let submissions = this.submissionService.getSubmissions();
-
-        if (submissions.length === 0) {
-            this.submissionService.getAll();
-
-            this.routeSubscription = this.submissionService.submissionsChange.subscribe(
-                data => this.routeInitSpecifics()
-            );
-        } else {
-            this.routeSubscription = this.routeInitSpecifics();
-        }
-    }
-
-    routeInitSpecifics() {
-        return this.activatedRoute.params.subscribe(
-            (param: any) => this.submission = this.submissionService.getById(param['id'])
+        this.routeSubscription = this.activatedRoute.params.subscribe(
+            (param: any) => {
+                new Promise(
+                    resolve => {
+                        this.httpService.get('submission/' + param['id']).subscribe(
+                            response => {
+                                this.submission = Submission.newSubmission(response.submission);
+                                this.task = Task.newTask(response.submission.task);
+                                this.user = User.newUser(response.submission.user);
+                                resolve(response.success);
+                            }
+                        );
+                    }
+                );
+            }
         );
     }
 

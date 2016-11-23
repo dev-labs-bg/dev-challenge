@@ -1,7 +1,13 @@
-<p>
-  single works!
-</p>
-
 <div *ngIf="submission != null">
-    <p>{{ submission.id }}</p>
+    <h1>{{ task.title }}</h1>
+    <span>Submitted by {{ user.getName() }}</span>
+
+    <div class="question">
+        <h3>Question</h3>
+        <p>Question text</p>
+    </div>
+
+    <div class="submission">
+        <h3>Submission from {{ user.getName() }}</h3>
+    </div>
 </div>

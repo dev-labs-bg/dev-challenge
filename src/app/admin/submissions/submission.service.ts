@@ -18,7 +18,7 @@ export class SubmissionService {
             return this.submissions;
         }
 
-        return this.httpService.get('submissions/all').subscribe(
+        return this.httpService.get('submission/all').subscribe(
             response => {
                 this.submissions = response.submissions.map(
                     el => Submission.newSubmission(el)
