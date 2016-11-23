@@ -1,0 +1,32 @@
+<h1>Assessment Center</h1>
+
+<h2>Please select a task</h2>
+
+<div class="form-group">
+    <label for="task">Task</label>
+    <select
+        name="task"
+        id="task"
+        (ngModelChange)="onTaskChange($event)" [ngModel]="task_id">
+        <option value="0" disabled selected>Select Task</option>
+        <option *ngFor="let task of taskService.getTasks()"
+                value="{{ task.id }}">
+            {{ task.title }}
+        </option>
+    </select>
+</div>
+
+<p *ngIf="(selectedTask != null)">
+    Task type:
+    <strong>{{ selectedTask.assessment.type }}</strong>
+</p>
+
+<xp-open-answer-form
+    *ngIf="isType('Open-Answer')"
+    [task]="selectedTask">
+</xp-open-answer-form>
+
+<xp-exam-answer-form
+    *ngIf="isType('Exam-Answer')"
+    [task]="selectedTask">
+</xp-exam-answer-form>
