@@ -1,5 +1,6 @@
 import {Component, OnInit } from '@angular/core';
 
+import { User } from '../classes/user';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -16,7 +17,17 @@ export class RegisterComponent implements OnInit {
     };
     private currentMode = this.modes.ADDITIONAL_INFO;
     // TODO: new User();
-    private user = { mainInfo: {}, timeInvestment: {}, additionalInfo: {} };
+    // private user = { mainInfo: {}, timeInvestment: {}, additionalInfo: {} };
+    private user: User = new User();
+    private userProps: { password: string, spent_time: string, city: string,
+        university: string, year_of_study: number, date_of_birth: number } = {
+        password: '',
+        spent_time: '',
+        city: '',
+        university: '',
+        year_of_study: -1,
+        date_of_birth: -1
+    };
 
     constructor(
         private authService: AuthService
@@ -30,23 +41,32 @@ export class RegisterComponent implements OnInit {
     }
 
     handleMainInfoSubmit(mainInfo) {
-        this.user.mainInfo = mainInfo;
+        const { email, password, first_name } = mainInfo;
+
+        this.user.email = email;
+        this.user.first_name = first_name;
+        this.userProps.password = password;
+
         this.toggleMode(this.modes.TIME_INVESTMENT);
     }
 
     handleTimeInvestmentSubmit(timeInvestment) {
-        this.user.timeInvestment = timeInvestment;
+        this.userProps.spent_time = timeInvestment.spent_time;
+
         this.toggleMode(this.modes.ADDITIONAL_INFO);
     }
 
     handleAdditionalInfoSubmit(additionalInfo) {
-        this.user.additionalInfo = additionalInfo;
-        // TODO:
-        // get form data
-        // let formData = this.registerForm.value;
-        // formData.date_of_birth = this.currentDate;
+        const {
+            last_name, city, university, year_of_study, date_of_birth
+        } = additionalInfo;
 
-        // register user
-        // this.authService.register(formData);
+        this.user.last_name = last_name;
+        this.userProps.city = city;
+        this.userProps.university = university;
+        this.userProps.year_of_study = year_of_study;
+        this.userProps.date_of_birth = date_of_birth;
+
+        this.authService.register(this.user, this.userProps);
     }
 }

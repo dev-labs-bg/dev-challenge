@@ -25,15 +25,15 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
                 </div>
                 <div class="form-group">
                     <label class="block-display">Date of birth</label>
-                    <div class="datepicker-holder">
-                        <datepicker
-                            name="date_of_birth"
-                            [(ngModel)]="currentDate"
-                            [ngModelOptions]="{standalone: true}"
-                            [(maxDate)]="maxDate"
-                            required>
-                        </datepicker>
-                    </div>
+                    <input
+                        type="date"
+                        name="date_of_birth"
+                        class="form-control"
+                        id="date_of_birth"
+                        formControlName="date_of_birth"
+                        placeholder="Date of Birth"
+                        required
+                    />
                 </div>
                 <div class="form-group">
                     <label for="city">City</label>
@@ -96,7 +96,8 @@ export class AdditionalInfoComponent implements OnInit {
             'last_name': ['', Validators.required],
             'city': ['', Validators.required],
             'university': [''],
-            'year_of_study': ['']
+            'year_of_study': [''],
+            'date_of_birth': [new Date()]
         });
     }
 
