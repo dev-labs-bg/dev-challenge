@@ -5,15 +5,39 @@ import { AuthService } from '../services/auth.service';
 
 @Component({
     selector: 'xp-register',
-    templateUrl: './register.component.html',
-    styleUrls: ['./register.component.scss']
+    template: `
+        <div [ngSwitch]="currentMode">
+
+            <xp-register-prerequisites
+                *ngSwitchCase="modes.PREREQUISITES"
+                (onToggleMode)="toggleMode(modes.MAIN_INFO)">
+            </xp-register-prerequisites>
+
+            <xp-register-main-info
+                *ngSwitchCase="modes.MAIN_INFO"
+                (onSubmit)="handleMainInfoSubmit($event)">
+            </xp-register-main-info>
+
+            <xp-register-time-investment
+                *ngSwitchCase="modes.TIME_INVESTMENT"
+                (onSubmit)="handleTimeInvestmentSubmit($event)">
+            </xp-register-time-investment>
+
+            <xp-register-additional-info
+                *ngSwitchCase="modes.ADDITIONAL_INFO"
+                (onSubmit)="handleAdditionalInfoSubmit($event)">
+            </xp-register-additional-info>
+
+        </div>
+    `
 })
 export class RegisterComponent implements OnInit {
     private modes = {
         PREREQUISITES: 0,
         MAIN_INFO: 1,
         TIME_INVESTMENT: 2,
-        ADDITIONAL_INFO: 3
+        ADDITIONAL_INFO: 3,
+        VERIFY_EMAIL: 4
     };
     private currentMode = this.modes.PREREQUISITES;
     // TODO: new User();
@@ -67,6 +91,9 @@ export class RegisterComponent implements OnInit {
         this.userProps.year_of_study = year_of_study;
         this.userProps.date_of_birth = date_of_birth;
 
-        this.authService.register(this.user, this.userProps);
+        this.authService.register(this.user, this.userProps).subscribe(
+            response => this.toggleMode(this.modes.VERIFY_EMAIL),
+            error => console.log('Registration failed!', error)
+        );
     }
 }

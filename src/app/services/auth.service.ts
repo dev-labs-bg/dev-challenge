@@ -8,7 +8,6 @@ import { User } from '../classes/user';
 export class AuthService {
     private loginToken: string = null;
     private loggedUser: User;
-    public successfulRegistration: boolean = false;
     public successfulActivation: boolean = null;
     public loginFail: boolean = false;
 
@@ -151,17 +150,7 @@ export class AuthService {
             year_of_study: userProps.year_of_study
         };
 
-        this.httpService.post('register', data).subscribe(
-            response => {
-                this.successfulRegistration = true;
-                this.router.navigate(['login']);
-            },
-            error => {
-                console.log('Registration failed!', error);
-
-                return false;
-            }
-        );
+        return this.httpService.post('register', data);
     }
 
     /**

@@ -21,10 +21,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RegisterComponent } from './register/register.component';
 import { AccountActivationComponent } from './components/account-activation/account-activation.component';
 import { AdminComponent } from './admin/admin.component';
-import { AdminGuard } from "./core/admin.guard";
+import { AdminGuard } from './core/admin.guard';
 import { AdminCategoriesComponent } from './admin/categories/categories.component';
 import { AdminTasksComponent } from './admin/admin-tasks/admin-tasks.component';
-import { CategoryService } from "./admin/categories/category.service";
+import { CategoryService } from './admin/categories/category.service';
 import { CategoryFormComponent } from './admin/categories/form/form.component';
 import { TaskService } from './services/task.service';
 import { AssessmentTypeService } from './services/assessment-type.service';
@@ -34,10 +34,11 @@ import { EditComponent } from './admin/categories/edit.component';
 
 import { NotificationService } from './shared/notification.service';
 import { LoadingIndicatorComponent } from './shared/loading-indicator.component';
-import { PrerequisitesComponent } from './register/prerequisites.component';
-import { MainInfoComponent } from './register/main-info.component';
-import { TimeInvestmentComponent } from './register/time-investment.component';
-import { AdditionalInfoComponent } from './register/additional-info.component';
+import { PrerequisitesComponent } from './register/steps/prerequisites.component';
+import { MainInfoComponent } from './register/steps/main-info.component';
+import { TimeInvestmentComponent } from './register/steps/time-investment.component';
+import { AdditionalInfoComponent } from './register/steps/additional-info.component';
+import { VerifyEmailComponent } from './register/steps/verify-email.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { AdditionalInfoComponent } from './register/additional-info.component';
     PrerequisitesComponent,
     MainInfoComponent,
     TimeInvestmentComponent,
-    AdditionalInfoComponent
+    AdditionalInfoComponent,
+    VerifyEmailComponent
   ],
   imports: [
     BrowserModule,
