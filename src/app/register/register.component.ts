@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Subscription } from 'rxjs/Rx';
 
 import { User } from '../classes/user';
 import { AuthService } from '../services/auth.service';
@@ -6,36 +7,39 @@ import { AuthService } from '../services/auth.service';
 @Component({
     selector: 'xp-register',
     template: `
-        <div [ngSwitch]="currentMode">
+        <xp-loading-indicator [wait]="subscription">
+            <div [ngSwitch]="currentMode">
 
-            <xp-register-prerequisites
-                *ngSwitchCase="modes.PREREQUISITES"
-                (onToggleMode)="toggleMode(modes.MAIN_INFO)">
-            </xp-register-prerequisites>
+                <xp-register-prerequisites
+                    *ngSwitchCase="modes.PREREQUISITES"
+                    (onToggleMode)="toggleMode(modes.MAIN_INFO)">
+                </xp-register-prerequisites>
 
-            <xp-register-main-info
-                *ngSwitchCase="modes.MAIN_INFO"
-                (onSubmit)="handleMainInfoSubmit($event)">
-            </xp-register-main-info>
+                <xp-register-main-info
+                    *ngSwitchCase="modes.MAIN_INFO"
+                    (onSubmit)="handleMainInfoSubmit($event)">
+                </xp-register-main-info>
 
-            <xp-register-time-investment
-                *ngSwitchCase="modes.TIME_INVESTMENT"
-                (onSubmit)="handleTimeInvestmentSubmit($event)">
-            </xp-register-time-investment>
+                <xp-register-time-investment
+                    *ngSwitchCase="modes.TIME_INVESTMENT"
+                    (onSubmit)="handleTimeInvestmentSubmit($event)">
+                </xp-register-time-investment>
 
-            <xp-register-additional-info
-                *ngSwitchCase="modes.ADDITIONAL_INFO"
-                (onSubmit)="handleAdditionalInfoSubmit($event)">
-            </xp-register-additional-info>
+                <xp-register-additional-info
+                    *ngSwitchCase="modes.ADDITIONAL_INFO"
+                    (onSubmit)="handleAdditionalInfoSubmit($event)">
+                </xp-register-additional-info>
 
-            <xp-register-verify-email
-                *ngSwitchCase="modes.VERIFY_EMAIL">
-            </xp-register-verify-email>
+                <xp-register-verify-email
+                    *ngSwitchCase="modes.VERIFY_EMAIL">
+                </xp-register-verify-email>
 
-        </div>
+            </div>
+        </xp-loading-indicator>
     `
 })
 export class RegisterComponent {
+    private subscription: Subscription;
     private modes = {
         PREREQUISITES: 0,
         MAIN_INFO: 1,
@@ -89,7 +93,7 @@ export class RegisterComponent {
         this.userProps.year_of_study = year_of_study;
         this.userProps.date_of_birth = date_of_birth;
 
-        this.authService.register(this.user, this.userProps).subscribe(
+        this.subscription = this.authService.register(this.user, this.userProps).subscribe(
             response => this.toggleMode(this.modes.VERIFY_EMAIL),
             error => console.log('Registration failed!', error)
         );
