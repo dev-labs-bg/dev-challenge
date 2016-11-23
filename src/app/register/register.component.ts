@@ -28,6 +28,10 @@ import { AuthService } from '../services/auth.service';
                 (onSubmit)="handleAdditionalInfoSubmit($event)">
             </xp-register-additional-info>
 
+            <xp-register-verify-email
+                *ngSwitchCase="modes.VERIFY_EMAIL">
+            </xp-register-verify-email>
+
         </div>
     `
 })
@@ -39,7 +43,7 @@ export class RegisterComponent {
         ADDITIONAL_INFO: 3,
         VERIFY_EMAIL: 4
     };
-    private currentMode = this.modes.PREREQUISITES;
+    private currentMode = this.modes.VERIFY_EMAIL;
     private user: User = new User();
     // Additional user attributes
     private userProps: { password: string, spent_time: string, city: string,

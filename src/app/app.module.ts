@@ -6,7 +6,9 @@ import { HttpModule } from '@angular/http';
 // 3rd party plugins
 import { ToastyModule } from 'ng2-toasty';
 import { BusyModule } from 'angular2-busy';
-import {AlertModule, DatepickerModule, ModalModule} from 'ng2-bootstrap/ng2-bootstrap';
+import {
+    AlertModule, DatepickerModule, ModalModule
+} from 'ng2-bootstrap/ng2-bootstrap';
 
 import { routing } from './app.routing';
 import { AuthService } from './services/auth.service';
