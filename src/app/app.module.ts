@@ -19,6 +19,7 @@ import { AssessmentTypeService } from './admin/tasks/assessment-type.service';
 import { NotificationService } from './shared/notification.service';
 import { TaskService } from './admin/tasks/task.service';
 import { QuestionService } from './admin/assessments/question.service';
+import { UserService } from './shared/user.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -81,7 +82,8 @@ import { SubmissionsComponent } from './admin/submissions/submissions.component'
     AssessmentTypeService,
     QuestionService,
     SubmissionService,
-    NotificationService
+    NotificationService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })

@@ -22,7 +22,6 @@
     <a
         href="javascript:;"
         *ngFor="let submission of taskService.findSubmissions(task.id)">
-        {{ submission.id }}
-        <!-- submitted by: user -->
+        Submitted by {{ userService.getById(submission.user_id).getName() }}
     </a>
 </div>

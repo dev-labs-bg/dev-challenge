@@ -61,5 +61,9 @@ export class User {
         return admin;
     }
 
+    getName() {
+        return this.first_name + ' ' + this.last_name;
+    }
+
 
 }

@@ -4,6 +4,7 @@ import {Category} from '../categories/category';
 import {Task} from '../tasks/Task';
 import {TaskService} from '../tasks/task.service';
 import {SubmissionService} from './submission.service';
+import {UserService} from '../../shared/user.service';
 
 @Component({
   selector: 'xp-approvals',
@@ -17,13 +18,15 @@ export class SubmissionsComponent implements OnInit {
     constructor(
         private categoryService: CategoryService,
         private taskService: TaskService,
-        private submissionService: SubmissionService
+        private submissionService: SubmissionService,
+        private userService: UserService,
     ) { }
 
     ngOnInit() {
         this.categoryService.getAll();
         this.submissionService.getAll();
         this.taskService.getAll();
+        this.userService.getAll();
     }
 
     onCategoryChange(val) {
