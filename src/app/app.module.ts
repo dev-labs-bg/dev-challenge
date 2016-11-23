@@ -36,6 +36,7 @@ import { NotificationService } from './shared/notification.service';
 import { LoadingIndicatorComponent } from './shared/loading-indicator.component';
 import { PrerequisitesComponent } from './register/prerequisites.component';
 import { MainInfoComponent } from './register/main-info.component';
+import { TimeInvestmentComponent } from './register/time-investment.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { MainInfoComponent } from './register/main-info.component';
     EditComponent,
     LoadingIndicatorComponent,
     PrerequisitesComponent,
-    MainInfoComponent
+    MainInfoComponent,
+    TimeInvestmentComponent
   ],
   imports: [
     BrowserModule,

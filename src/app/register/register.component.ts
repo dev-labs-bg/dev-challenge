@@ -15,12 +15,12 @@ export class RegisterComponent implements OnInit {
     private modes = {
         PREREQUISITES: 0,
         MAIN_INFO: 1,
-        CHOOSE_TIME_INVESTMENT: 2,
+        TIME_INVESTMENT: 2,
         ADDITIONAL_INFO: 3
     };
     private currentMode = this.modes.PREREQUISITES;
     // TODO: new User();
-    private user = { mainInfo: {} };
+    private user = { mainInfo: {}, timeInvestment: {} };
 
     constructor(
         private authService: AuthService,
@@ -47,7 +47,12 @@ export class RegisterComponent implements OnInit {
 
     handleMainInfoSubmit(mainInfo) {
         this.user.mainInfo = mainInfo;
-        this.toggleMode(this.modes.CHOOSE_TIME_INVESTMENT);
+        this.toggleMode(this.modes.TIME_INVESTMENT);
+    }
+
+    handleTimeInvestmentSubmit(timeInvestment) {
+        this.user.timeInvestment = timeInvestment;
+        this.toggleMode(this.modes.ADDITIONAL_INFO);
     }
 
     onSubmit() {

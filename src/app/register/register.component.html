@@ -10,8 +10,13 @@
         (onSubmit)="handleMainInfoSubmit($event)">
     </xp-register-main-info>
 
-    <div *ngSwitchCase="modes.CHOOSE_TIME_INVESTMENT">
-        // TODO: How much time you can invest?
+    <xp-register-time-investment
+        *ngSwitchCase="modes.TIME_INVESTMENT"
+        (onSubmit)="handleTimeInvestmentSubmit($event)">
+    </xp-register-time-investment>
+
+    <div *ngSwitchCase="modes.ADDITIONAL_INFO">
+        // TODO: Additional info
     </div>
 
     <div *ngSwitchCase="modes.MAIN_INFORMATION" class="center-block register-form">
