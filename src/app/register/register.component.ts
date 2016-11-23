@@ -12,7 +12,13 @@ export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     currentDate = new Date();
     maxDate: Date = new Date();
-    private mode: string = 'PREREQUISITES';
+    private modes = {
+        PREREQUISITES: 0,
+        MAIN_INFO: 1,
+        CHOOSE_TIME_INVESTMENT: 2,
+        ADDITIONAL_INFO: 3
+    };
+    private currentMode = this.modes.PREREQUISITES;
     // TODO: new User();
     private user = { mainInfo: {} };
 
@@ -36,12 +42,12 @@ export class RegisterComponent implements OnInit {
     }
 
     toggleMode(nextMode) {
-        this.mode = nextMode;
+        this.currentMode = nextMode;
     }
 
     handleMainInfoSubmit(mainInfo) {
         this.user.mainInfo = mainInfo;
-        this.toggleMode('CHOOSE_TIME_INVESTMENT');
+        this.toggleMode(this.modes.CHOOSE_TIME_INVESTMENT);
     }
 
     onSubmit() {

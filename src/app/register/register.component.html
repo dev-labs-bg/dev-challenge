@@ -1,20 +1,20 @@
-<div [ngSwitch]="mode">
+<div [ngSwitch]="currentMode">
 
     <xp-register-prerequisites
-        *ngSwitchCase="'PREREQUISITES'"
-        (onToggleMode)="toggleMode('MAIN_INFO')">
+        *ngSwitchCase="modes.PREREQUISITES"
+        (onToggleMode)="toggleMode(modes.MAIN_INFO)">
     </xp-register-prerequisites>
 
     <xp-register-main-info
-        *ngSwitchCase="'MAIN_INFO'"
+        *ngSwitchCase="modes.MAIN_INFO"
         (onSubmit)="handleMainInfoSubmit($event)">
     </xp-register-main-info>
 
-    <div *ngSwitchCase="'CHOOSE_TIME_INVESTMENT'">
+    <div *ngSwitchCase="modes.CHOOSE_TIME_INVESTMENT">
         // TODO: How much time you can invest?
     </div>
 
-    <div *ngSwitchCase="'MAIN_INFORMATION'" class="center-block register-form">
+    <div *ngSwitchCase="modes.MAIN_INFORMATION" class="center-block register-form">
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
                 <label for="email">Email address</label>
