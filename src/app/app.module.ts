@@ -6,7 +6,9 @@ import { HttpModule } from '@angular/http';
 // 3rd party plugins
 import { ToastyModule } from 'ng2-toasty';
 import { BusyModule } from 'angular2-busy';
-import {AlertModule, DatepickerModule, ModalModule} from 'ng2-bootstrap/ng2-bootstrap';
+import {
+    AlertModule, DatepickerModule, ModalModule
+} from 'ng2-bootstrap/ng2-bootstrap';
 
 import { routing } from './app.routing';
 import { AuthService } from './services/auth.service';
@@ -23,7 +25,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { RegisterComponent } from './components/register/register.component';
+import { RegisterComponent } from './register/register.component';
 import { AccountActivationComponent } from './components/account-activation/account-activation.component';
 import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from './core/admin.guard';
@@ -37,6 +39,11 @@ import { ListComponent } from './admin/categories/list.component';
 import { CreateComponent } from './admin/categories/create.component';
 import { EditComponent } from './admin/categories/edit.component';
 import { LoadingIndicatorComponent } from './shared/loading-indicator.component';
+import { PrerequisitesComponent } from './register/steps/prerequisites.component';
+import { MainInfoComponent } from './register/steps/main-info.component';
+import { TimeInvestmentComponent } from './register/steps/time-investment.component';
+import { AdditionalInfoComponent } from './register/steps/additional-info.component';
+import { VerifyEmailComponent } from './register/steps/verify-email.component';
 
 
 @NgModule({
@@ -57,7 +64,12 @@ import { LoadingIndicatorComponent } from './shared/loading-indicator.component'
     ListComponent,
     CreateComponent,
     EditComponent,
-    LoadingIndicatorComponent
+    LoadingIndicatorComponent,
+    PrerequisitesComponent,
+    MainInfoComponent,
+    TimeInvestmentComponent,
+    AdditionalInfoComponent,
+    VerifyEmailComponent
   ],
   imports: [
     BrowserModule,

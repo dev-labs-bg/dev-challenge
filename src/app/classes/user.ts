@@ -6,12 +6,12 @@ export class User {
      * Set user class properties
      */
     constructor(
-        public id: number,
-        public first_name: string,
-        public last_name: string,
-        public email: string,
-        public active: number,
-        public created_at: string,
+        public id: number = -1,
+        public first_name: string = '',
+        public last_name: string = '',
+        public email: string = '',
+        public active: number = 0,
+        public created_at: string = '',
         public roles: Role[] = [],
     ) {}
 
