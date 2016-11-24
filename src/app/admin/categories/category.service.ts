@@ -19,13 +19,7 @@ export class CategoryService {
      *
      * @returns {Subscription}
      */
-    getAll(): Subscription | Category[] {
-        let categories = this.getCategories();
-
-        if (categories != null) {
-            return categories;
-        }
-
+    getAll(): Subscription {
         return this.httpService.get('category/all').subscribe(
             response => this.categories = response.categories.map(
                 el => new Category(el.id, el.name)

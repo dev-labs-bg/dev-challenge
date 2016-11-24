@@ -9,7 +9,7 @@ export class Repository {
 
     /**
      * Quickly setup your dependencies
-     * Perfect if you like to just get your data 
+     * Perfect if you like to just get your data
      * and start coding
      *
      * @param httpObservable - the http request as an Observable

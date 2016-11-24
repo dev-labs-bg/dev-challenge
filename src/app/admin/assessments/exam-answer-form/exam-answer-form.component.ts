@@ -3,6 +3,7 @@ import {FormGroup, FormBuilder, Validators, FormArray} from '@angular/forms';
 import {Question} from '../question';
 import {Task} from '../../tasks/task';
 import {QuestionService} from '../question.service';
+import {Subscription} from 'rxjs/Rx';
 
 @Component({
   selector: 'xp-exam-answer-form',
@@ -13,6 +14,7 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
     @Input() private task: Task;
     private questions: Question[] = [];
     private form: FormGroup;
+    private formSubscription: Subscription;
 
     constructor(
         private questionService: QuestionService,
@@ -92,7 +94,7 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
 
         let thisInstance = this;
 
-        return this.questionService.saveExam(formValue).subscribe(
+        return this.formSubscription = this.questionService.saveExam(formValue).subscribe(
             response => {
                 if (response.success) {
                     // noinspection TypeScriptUnresolvedVariable
@@ -186,7 +188,7 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
 
         // if there's a question id, delete the question
         if (typeof(questionId) === 'number' && questionId > 0) {
-            this.questionService.delete(questionId).subscribe(
+            this.formSubscription = this.questionService.delete(questionId).subscribe(
                 response => {
                     this.questionService.remove(questionId);
                     this.buildExamForm();

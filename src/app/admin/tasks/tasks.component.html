@@ -15,78 +15,80 @@
                 <h4 class="modal-title">Task Form</h4>
             </div>
             <div class="modal-body task-form-modal">
-                <form [formGroup]="taskForm" (ngSubmit)="handleSubmit()">
-                    <div class="form-group">
-                        <label for="category_id">Select Category</label>
-                        <select
-                            name="category_id"
-                            formControlName="category_id"
-                            id="category_id">
-                            <option *ngFor="let category of categoryService.getCategories()"
-                                value="{{ category.id }}">
-                                {{ category.name }}
-                            </option>
-                        </select>
-                    </div>
+                <xp-loading-indicator [wait]="taskFormSubscription">
+                    <form [formGroup]="taskForm" (ngSubmit)="handleSubmit()">
+                        <div class="form-group">
+                            <label for="category_id">Select Category</label>
+                            <select
+                                name="category_id"
+                                formControlName="category_id"
+                                id="category_id">
+                                <option *ngFor="let category of categoryService.getCategories()"
+                                    value="{{ category.id }}">
+                                    {{ category.name }}
+                                </option>
+                            </select>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="title">Title</label>
-                        <input class="form-control"
-                           formControlName="title"
-                           type="text"
-                           id="title"
-                           name="title"
-                           required
-                        />
-                    </div>
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input class="form-control"
+                               formControlName="title"
+                               type="text"
+                               id="title"
+                               name="title"
+                               required
+                            />
+                        </div>
 
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea
-                            class="form-control"
-                            formControlName="description"
-                            name="description"
-                            id="description"
-                            required>
-                        </textarea>
-                    </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea
+                                class="form-control"
+                                formControlName="description"
+                                name="description"
+                                id="description"
+                                required>
+                            </textarea>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="time_estimation">Estimate completion time</label>
-                        <input class="form-control"
-                           formControlName="time_estimation"
-                           type="text"
-                           name="time_estimation"
-                           id="time_estimation"
-                           required
-                        />
-                    </div>
+                        <div class="form-group">
+                            <label for="time_estimation">Estimate completion time</label>
+                            <input class="form-control"
+                               formControlName="time_estimation"
+                               type="text"
+                               name="time_estimation"
+                               id="time_estimation"
+                               required
+                            />
+                        </div>
 
-                    <div class="form-group">
-                        <label for="assessment_type_id">Select Assessment Type</label>
-                        <select
-                            name="assessment_type_id"
-                            id="assessment_type_id"
-                            formControlName="assessment_type_id">
-                            <option *ngFor="let type of assessmentTypeService.getAssessmentTypes()"
-                                value="{{ type.id }}">
-                                {{ type.type }}
-                            </option>
-                        </select>
-                    </div>
-                    <button
-                        type="submit"
-                        class="btn btn-default"
-                        [disabled]="!taskForm.valid">
-                        Submit
-                    </button>
-                    <div
-                        *ngIf="(selectedTask != null)"
-                        (click)="deleteTask()"
-                        class="btn btn-default">
-                        Delete
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <label for="assessment_type_id">Select Assessment Type</label>
+                            <select
+                                name="assessment_type_id"
+                                id="assessment_type_id"
+                                formControlName="assessment_type_id">
+                                <option *ngFor="let type of assessmentTypeService.getAssessmentTypes()"
+                                    value="{{ type.id }}">
+                                    {{ type.type }}
+                                </option>
+                            </select>
+                        </div>
+                        <button
+                            type="submit"
+                            class="btn btn-default"
+                            [disabled]="!taskForm.valid">
+                            Submit
+                        </button>
+                        <div
+                            *ngIf="(selectedTask != null)"
+                            (click)="deleteTask()"
+                            class="btn btn-default">
+                            Delete
+                        </div>
+                    </form>
+                </xp-loading-indicator>
             </div>
         </div>
     </div>
@@ -117,7 +119,7 @@
         {{ task.title }}
     </a>
     <div
-        *ngIf="! selectedCategory"
+        *ngIf="selectedCategory != null && categoryTasks.length === 0"
         class="alert alert-danger">
         No tasks found from chosen category.
     </div>

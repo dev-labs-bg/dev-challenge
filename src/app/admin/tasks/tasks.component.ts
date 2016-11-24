@@ -15,6 +15,7 @@ import { TaskService } from './task.service';
     styleUrls: ['./tasks.component.scss']
 })
 export class TasksComponent implements OnInit {
+    private taskFormSubscription: Subscription;
     private taskForm: FormGroup;
     private selectedTask: Task = null;
     private selectedCategory: Category = null;
@@ -54,7 +55,7 @@ export class TasksComponent implements OnInit {
     onCreate() {
         let values = this.taskForm.value;
 
-        return this.taskService.createTask(values).subscribe(
+        return this.taskFormSubscription = this.taskService.createTask(values).subscribe(
             response => {
                 this.taskService.repository.add(Task.newInstance(response.task));
                 this.taskForm.reset();
@@ -73,7 +74,7 @@ export class TasksComponent implements OnInit {
     onUpdate() {
         let values = this.taskForm.value;
 
-        return this.taskService.updateTask(this.selectedTask.id, values).subscribe(
+        return this.taskFormSubscription = this.taskService.updateTask(this.selectedTask.id, values).subscribe(
             response => {
                 let newTask = Task.newInstance(response.task);
                 this.taskService.repository.update(newTask);
@@ -123,7 +124,7 @@ export class TasksComponent implements OnInit {
      * @returns {Subscription}
      */
     deleteTask() {
-        return this.taskService.deleteTask(this.selectedTask.id).subscribe(
+        return this.taskFormSubscription = this.taskService.deleteTask(this.selectedTask.id).subscribe(
             response => {
                 this.taskService.repository.remove(this.selectedTask.id);
                 this.onCategoryChange(this.selectedTask.category.getId());

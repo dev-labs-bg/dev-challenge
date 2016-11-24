@@ -8,7 +8,6 @@ import { User } from '../classes/user';
 export class AuthService {
     private loginToken: string = null;
     private loggedUser: User;
-    public successfulRegistration: boolean = false;
     public successfulActivation: boolean = null;
     public loginFail: boolean = false;
 
@@ -71,8 +70,7 @@ export class AuthService {
      *
      * @returns {User}
      */
-    getLoggedUser()
-    {
+    getLoggedUser() {
         return this.loggedUser;
     }
 
@@ -81,8 +79,7 @@ export class AuthService {
      *
      * @param user
      */
-    setLoggedUser(user: User)
-    {
+    setLoggedUser(user: User) {
         this.loggedUser = User.newUser(user);
     }
 
@@ -103,7 +100,7 @@ export class AuthService {
             this.httpService.updateHeader('loginToken', loginToken);
 
             // redirect only if current route is login
-            if (this.router.url == '/login') {
+            if (this.router.url === '/login') {
                 this.router.navigate(['dashboard']);
             }
         } else {
@@ -140,18 +137,20 @@ export class AuthService {
         return Boolean(this.getLoginToken());
     }
 
-    register(data) {
-        this.httpService.post('register', data).subscribe(
-            response => {
-                this.successfulRegistration = true;
-                this.router.navigate(['login']);
-            },
-            error => {
-                console.log('Registration failed!', error)
+    register(user: User, userProps) {
+        const data = {
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            password: userProps.password,
+            spent_time: userProps.spent_time,
+            date_of_birth: userProps.date_of_birth,
+            city: userProps.city,
+            university: userProps.university,
+            year_of_study: userProps.year_of_study
+        };
 
-                return false;
-            }
-        );
+        return this.httpService.post('register', data);
     }
 
     /**
@@ -169,7 +168,7 @@ export class AuthService {
             error => {
                 this.successfulActivation = false;
 
-                console.log('Account activation failed!', error)
+                console.log('Account activation failed!', error);
             }
         );
     }

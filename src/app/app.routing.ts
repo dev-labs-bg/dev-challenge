@@ -2,14 +2,14 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {AuthGuard} from './core/auth.guard';
 import {AdminGuard} from './core/admin.guard';
-import {LoginComponent} from './components/login/login.component';
-import {DashboardComponent} from './components/dashboard/dashboard.component';
-import {RegisterComponent} from './components/register/register.component';
-import {AccountActivationComponent} from './components/account-activation/account-activation.component';
-import {AdminComponent} from './admin/admin.component';
-import {AdminCategoriesComponent} from './admin/categories/categories.component';
-import {TasksComponent} from './admin/tasks/tasks.component';
-import {AssessmentsComponent} from './admin/assessments/assessments.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AccountActivationComponent } from './components/account-activation/account-activation.component';
+import { AdminComponent } from './admin/admin.component';
+import { AdminCategoriesComponent } from './admin/categories/categories.component';
+import { TasksComponent } from './admin/tasks/tasks.component';
+import { AssessmentsComponent } from './admin/assessments/assessments.component';
 import {SubmissionsComponent} from './admin/submissions/submissions.component';
 import {SingleComponent} from './admin/submissions/single/single.component';
 

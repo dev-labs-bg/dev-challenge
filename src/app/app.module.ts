@@ -5,7 +5,10 @@ import { HttpModule } from '@angular/http';
 
 // 3rd party plugins
 import { ToastyModule } from 'ng2-toasty';
-import {AlertModule, DatepickerModule, ModalModule} from 'ng2-bootstrap/ng2-bootstrap';
+import { BusyModule } from 'angular2-busy';
+import {
+    AlertModule, DatepickerModule, ModalModule
+} from 'ng2-bootstrap/ng2-bootstrap';
 
 import { routing } from './app.routing';
 
@@ -14,18 +17,18 @@ import { AuthGuard } from './core/auth.guard';
 import { HttpService } from './services/http.service';
 import { AdminService } from './services/admin.service';
 import { SubmissionService } from './admin/submissions/submission.service';
+import { UserService } from './shared/user.service';
 import { CategoryService } from './admin/categories/category.service';
 import { AssessmentTypeService } from './admin/tasks/assessment-type.service';
-import { NotificationService } from './shared/notification.service';
 import { TaskService } from './admin/tasks/task.service';
 import { QuestionService } from './admin/assessments/question.service';
-import { UserService } from './shared/user.service';
+import { NotificationService } from './shared/notification.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { RegisterComponent } from './components/register/register.component';
+import { RegisterComponent } from './register/register.component';
 import { AccountActivationComponent } from './components/account-activation/account-activation.component';
 import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from './core/admin.guard';
@@ -40,6 +43,12 @@ import { CreateComponent } from './admin/categories/create.component';
 import { EditComponent } from './admin/categories/edit.component';
 import { SubmissionsComponent } from './admin/submissions/submissions.component';
 import { SingleComponent } from './admin/submissions/single/single.component';
+import { LoadingIndicatorComponent } from './shared/loading-indicator.component';
+import { PrerequisitesComponent } from './register/steps/prerequisites.component';
+import { MainInfoComponent } from './register/steps/main-info.component';
+import { TimeInvestmentComponent } from './register/steps/time-investment.component';
+import { AdditionalInfoComponent } from './register/steps/additional-info.component';
+import { VerifyEmailComponent } from './register/steps/verify-email.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +69,13 @@ import { SingleComponent } from './admin/submissions/single/single.component';
     CreateComponent,
     EditComponent,
     SubmissionsComponent,
-    SingleComponent
+    SingleComponent,
+    LoadingIndicatorComponent,
+    PrerequisitesComponent,
+    MainInfoComponent,
+    TimeInvestmentComponent,
+    AdditionalInfoComponent,
+    VerifyEmailComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +86,7 @@ import { SingleComponent } from './admin/submissions/single/single.component';
     AlertModule,
     DatepickerModule,
     ModalModule,
+    BusyModule,
     ToastyModule.forRoot()
   ],
   providers: [
