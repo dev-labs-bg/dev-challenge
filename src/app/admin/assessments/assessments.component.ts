@@ -13,11 +13,15 @@ export class AssessmentsComponent implements OnInit {
 
     constructor(
         private taskService: TaskService,
-        private questionService: QuestionService
+        private questionService: QuestionService,
     ) { }
 
     ngOnInit() {
-        this.taskService.getAll();
+        this.taskService.repository.setup(
+            this.taskService.apiGetURLS.all,
+            Task
+        );
+
         this.questionService.getAll();
     }
 
@@ -27,7 +31,7 @@ export class AssessmentsComponent implements OnInit {
         }
 
         // find selected task out of tasks array
-        this.selectedTask = this.taskService.find(value);
+        this.selectedTask = this.taskService.repository.find(value);
     }
 
     isType(type) {

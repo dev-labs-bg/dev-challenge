@@ -163,8 +163,10 @@ export class HttpService implements OnInit {
             .map(this.checkServerSuccess)
             .catch(this.handleError)
             .subscribe(response => {
+                // noinspection TypeScriptUnresolvedVariable
                 localStorage.setItem('xp_access_token', 'Bearer ' + response.access_token);
 
+                // noinspection TypeScriptUnresolvedVariable
                 this.accessToken = response.access_token;
             }
         );
