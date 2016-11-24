@@ -18,6 +18,7 @@ export class TasksComponent implements OnInit {
     private taskForm: FormGroup;
     private selectedTask: Task = null;
     private selectedCategory: Category = null;
+    private categoryId: number;
     private categoryTasks: Task[] = [];
 
     constructor(
@@ -29,8 +30,12 @@ export class TasksComponent implements OnInit {
 
     ngOnInit() {
         this.categoryService.getAll();
-        this.taskService.getAll();
         this.assessmentTypeService.getAll();
+
+        this.taskService.repository.setup(
+            this.taskService.apiGetURLS.all,
+            Task
+        );
 
         this.taskForm = this.formBuilder.group({
             'category_id': ['', Validators.required],
@@ -51,7 +56,7 @@ export class TasksComponent implements OnInit {
 
         return this.taskService.createTask(values).subscribe(
             response => {
-                this.taskService.addTask(Task.newTask(response.task));
+                this.taskService.repository.add(Task.newInstance(response.task));
                 this.taskForm.reset();
                 this.onCategoryChange(response.task.category_id);
                 document.getElementById('close_modal').click();
@@ -70,8 +75,8 @@ export class TasksComponent implements OnInit {
 
         return this.taskService.updateTask(this.selectedTask.id, values).subscribe(
             response => {
-                let newTask = Task.newTask(response.task);
-                this.taskService.updateMainArray(newTask);
+                let newTask = Task.newInstance(response.task);
+                this.taskService.repository.update(newTask);
                 this.taskForm.reset();
                 this.onCategoryChange(newTask.category.getId());
                 document.getElementById('close_modal').click();
@@ -120,7 +125,7 @@ export class TasksComponent implements OnInit {
     deleteTask() {
         return this.taskService.deleteTask(this.selectedTask.id).subscribe(
             response => {
-                this.taskService.removeTask(this.selectedTask.id);
+                this.taskService.repository.remove(this.selectedTask.id);
                 this.onCategoryChange(this.selectedTask.category.getId());
                 this.selectedTask = null;
                 document.getElementById('close_modal').click();
@@ -131,6 +136,8 @@ export class TasksComponent implements OnInit {
 
     onCategoryChange(val) {
         let categoryId = +val;
+
+        this.categoryId = categoryId;
 
         this.selectedCategory = this.categoryService.findCategory(categoryId);
 

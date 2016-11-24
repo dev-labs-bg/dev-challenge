@@ -13,7 +13,7 @@ export class Task {
         public created_at: string
     ) {}
 
-    static newTask(data) {
+    static newInstance(data) {
 
         let category = new Category(
             data.category.id,

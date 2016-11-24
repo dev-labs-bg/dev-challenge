@@ -4,15 +4,15 @@ import {Subscription} from 'rxjs/Rx';
 import {Submission} from '../submission';
 import {Task} from '../../tasks/task';
 import {Question} from '../../assessments/question';
-import {User} from '../../../classes/user';
+    import {User} from '../../../classes/user';
 import {HttpService} from '../../../services/http.service';
 import {SubmissionService} from '../submission.service';
 import {NotificationService} from '../../../shared/notification.service';
 
 @Component({
-  selector: 'xp-single',
-  templateUrl: './single.component.html',
-  styleUrls: ['./single.component.scss']
+    selector: 'xp-single',
+    templateUrl: './single.component.html',
+    styleUrls: ['./single.component.scss']
 })
 export class SingleComponent implements OnInit, OnDestroy {
     private routeSubscription: Subscription;
@@ -37,7 +37,7 @@ export class SingleComponent implements OnInit, OnDestroy {
                         this.httpService.get('submission/' + param['id']).subscribe(
                             response => {
                                 this.submission = Submission.newSubmission(response.submission);
-                                this.task = Task.newTask(response.task);
+                                this.task = Task.newInstance(response.task);
                                 this.user = User.newUser(response.user);
                                 this.question = Question.newQuestion(response.questions[0]);
                                 resolve(response.success);

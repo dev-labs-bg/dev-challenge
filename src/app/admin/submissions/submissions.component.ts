@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {CategoryService} from '../categories/category.service';
 import {Category} from '../categories/category';
-import {Task} from '../tasks/Task';
 import {TaskService} from '../tasks/task.service';
 import {SubmissionService} from './submission.service';
 import {UserService} from '../../shared/user.service';
+import {Task} from '../tasks/task';
 
 @Component({
   selector: 'xp-approvals',
@@ -19,13 +19,16 @@ export class SubmissionsComponent implements OnInit {
         private categoryService: CategoryService,
         private taskService: TaskService,
         private submissionService: SubmissionService,
-        private userService: UserService,
+        private userService: UserService
     ) { }
 
     ngOnInit() {
         this.categoryService.getAll();
         this.submissionService.getAll();
-        this.taskService.getAll();
+        this.taskService.repository.setup(
+            this.taskService.apiGetURLS.all,
+            Task
+        );
         this.userService.getAll();
     }
 
