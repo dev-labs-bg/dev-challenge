@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Task } from "../classes/task";
-import { HttpService } from "./http.service";
-import { Subscription } from "rxjs/Rx";
-
-var _ = require('lodash');
+import { Task } from './task';
+import { HttpService } from '../../services/http.service';
+import { Subscription } from 'rxjs/Rx';
+import * as _ from 'lodash';
 
 @Injectable()
 export class TaskService {
-    private tasks: Task[];
+    private tasks: Task[] = [];
 
     constructor(
         private httpService: HttpService
@@ -20,16 +19,15 @@ export class TaskService {
      * @returns {any}
      */
     getAll(): Subscription | Task[] {
-        let tasks = this.getTasks();
-
-        if (tasks != null) {
-            return tasks;
+        if (this.tasks.length > 0) {
+            return this.tasks;
         }
 
         return this.httpService.get('task/all').subscribe(
             response => this.tasks = response.tasks.map(
                 el => Task.newTask(el)
-            )
+            ),
+            error => console.log('Sorry, could not find tasks', error)
         );
     }
 
@@ -71,7 +69,7 @@ export class TaskService {
      * @returns {Task[]}
      */
     updateMainArray(task: Task) {
-        let id = task.getId();
+        let id = task.id;
         let taskIndex = _.findIndex(this.tasks, { id });
 
         this.tasks[taskIndex] = task;
@@ -109,17 +107,34 @@ export class TaskService {
         return this.tasks.push(task);
     }
 
-    getFromCategory(category_id: number) {
+    getFromCategory(category_id) {
         let categoryTasks: Task[] = [];
+        let categoryId = parseInt(category_id, 10);
 
         _.forEach(this.tasks,
             task => {
-                if (task.category_id == category_id)
+                if (task.category.getId() === categoryId) {
                     categoryTasks.push(task);
+                }
             }
         );
 
         return categoryTasks;
+    }
+
+    find(id) {
+        let foundTask = null;
+        let taskId = parseInt(id, 10);
+
+        _.forEach(this.tasks,
+            task => {
+                if (task.id === taskId) {
+                    foundTask = task;
+                }
+            }
+        );
+
+        return foundTask;
     }
 
 }

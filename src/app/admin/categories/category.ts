@@ -2,7 +2,7 @@ export class Category {
 
     constructor(
        private id: number = -1,
-       private name:string = ''
+       private name = ''
     ) {}
 
     /**

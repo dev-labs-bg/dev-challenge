@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Subscription } from "rxjs/Rx";
+import { Subscription } from 'rxjs/Rx';
 import * as _ from 'lodash';
-
-import { HttpService } from "../../services/http.service";
-import { Category } from "./category";
+import { HttpService } from '../../services/http.service';
+import { Category } from './category';
 
 @Injectable()
 export class CategoryService {

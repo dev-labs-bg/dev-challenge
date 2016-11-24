@@ -1,4 +1,4 @@
-import {Role} from "./role";
+import {Role} from './role';
 
 export class User {
 
@@ -52,7 +52,7 @@ export class User {
 
         this.roles.forEach(
             (el) => {
-                if (el.name == 'Admin') {
+                if (el.name === 'Admin') {
                     admin = true;
                 }
             }

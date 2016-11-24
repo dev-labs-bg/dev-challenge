@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from "./http.service";
-import { AssessmentType } from "../classes/assessment-type";
-import { Subscription } from "rxjs/Rx";
+import { HttpService } from '../../services/http.service';
+import { AssessmentType } from './assessment-type';
+import { Subscription } from 'rxjs/Rx';
 
 @Injectable()
 export class AssessmentTypeService {
@@ -30,7 +30,7 @@ export class AssessmentTypeService {
                         el.id,
                         el.type
                     )
-                )
+                );
             },
             error => console.log('Ah, Could not get the assessment types!', error)
         );
