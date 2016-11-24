@@ -3,6 +3,7 @@ import {Question} from '../question';
 import {Task} from '../../tasks/task';
 import {FormGroup, Validators, FormBuilder} from '@angular/forms';
 import {QuestionService} from '../question.service';
+import {Subscription} from 'rxjs/Rx';
 
 @Component({
   selector: 'xp-open-answer-form',
@@ -13,6 +14,7 @@ export class OpenAnswerFormComponent implements OnInit, OnChanges {
     @Input() private task: Task;
     private form: FormGroup;
     private question: Question;
+    private formSubscription: Subscription;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -70,7 +72,7 @@ export class OpenAnswerFormComponent implements OnInit, OnChanges {
     onSubmit() {
         let value = this.form.value;
 
-        return this.questionService.create(value).subscribe(
+        return this.formSubscription = this.questionService.create(value).subscribe(
             response => {
                 if (response.success) {
                     this.questionService.add(Question.newQuestion(response.question));
@@ -90,7 +92,7 @@ export class OpenAnswerFormComponent implements OnInit, OnChanges {
     onUpdate(id) {
         let value = this.form.value;
 
-        return this.questionService.update(id, value).subscribe(
+        return this.formSubscription = this.questionService.update(id, value).subscribe(
             response => {
                 if (response.success) {
                     this.questionService.updateMainArray(Question.newQuestion(response.question));

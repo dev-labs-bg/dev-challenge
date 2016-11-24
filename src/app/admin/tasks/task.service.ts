@@ -26,7 +26,8 @@ export class TaskService {
         return this.httpService.get('task/all').subscribe(
             response => this.tasks = response.tasks.map(
                 el => Task.newTask(el)
-            )
+            ),
+            error => console.log('Sorry, could not find tasks', error)
         );
     }
 
