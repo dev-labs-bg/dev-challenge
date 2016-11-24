@@ -18,11 +18,10 @@ export class QuestionService {
         }
 
         return this.httpService.get('question/all').subscribe(
-            response => {
-                this.questions = response.questions.map(
-                    el => Question.newQuestion(el)
-                );
-            }
+            response => this.questions = response.questions.map(
+                el => Question.newQuestion(el)
+            ),
+            error => console.log('Sorry, no questions found', error)
         );
     }
 
