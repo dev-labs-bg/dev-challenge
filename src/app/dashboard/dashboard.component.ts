@@ -1,34 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-
-import { TodoService } from './todo.service';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'xp-dashboard',
     template: `
-        <div class="list-group">
-            <div
-                *ngFor="let todo of todoService.repository.getData()"
-                class="list-group-item">
-                <h4 class="list-group-item-heading">
-                    <input type="checkbox" />
-                    <span
-                        *ngIf="todo.completed"
-                        class="label label-success">
-                        completed
-                    </span>
-                    {{ todo.title }}
-                </h4>
-                <p class="list-group-item-text">{{ todo.description }}</p>
-            </div>
-        </div>
+        <xp-todos-list></xp-todos-list>
     `
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
 
-    constructor(private todoService: TodoService) { }
-
-    ngOnInit() {
-        this.todoService.setup();
-    }
+    constructor() { }
 
 }
