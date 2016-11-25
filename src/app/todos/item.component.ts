@@ -13,16 +13,30 @@ import { Todo } from './todo';
             </span>
             {{ todo.title }}
         </h4>
-        <p class="list-group-item-text">{{ todo.description }}</p>
+        <p class="list-group-item-text">
+            <button
+                class="btn btn-default btn-xs"
+                (click)="toggleOpen()">
+                view more
+            </button>
+        </p>
+        <p *ngIf="isOpen">
+            {{ todo.description }}
+        </p>
     `,
     styles: []
 })
 export class TodoItemComponent implements OnInit {
     @Input() todo: Todo;
+    private isOpen: boolean = false;
 
     constructor() { }
 
     ngOnInit() {
+    }
+
+    private toggleOpen() {
+        this.isOpen = ! this.isOpen;
     }
 
 }
