@@ -52,6 +52,8 @@ import { AdditionalInfoComponent } from './register/steps/additional-info.compon
 import { VerifyEmailComponent } from './register/steps/verify-email.component';
 import { TodosListComponent } from './todos/list.component';
 import { TodoItemComponent } from './todos/item.component';
+import { AssessmentMicroProjectComponent } from './assessment/micro-project/assessment-micro-project.component';
+import { AssessmentMicroProjectFormComponent } from './assessment/micro-project/form.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +82,9 @@ import { TodoItemComponent } from './todos/item.component';
     AdditionalInfoComponent,
     VerifyEmailComponent,
     TodosListComponent,
-    TodoItemComponent
+    TodoItemComponent,
+    AssessmentMicroProjectComponent,
+    AssessmentMicroProjectFormComponent
   ],
   imports: [
     BrowserModule,

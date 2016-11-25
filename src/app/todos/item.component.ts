@@ -39,16 +39,15 @@ import { Todo } from './todo';
             </button>
             <hr />
         </div>
-        <p *ngIf="isAssessmentOpen">
-            TODO: Assessment
-        </p>
+        <xp-assessment-micro-project *ngIf="isAssessmentOpen">
+        </xp-assessment-micro-project>
     `,
     styles: []
 })
 export class TodoItemComponent implements OnInit {
     @Input() todo: Todo;
-    private areDetailsOpen: boolean = false;
-    private isAssessmentOpen: boolean = false;
+    private areDetailsOpen: boolean = true;
+    private isAssessmentOpen: boolean = true;
 
     constructor() { }
 
