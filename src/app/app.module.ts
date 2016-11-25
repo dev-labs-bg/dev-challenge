@@ -9,6 +9,8 @@ import { BusyModule } from 'angular2-busy';
 import {
     AlertModule, DatepickerModule, ModalModule
 } from 'ng2-bootstrap/ng2-bootstrap';
+import { DragulaModule } from 'ng2-dragula/ng2-dragula';
+import { DragulaService } from 'ng2-dragula/ng2-dragula';
 
 import { routing } from './app.routing';
 
@@ -87,7 +89,8 @@ import { VerifyEmailComponent } from './register/steps/verify-email.component';
     DatepickerModule,
     ModalModule,
     BusyModule,
-    ToastyModule.forRoot()
+    ToastyModule.forRoot(),
+    DragulaModule
   ],
   providers: [
     AuthService,
@@ -101,7 +104,8 @@ import { VerifyEmailComponent } from './register/steps/verify-email.component';
     QuestionService,
     SubmissionService,
     NotificationService,
-    UserService
+    UserService,
+    DragulaService
   ],
   bootstrap: [AppComponent]
 })

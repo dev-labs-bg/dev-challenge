@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { AssessmentTypeService } from './assessment-type.service';
 import { CategoryService } from '../categories/category.service';
 import { Category } from '../categories/category';
 import { Subscription } from 'rxjs/Rx';
 import { Task } from './task';
 import { TaskService } from './task.service';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'xp-admin-tasks',
@@ -143,6 +143,19 @@ export class TasksComponent implements OnInit {
         this.selectedCategory = this.categoryService.findCategory(categoryId);
 
         this.categoryTasks = this.taskService.getFromCategory(categoryId);
+    }
+
+    updateList() {
+        let inputs = document.getElementById('task_holder').getElementsByTagName('input');
+        let values = [];
+
+        _.forEach(inputs,
+            input => values.push(input.value)
+        );
+
+        this.taskService.updateList(values).subscribe(
+            response => console.log(response)
+        );
     }
 
 }
