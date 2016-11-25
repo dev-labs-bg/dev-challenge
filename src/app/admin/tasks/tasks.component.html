@@ -96,8 +96,12 @@
 
 <h2>Please select a category</h2>
 <div class="form-group">
-    <label for="category">Category</label>
-    <select name="category" id="category" (ngModelChange)="onCategoryChange($event)" [ngModel]="category">
+    <label for="categoryId">Category</label>
+    <select
+        name="categoryId"
+        id="categoryId"
+        (ngModelChange)="onCategoryChange($event)"
+        [(ngModel)]="categoryId">
         <option value="0" disabled selected>Select category</option>
         <option *ngFor="let category of categoryService.getCategories()"
                 value="{{ category.id }}">

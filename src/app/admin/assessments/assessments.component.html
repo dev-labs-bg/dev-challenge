@@ -9,7 +9,7 @@
         id="task"
         (ngModelChange)="onTaskChange($event)" [ngModel]="task_id">
         <option value="0" disabled selected>Select Task</option>
-        <option *ngFor="let task of taskService.getTasks()"
+        <option *ngFor="let task of taskService.repository.getData()"
                 value="{{ task.id }}">
             {{ task.title }}
         </option>

@@ -1,0 +1,47 @@
+<h1>Approval Center</h1>
+
+<div class="form-group">
+    <label for="category_id">Category</label>
+    <select
+        name="category_id"
+        id="category_id"
+        class="form-control"
+        (ngModelChange)="onCategoryChange($event)"
+        [ngModel]="category">
+        <option value="" selected disabled>Please select a category</option>
+        <option
+            *ngFor="let category of categoryService.getCategories()"
+            value="{{ category.id }}">
+            {{ category.name }}
+        </option>
+    </select>
+</div>
+
+<div
+    *ngFor="let task of categoryTasks"
+    class="panel panel-default">
+    <div class="panel-heading">{{ task.title }}</div>
+    <ul
+        *ngIf="taskService.findSubmissions(task.id).length > 0"
+        class="list-group">
+        <li class="list-group-item">
+            <a
+                *ngFor="let submission of taskService.findSubmissions(task.id)"
+                routerLink="/admin/submissions/{{ submission.id }}">
+                Submitted by {{ userService.getById(submission.user_id).getName() }}
+            </a>
+        </li>
+    </ul>
+    <div
+        *ngIf="taskService.findSubmissions(task.id).length === 0"
+        class="list-group-item alert-danger"
+        role="alert">
+        No submissions for review
+    </div>
+</div>
+
+<div
+    *ngIf="categoryTasks.length === 0"
+    class="alert alert-warning">
+    No tasks found for given category
+</div>

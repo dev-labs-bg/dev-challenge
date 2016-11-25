@@ -13,7 +13,7 @@ export class Task {
         public created_at: string
     ) {}
 
-    public static newTask(data) {
+    static newInstance(data) {
 
         let category = new Category(
             data.category.id,
@@ -36,7 +36,7 @@ export class Task {
         );
     }
 
-    public toForm() {
+    toForm() {
         return {
             category_id: this.category.getId(),
             assessment_type_id: this.assessment.id,
@@ -45,6 +45,4 @@ export class Task {
             time_estimation: this.time_estimation
         };
     }
-
-
 }
