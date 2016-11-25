@@ -19,27 +19,43 @@ import { Todo } from './todo';
         <p class="list-group-item-text">
             <button
                 class="btn btn-default btn-xs"
-                (click)="toggleOpen()">
-                view more
+                (click)="toggleOpenDetails()">
+                {{ areDetailsOpen ? 'hide details' : 'see details' }}
             </button>
         </p>
-        <p *ngIf="isOpen">
-            {{ todo.description }}
+        <div *ngIf="areDetailsOpen">
+            <p>
+                {{ todo.description }}
+            </p>
+            <button
+                class="btn btn-primary"
+                (click)="toggleOpenAssessment()">
+                {{ isAssessmentOpen ? 'close' : 'open' }} assessment
+            </button>
+            <hr />
+        </div>
+        <p *ngIf="isAssessmentOpen">
+            TODO: Assessment
         </p>
     `,
     styles: []
 })
 export class TodoItemComponent implements OnInit {
     @Input() todo: Todo;
-    private isOpen: boolean = false;
+    private areDetailsOpen: boolean = false;
+    private isAssessmentOpen: boolean = false;
 
     constructor() { }
 
     ngOnInit() {
     }
 
-    private toggleOpen() {
-        this.isOpen = ! this.isOpen;
+    private toggleOpenDetails() {
+        this.areDetailsOpen = ! this.areDetailsOpen;
+    }
+
+    private toggleOpenAssessment() {
+        this.isAssessmentOpen = ! this.isAssessmentOpen;
     }
 
 }
