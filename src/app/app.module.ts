@@ -23,6 +23,7 @@ import { AssessmentTypeService } from './admin/tasks/assessment-type.service';
 import { TaskService } from './admin/tasks/task.service';
 import { QuestionService } from './admin/assessments/question.service';
 import { NotificationService } from './shared/notification.service';
+import { TodoService } from './dashboard/todo.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -101,7 +102,8 @@ import { VerifyEmailComponent } from './register/steps/verify-email.component';
     QuestionService,
     SubmissionService,
     NotificationService,
-    UserService
+    UserService,
+    TodoService
   ],
   bootstrap: [AppComponent]
 })

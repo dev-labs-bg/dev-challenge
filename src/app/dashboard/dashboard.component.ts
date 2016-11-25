@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { TodoService } from './todo.service';
+import { Todo } from './todo';
+
 @Component({
     selector: 'xp-dashboard',
     template: `
@@ -17,9 +20,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-    constructor() { }
+    constructor(private todoService: TodoService) { }
 
     ngOnInit() {
+        this.todoService.repository.setup(
+            this.todoService.apiGetURLS.all,
+            Todo
+        );
     }
 
 }
