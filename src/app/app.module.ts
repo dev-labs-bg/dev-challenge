@@ -51,6 +51,7 @@ import { TimeInvestmentComponent } from './register/steps/time-investment.compon
 import { AdditionalInfoComponent } from './register/steps/additional-info.component';
 import { VerifyEmailComponent } from './register/steps/verify-email.component';
 import { TodosListComponent } from './todos/list.component';
+import { TodoItemComponent } from './todos/item.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { TodosListComponent } from './todos/list.component';
     TimeInvestmentComponent,
     AdditionalInfoComponent,
     VerifyEmailComponent,
-    TodosListComponent
+    TodosListComponent,
+    TodoItemComponent
   ],
   imports: [
     BrowserModule,
