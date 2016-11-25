@@ -11,7 +11,10 @@ import { Todo } from './todo';
                 class="label label-success">
                 completed
             </span>
-            {{ todo.title }}
+            {{ todo.title }} | <span
+                class="label label-info">
+                3 days remaining
+            </span>
         </h4>
         <p class="list-group-item-text">
             <button
