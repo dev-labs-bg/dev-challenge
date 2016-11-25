@@ -111,33 +111,35 @@
     </select>
 </div>
 
-<div
-    *ngIf="selectedCategory != null && categoryTasks.length > 0"
-    class="tasks-holder"
-    id="task_holder">
+<xp-loading-indicator [wait]="listFormSubscription">
     <div
-        class="list-group"
-        [dragula]='"first-bag"'>
+        *ngIf="selectedCategory != null && categoryTasks.length > 0"
+        class="tasks-holder"
+        id="task_holder">
         <div
-            *ngFor="let task of categoryTasks; let i = index"
-            class="list-group-item draggable">
-            <input
-                type="hidden"
-                value="{{ task.id }}"
-            />
-            <a
-                (click)="openUpdateForm(task)"
-                href="javascript:;">
-                {{ task.title }}
-            </a>
+            class="list-group"
+            [dragula]='"first-bag"'>
+            <div
+                *ngFor="let task of categoryTasks; let i = index"
+                class="list-group-item draggable">
+                <input
+                    type="hidden"
+                    value="{{ task.id }}"
+                />
+                <a
+                    (click)="openUpdateForm(task)"
+                    href="javascript:;">
+                    {{ task.title }}
+                </a>
+            </div>
+        </div>
+        <div
+            (click)="updateList()"
+            class="btn btn-primary">
+            Update List Order
         </div>
     </div>
-    <div
-        (click)="updateList()"
-        class="btn btn-primary">
-        Update List Order
-    </div>
-</div>
+</xp-loading-indicator>
 <div
     *ngIf="selectedCategory != null && categoryTasks.length === 0"
     class="alert alert-warning">

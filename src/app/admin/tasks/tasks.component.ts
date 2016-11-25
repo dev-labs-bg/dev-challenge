@@ -16,6 +16,7 @@ import * as _ from 'lodash';
 })
 export class TasksComponent implements OnInit {
     private taskFormSubscription: Subscription;
+    private listFormSubscription: Subscription;
     private taskForm: FormGroup;
     private selectedTask: Task = null;
     private selectedCategory: Category = null;
@@ -153,7 +154,7 @@ export class TasksComponent implements OnInit {
             input => values.push(input.value)
         );
 
-        this.taskService.updateList(values).subscribe(
+        this.listFormSubscription = this.taskService.updateList(values).subscribe(
             response => console.log(response)
         );
     }
