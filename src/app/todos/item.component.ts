@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+
 import { Todo } from './todo';
 
 @Component({
@@ -20,7 +21,6 @@ import { Todo } from './todo';
             <span *ngIf="todo.status == 2">
                 <span
                     class="label label-danger">
-                    
                 </span>
             </span>
             <span *ngIf="todo.status == 3" class="text-success">
@@ -44,36 +44,22 @@ import { Todo } from './todo';
             <p>
                 {{ todo.task.description }}
             </p>
-            <button
-                class="btn btn-primary"
-                (click)="toggleOpenAssessment()">
-                {{ isAssessmentOpen ? 'close' : 'open' }} assessment
-            </button>
             <hr />
+            <xp-assessment [assessment]="todo.assessment">
+            </xp-assessment>
         </div>
-        <xp-assessment-micro-project *ngIf="isAssessmentOpen">
-        </xp-assessment-micro-project>
-    `,
-    styles: []
+    `
 })
 export class TodoItemComponent implements OnInit {
     @Input() todo: Todo;
     private areDetailsOpen: boolean = true;
-    private isAssessmentOpen: boolean = true;
 
-    constructor() {
-        console.log(this.todo);
-    }
+    constructor() { }
 
-    ngOnInit() {
-    }
+    ngOnInit() { }
 
     private toggleOpenDetails() {
         this.areDetailsOpen = ! this.areDetailsOpen;
-    }
-
-    private toggleOpenAssessment() {
-        this.isAssessmentOpen = ! this.isAssessmentOpen;
     }
 
 }

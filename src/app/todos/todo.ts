@@ -6,7 +6,11 @@ export class Todo {
             description: '',
             time_estimation: '',
         },
-        private status: number = 0,
+        public assessment: { type: number, description: string } = {
+            type: -1,
+            description: ''
+        },
+        private status: number = 0
     ) {}
 
     static newInstance(data) {
@@ -16,6 +20,10 @@ export class Todo {
                 title: data.task.title,
                 description: data.task.description,
                 time_estimation: data.task.time_estimation,
+            },
+            {
+                type: data.task.assessment_type_id,
+                description: data.task.questions[0].body
             },
             data.status
         );

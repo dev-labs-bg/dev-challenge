@@ -56,6 +56,7 @@ import { TodosListComponent } from './todos/list.component';
 import { TodoItemComponent } from './todos/item.component';
 import { AssessmentMicroProjectComponent } from './assessment/micro-project/assessment-micro-project.component';
 import { AssessmentMicroProjectFormComponent } from './assessment/micro-project/form.component';
+import { AssessmentComponent } from './assessment/assessment.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { AssessmentMicroProjectFormComponent } from './assessment/micro-project/
     TodosListComponent,
     TodoItemComponent,
     AssessmentMicroProjectComponent,
-    AssessmentMicroProjectFormComponent
+    AssessmentMicroProjectFormComponent,
+    AssessmentComponent
   ],
   imports: [
     BrowserModule,
