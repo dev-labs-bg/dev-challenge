@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import Utils from '../../shared/utils';
+
 @Component({
     selector: 'xp-assessment-micro-project-form',
     template: `
@@ -16,11 +18,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
             <p
                 class="text-right"
                 [ngClass]="{
-                    'text-danger': countWords(message.value) > wordsLimit,
-                    'text-success': countWords(message.value) <= wordsLimit
+                    'text-danger': isWordsLimitReached(),
+                    'text-success': ! isWordsLimitReached()
                 }">
                 <strong>
-                    {{ wordsLimit - countWords(message.value) }} words left
+                    {{ countRemainingWords() }} words remaining
                 </strong>
             </p>
             <button
@@ -52,7 +54,7 @@ export class AssessmentMicroProjectFormComponent implements OnInit {
         return (group: FormGroup): {[key: string]: any} => {
             const { message } = group.controls;
 
-            if (this.countWords(message.value) > maxWords) {
+            if (Utils.countWords(message.value) > maxWords) {
                 return {
                     mismatchedWordsCount: true
                 };
@@ -61,25 +63,12 @@ export class AssessmentMicroProjectFormComponent implements OnInit {
 
     }
 
-    /**
-     * Count words in any string, see:
-     * http://stackoverflow.com/a/18679657/1333836
-     *
-     * @param {string} s
-     */
-    private countWords(s) {
-        if (! s.trim().length) {
-            return 0;
-        }
+    private isWordsLimitReached() {
+        return Utils.countWords(this.form.value.message) > this.wordsLimit;
+    }
 
-        // exclude  start and end white-space
-        s = s.replace(/(^\s*)|(\s*$)/gi, '');
-        // 2 or more space to 1
-        s = s.replace(/[ ]{2,}/gi, ' ');
-        // exclude newline with a start spacing
-        s = s.replace(/\n /, '\n');
-
-        return s.split(' ').length;
+    private countRemainingWords() {
+        return this.wordsLimit - Utils.countWords(this.form.value.message);
     }
 
     handleSubmit() {
