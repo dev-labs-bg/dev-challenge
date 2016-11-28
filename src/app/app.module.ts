@@ -25,11 +25,12 @@ import { AssessmentTypeService } from './admin/tasks/assessment-type.service';
 import { TaskService } from './admin/tasks/task.service';
 import { QuestionService } from './admin/assessments/question.service';
 import { NotificationService } from './shared/notification.service';
+import { TodoService } from './todos/todo.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegisterComponent } from './register/register.component';
 import { AccountActivationComponent } from './components/account-activation/account-activation.component';
 import { AdminComponent } from './admin/admin.component';
@@ -51,6 +52,8 @@ import { MainInfoComponent } from './register/steps/main-info.component';
 import { TimeInvestmentComponent } from './register/steps/time-investment.component';
 import { AdditionalInfoComponent } from './register/steps/additional-info.component';
 import { VerifyEmailComponent } from './register/steps/verify-email.component';
+import { TodosListComponent } from './todos/list.component';
+import { TodoItemComponent } from './todos/item.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +80,9 @@ import { VerifyEmailComponent } from './register/steps/verify-email.component';
     MainInfoComponent,
     TimeInvestmentComponent,
     AdditionalInfoComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    TodosListComponent,
+    TodoItemComponent
   ],
   imports: [
     BrowserModule,
@@ -105,7 +110,8 @@ import { VerifyEmailComponent } from './register/steps/verify-email.component';
     SubmissionService,
     NotificationService,
     UserService,
-    DragulaService
+    DragulaService,
+    TodoService
   ],
   bootstrap: [AppComponent]
 })
