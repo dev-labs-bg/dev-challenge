@@ -9,6 +9,7 @@ import { AssessmentService } from './assessment.service';
         <div class="form-group" [formGroup]="form">
             <label [attr.for]="name">Select Assessment Type</label>
             <select
+                class="form-control"
                 name="{{ name }}"
                 id="{{ name }}"
                 formControlName="{{ name }}">
