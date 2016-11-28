@@ -63,18 +63,11 @@
                             />
                         </div>
 
-                        <div class="form-group">
-                            <label for="assessment_type_id">Select Assessment Type</label>
-                            <select
-                                name="assessment_type_id"
-                                id="assessment_type_id"
-                                formControlName="assessment_type_id">
-                                <option *ngFor="let type of assessmentTypeService.getAssessmentTypes()"
-                                    value="{{ type.id }}">
-                                    {{ type.type }}
-                                </option>
-                            </select>
-                        </div>
+                        <xp-admin-assessments-list
+                            [form]="taskForm"
+                            [name]="'assessment_type_id'">
+                        </xp-admin-assessments-list>
+
                         <button
                             type="submit"
                             class="btn btn-default"
