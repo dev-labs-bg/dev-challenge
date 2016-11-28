@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '../../services/http.service';
-import { AssessmentType } from './assessment-type';
 import { Subscription } from 'rxjs/Rx';
 
+import { HttpService } from '../../services/http.service';
+import { AssessmentType } from '../tasks/assessment-type';
+
 @Injectable()
-export class AssessmentTypeService {
+export class AssessmentService {
     private assessmentTypes;
 
     constructor(

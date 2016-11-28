@@ -21,7 +21,7 @@ import { AdminService } from './services/admin.service';
 import { SubmissionService } from './admin/submissions/submission.service';
 import { UserService } from './shared/user.service';
 import { CategoryService } from './admin/categories/category.service';
-import { AssessmentTypeService } from './admin/tasks/assessment-type.service';
+import { AssessmentService } from './admin/assessments/assessment.service';
 import { TaskService } from './admin/tasks/task.service';
 import { QuestionService } from './admin/assessments/question.service';
 import { NotificationService } from './shared/notification.service';
@@ -113,7 +113,7 @@ import { AdminAssessmentsListComponent } from './admin/assessments/list.componen
     AdminGuard,
     CategoryService,
     TaskService,
-    AssessmentTypeService,
+    AssessmentService,
     QuestionService,
     SubmissionService,
     NotificationService,

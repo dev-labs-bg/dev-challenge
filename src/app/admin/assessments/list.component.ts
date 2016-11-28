@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { AssessmentTypeService } from '../tasks/assessment-type.service';
+import { AssessmentService } from './assessment.service';
 
 @Component({
     selector: 'xp-admin-assessments-list',
@@ -14,7 +14,7 @@ import { AssessmentTypeService } from '../tasks/assessment-type.service';
                 formControlName="{{ name }}">
                 <option value="" disabled>Please choose</option>
                 <option
-                    *ngFor="let type of assessmentTypeService.getAssessmentTypes()"
+                    *ngFor="let type of assessmentService.getAssessmentTypes()"
                     value="{{ type.id }}">
                     {{ type.type }}
                 </option>
@@ -26,10 +26,10 @@ export class AdminAssessmentsListComponent implements OnInit {
     @Input() private name: string;
     @Input() private form: FormGroup;
 
-    constructor(private assessmentTypeService: AssessmentTypeService) { }
+    constructor(private assessmentService: AssessmentService) { }
 
     ngOnInit() {
-        this.assessmentTypeService.getAll();
+        this.assessmentService.getAll();
     }
 
 }
