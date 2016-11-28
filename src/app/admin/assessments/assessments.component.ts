@@ -5,8 +5,7 @@ import { QuestionService } from './question.service';
 
 @Component({
   selector: 'xp-assessments',
-  templateUrl: './assessments.component.html',
-  styleUrls: ['./assessments.component.scss']
+  templateUrl: './assessments.component.html'
 })
 export class AssessmentsComponent implements OnInit {
     private selectedTask: Task = null;
