@@ -1,20 +1,23 @@
 export class Todo {
 
     constructor(
-        private title: string = '',
-        private description: string = '',
-        private time_estimation: number = -1,
-        private completed: boolean = false
+        private task = {
+            title: '',
+            description: '',
+            time_estimation: '',
+        },
+        private status: number = 0,
     ) {}
 
     static newInstance(data) {
-        const { title, description, time_estimation, pivot } = data;
 
         return new Todo(
-            title,
-            description,
-            time_estimation,
-            !! pivot.completed
+            {
+                title: data.task.title,
+                description: data.task.description,
+                time_estimation: data.task.time_estimation,
+            },
+            data.status
         );
     }
 }
