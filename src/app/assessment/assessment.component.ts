@@ -13,7 +13,8 @@ import { Assessment } from './assessment';
         </button>
         <div *ngIf="isOpen" [ngSwitch]="assessment.type">
             <xp-assessment-micro-project
-                *ngSwitchCase="ASSESSMENT_TYPES.MICRO_PROJECT">
+                *ngSwitchCase="ASSESSMENT_TYPES.MICRO_PROJECT"
+                [assessment]="assessment">
             </xp-assessment-micro-project>
         </div>
     `,
