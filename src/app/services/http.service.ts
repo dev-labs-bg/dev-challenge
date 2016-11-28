@@ -1,20 +1,20 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {Http, Response, Headers, URLSearchParams} from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import * as _ from 'lodash';
 
 import {
-    API_ENDPOINT, API_AUTH_ENDPOINT, CLIENT_SECRET, CLIENT_ID
+    API_ENDPOINT, APPLICATION_TOKEN
 } from '../config';
 import { NotificationService } from '../shared/notification.service';
 
 @Injectable()
-export class HttpService implements OnInit {
+export class HttpService {
     private accessToken;
 
     public headers: Headers = new Headers({
         'Content-Type': 'application/json',
-        'Authorization': localStorage.getItem('xp_access_token'),
+        'Authorization': APPLICATION_TOKEN,
         'loginToken': localStorage.getItem('xp_login_token')
     });
 
@@ -24,10 +24,6 @@ export class HttpService implements OnInit {
     ) {
         // Bind the `this` context
         this.handleError = this.handleError.bind(this);
-    }
-
-    ngOnInit() {
-        this.setAccessToken();
     }
 
     /**
@@ -113,63 +109,6 @@ export class HttpService implements OnInit {
      */
     updateHeader(param, value) {
         this.headers.set(param, value);
-    }
-
-    /**
-     * accessToken setter
-     */
-    setAccessToken() {
-        this.accessToken = localStorage.getItem('xp_access_token');
-
-        if (this.accessToken == null) {
-            this.generateAccessToken();
-        }
-    }
-
-    /**
-     * Get the access token
-     *
-     * @returns string accessToken
-     */
-    getAccessToken() {
-        return this.accessToken;
-    }
-
-    /**
-     * Generate an access token
-     *
-     * @return void
-     * TO DO: refactor this to an observable
-     */
-    generateAccessToken() {
-        // set post params
-        let oAuth2Params = new URLSearchParams();
-        oAuth2Params.append('client_id', CLIENT_ID);
-        oAuth2Params.append('client_secret', CLIENT_SECRET);
-        oAuth2Params.append('username', 'account@devlabs.bg');
-        oAuth2Params.append('password', '[H,U2F?vH^j9$j}4');
-        oAuth2Params.append('grant_type', 'password');
-        oAuth2Params.append('scope', '');
-        let body = oAuth2Params.toString();
-
-        // change content type so we could
-        // make an oAuth2 request
-        let oAuth2Headers = new Headers({
-            'Content-Type': 'application/x-www-form-urlencoded',
-        });
-
-        this.http.post(`${API_AUTH_ENDPOINT}/token`, body, { headers: oAuth2Headers })
-            .map((response: Response) => response.json())
-            .map(this.checkServerSuccess)
-            .catch(this.handleError)
-            .subscribe(response => {
-                // noinspection TypeScriptUnresolvedVariable
-                localStorage.setItem('xp_access_token', 'Bearer ' + response.access_token);
-
-                // noinspection TypeScriptUnresolvedVariable
-                this.accessToken = response.access_token;
-            }
-        );
     }
 
     buildErrorMessage(error: any) {
