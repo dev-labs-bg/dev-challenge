@@ -54,6 +54,7 @@ import { AdditionalInfoComponent } from './register/steps/additional-info.compon
 import { VerifyEmailComponent } from './register/steps/verify-email.component';
 import { TodosListComponent } from './todos/list.component';
 import { TodoItemComponent } from './todos/item.component';
+import { ExperienceBlockComponent } from './components/experience-block/experience-block.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { TodoItemComponent } from './todos/item.component';
     AdditionalInfoComponent,
     VerifyEmailComponent,
     TodosListComponent,
-    TodoItemComponent
+    TodoItemComponent,
+    ExperienceBlockComponent
   ],
   imports: [
     BrowserModule,

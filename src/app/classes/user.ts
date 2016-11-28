@@ -12,6 +12,7 @@ export class User {
         public email: string = '',
         public active: number = 0,
         public created_at: string = '',
+        public experience: number = 0,
         public roles: Role[] = [],
     ) {}
 
@@ -37,6 +38,7 @@ export class User {
             userData.email,
             userData.active,
             userData.created_at,
+            userData.experience_points,
             roles
         );
     }
