@@ -53,6 +53,8 @@ import { Todo } from './todo';
         </div>
         <xp-assessment-micro-project *ngIf="isAssessmentOpen">
         </xp-assessment-micro-project>
+        <xp-assessment-question *ngIf="isAssessmentOpen">
+        </xp-assessment-micro-project>
     `,
     styles: []
 })
