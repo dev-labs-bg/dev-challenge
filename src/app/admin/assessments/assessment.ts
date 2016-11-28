@@ -15,4 +15,11 @@ export class Assessment {
         return this.mappedTypes[this.type];
     }
 
+    static newInstance(data) {
+        return new Assessment(
+            data.id,
+            data.type
+        );
+    }
+
 }
