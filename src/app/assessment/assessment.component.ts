@@ -10,7 +10,7 @@ import { ASSESSMENT_TYPES } from './constants';
             (click)="toggleOpen()">
             {{ isOpen ? 'close' : 'open' }} assessment
         </button>
-        <div [ngSwitch]="assessment.type">
+        <div *ngIf="isOpen" [ngSwitch]="assessment.type">
             <xp-assessment-micro-project
                 *ngSwitchCase="ASSESSMENT_TYPES.MICRO_PROJECT">
             </xp-assessment-micro-project>
