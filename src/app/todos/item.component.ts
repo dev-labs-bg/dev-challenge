@@ -5,18 +5,30 @@ import { Todo } from './todo';
     selector: 'xp-todo-item',
     template: `
         <h4 class="list-group-item-heading">
-            <span *ngIf="todo.completed" class="text-success">
-                <i class="glyphicon glyphicon-check"></i>
-                completed
+            <span *ngIf="todo.status == 0">
+                <span
+                    class="label label-default">
+                    Uncompleted
+                </span>
             </span>
-            <span *ngIf="! todo.completed">
+            <span *ngIf="todo.status == 1">
                 <span
                     class="label label-warning">
                     submitted for review
                 </span>
             </span>
+            <span *ngIf="todo.status == 2">
+                <span
+                    class="label label-danger">
+                    
+                </span>
+            </span>
+            <span *ngIf="todo.status == 3" class="text-success">
+                <i class="glyphicon glyphicon-check"></i>
+                completed
+            </span>
             &nbsp;
-            {{ todo.title }} | <span
+            {{ todo.task.title }} | <span
                 class="label label-info">
                 3 days remaining
             </span>
@@ -30,7 +42,7 @@ import { Todo } from './todo';
         </p>
         <div *ngIf="areDetailsOpen">
             <p>
-                {{ todo.description }}
+                {{ todo.task.description }}
             </p>
             <button
                 class="btn btn-primary"
@@ -49,7 +61,9 @@ export class TodoItemComponent implements OnInit {
     private areDetailsOpen: boolean = true;
     private isAssessmentOpen: boolean = true;
 
-    constructor() { }
+    constructor() {
+        console.log(this.todo);
+    }
 
     ngOnInit() {
     }

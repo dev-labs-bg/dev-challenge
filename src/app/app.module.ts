@@ -9,6 +9,8 @@ import { BusyModule } from 'angular2-busy';
 import {
     AlertModule, DatepickerModule, ModalModule
 } from 'ng2-bootstrap/ng2-bootstrap';
+import { DragulaModule } from 'ng2-dragula/ng2-dragula';
+import { DragulaService } from 'ng2-dragula/ng2-dragula';
 
 import { routing } from './app.routing';
 
@@ -96,7 +98,8 @@ import { AssessmentMicroProjectFormComponent } from './assessment/micro-project/
     DatepickerModule,
     ModalModule,
     BusyModule,
-    ToastyModule.forRoot()
+    ToastyModule.forRoot(),
+    DragulaModule
   ],
   providers: [
     AuthService,
@@ -111,6 +114,7 @@ import { AssessmentMicroProjectFormComponent } from './assessment/micro-project/
     SubmissionService,
     NotificationService,
     UserService,
+    DragulaService,
     TodoService
   ],
   bootstrap: [AppComponent]

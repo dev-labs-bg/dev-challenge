@@ -100,6 +100,7 @@
     <select
         name="categoryId"
         id="categoryId"
+        class="form-control"
         (ngModelChange)="onCategoryChange($event)"
         [(ngModel)]="categoryId">
         <option value="0" disabled selected>Select category</option>
@@ -110,17 +111,37 @@
     </select>
 </div>
 
-<div class="list-group">
-    <a
-        *ngFor="let task of categoryTasks"
-        class="list-group-item"
-        (click)="openUpdateForm(task)"
-        href="javascript:;">
-        {{ task.title }}
-    </a>
+<xp-loading-indicator [wait]="listFormSubscription">
     <div
-        *ngIf="selectedCategory != null && categoryTasks.length === 0"
-        class="alert alert-danger">
-        No tasks found from chosen category.
+        *ngIf="selectedCategory != null && categoryTasks.length > 0"
+        class="tasks-holder"
+        id="task_holder">
+        <div
+            class="list-group"
+            [dragula]='"first-bag"'>
+            <div
+                *ngFor="let task of categoryTasks; let i = index"
+                class="list-group-item draggable">
+                <input
+                    type="hidden"
+                    value="{{ task.id }}"
+                />
+                <a
+                    (click)="openUpdateForm(task)"
+                    href="javascript:;">
+                    {{ task.title }}
+                </a>
+            </div>
+        </div>
+        <div
+            (click)="updateList()"
+            class="btn btn-primary">
+            Update List Order
+        </div>
     </div>
+</xp-loading-indicator>
+<div
+    *ngIf="selectedCategory != null && categoryTasks.length === 0"
+    class="alert alert-warning">
+    No tasks found from chosen category.
 </div>
