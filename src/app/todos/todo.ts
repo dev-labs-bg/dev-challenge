@@ -1,3 +1,5 @@
+import { Assessment } from '../assessment/assessment';
+
 export class Todo {
 
     constructor(
@@ -6,14 +8,16 @@ export class Todo {
             description: '',
             time_estimation: '',
         },
-        public assessment: { type: number, description: string } = {
-            type: -1,
-            description: ''
-        },
+        public assessment: Assessment,
         private status: number = 0
     ) {}
 
     static newInstance(data) {
+
+        const assessment = new Assessment(
+            data.task.assessment_type_id,
+            data.task.questions[0].body
+        );
 
         return new Todo(
             {
@@ -21,10 +25,7 @@ export class Todo {
                 description: data.task.description,
                 time_estimation: data.task.time_estimation,
             },
-            {
-                type: data.task.assessment_type_id,
-                description: data.task.questions[0].body
-            },
+            assessment,
             data.status
         );
     }

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { ASSESSMENT_TYPES } from './constants';
+import { Assessment } from './assessment';
 
 @Component({
     selector: 'xp-assessment',
@@ -19,7 +20,7 @@ import { ASSESSMENT_TYPES } from './constants';
     styles: []
 })
 export class AssessmentComponent {
-    @Input() private assessment;
+    @Input() private assessment: Assessment;
     private ASSESSMENT_TYPES = ASSESSMENT_TYPES;
     private isOpen: boolean = true;
 
