@@ -80,4 +80,8 @@ export class TaskService {
         return taskSubmissions;
     }
 
+    updateList(data) {
+        return this.httpService.put('task/update-list', data);
+    }
+
 }
