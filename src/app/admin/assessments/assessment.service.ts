@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
 import { HttpService } from '../../services/http.service';
-import { AssessmentType } from '../tasks/assessment-type';
+import { Assessment } from './assessment';
 
 @Injectable()
 export class AssessmentService {
@@ -17,7 +17,7 @@ export class AssessmentService {
      *
      * @returns {Subscription}
      */
-    getAll(): Subscription | AssessmentType[] {
+    getAll(): Subscription | Assessment[] {
         let assessmentTypes = this.getAssessmentTypes();
 
         if (assessmentTypes != null) {
@@ -27,7 +27,7 @@ export class AssessmentService {
         return this.httpService.get('assessment-types/all').subscribe(
             response => {
                 this.assessmentTypes = response.assessmentTypes.map(
-                    el => new AssessmentType(
+                    el => new Assessment(
                         el.id,
                         el.type
                     )

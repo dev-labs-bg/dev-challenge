@@ -1,4 +1,4 @@
-export class AssessmentType {
+export class Assessment {
 
     private mappedTypes = {
         'Micro project': 'Open-Answer',
