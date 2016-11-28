@@ -32,8 +32,7 @@ import Utils from '../../shared/utils';
                 Submit
             </button>
         </form>
-    `,
-    styles: []
+    `
 })
 export class AssessmentMicroProjectFormComponent implements OnInit {
     @Output() onSubmit = new EventEmitter();
@@ -71,7 +70,7 @@ export class AssessmentMicroProjectFormComponent implements OnInit {
         return this.wordsLimit - Utils.countWords(this.form.value.message);
     }
 
-    handleSubmit() {
+    private handleSubmit() {
         this.onSubmit.emit(this.form.value);
     }
 
