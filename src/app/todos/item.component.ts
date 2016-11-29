@@ -45,7 +45,9 @@ import { Todo } from './todo';
                 {{ todo.task.description }}
             </p>
             <hr />
-            <xp-assessment [assessment]="todo.assessment">
+            <xp-assessment
+                [assessment]="todo.assessment"
+                [todo]="todo">
             </xp-assessment>
         </div>
     `

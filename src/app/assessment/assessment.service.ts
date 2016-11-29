@@ -8,7 +8,7 @@ export class AssessmentService {
 
     constructor(private httpService: HttpService) { }
 
-    createAssessment(questionId: number, todoId: number, answer: string) {
+    createAssessment(todoId: number, questionId: number, answer: string) {
         return this.httpService.post(`answer/${questionId}`, {
             type: ASSESSMENT_ANSWER_TYPES.OPEN_ANSWER,
             todo_id: todoId,

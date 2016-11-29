@@ -9,7 +9,8 @@ export class Todo {
             time_estimation: '',
         },
         public assessment: Assessment,
-        private status: number = 0
+        private status: number = 0,
+        private submissions = []
     ) {}
 
     static newInstance(data) {
@@ -17,8 +18,8 @@ export class Todo {
         // Note: there will be always 1 item in the questions array
         const assessment = new Assessment(
             data.task.assessment_type_id,
-            data.task.questions[0].body,
-            data.questions[0].id,
+            data.task.questions.length ? data.task.questions[0].body : '',
+            data.task.questions.length ? data.questions[0].id : -1,
             data.id
         );
 
@@ -29,7 +30,8 @@ export class Todo {
                 time_estimation: data.task.time_estimation,
             },
             assessment,
-            data.status
+            data.status,
+            data.submissions
         );
     }
 }

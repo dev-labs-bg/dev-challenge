@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 
 import { Assessment } from '../assessment';
 import { AssessmentService } from '../assessment.service';
+import { TodoService } from '../../todos/todo.service';
 import { NotificationService } from '../../shared/notification.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class CreateMicroProjectAssessmentComponent {
 
     constructor(
         private assessmentService: AssessmentService,
+        private todoService: TodoService,
         private notificationService: NotificationService
     ) { }
 
@@ -29,6 +31,7 @@ export class CreateMicroProjectAssessmentComponent {
             message
         ).subscribe(
             response => {
+                this.todoService.reset();
                 this.notificationService.fireSuccess('Assessment submitted!');
             },
             error => console.log('Ah, assessment not submitted!', error)
