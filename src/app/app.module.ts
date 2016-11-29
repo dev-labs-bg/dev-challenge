@@ -58,6 +58,7 @@ import { ExperienceBlockComponent } from './components/experience-block/experien
 import { BonusesComponent } from './admin/bonuses/bonuses.component';
 import { ContributionsComponent } from './contributions/contributions.component';
 import { ContributionsFormComponent } from './contributions/form.component';
+import { BonusFormComponent } from './admin/bonuses/form.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { ContributionsFormComponent } from './contributions/form.component';
     ExperienceBlockComponent,
     BonusesComponent,
     ContributionsComponent,
-    ContributionsFormComponent
+    ContributionsFormComponent,
+    BonusFormComponent
   ],
   imports: [
     BrowserModule,
