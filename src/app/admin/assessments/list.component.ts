@@ -17,9 +17,9 @@ import { AssessmentService } from './assessment.service';
                     formControlName="{{ name }}">
                     <option value="" disabled>Please choose</option>
                     <option
-                        *ngFor="let type of assessmentService.getAssessmentTypes()"
-                        value="{{ type.id }}">
-                        {{ type.type }}
+                        *ngFor="let assessment of assessmentService.repository.getData()"
+                        value="{{ assessment.id }}">
+                        {{ assessment.type }}
                     </option>
                 </select>
             </div>

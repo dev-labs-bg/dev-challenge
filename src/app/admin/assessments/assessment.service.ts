@@ -22,14 +22,4 @@ export class AssessmentService {
         );
     }
 
-    /**
-     * Get assessmentTypes var
-     *
-     * @returns {any}
-     */
-    getAssessmentTypes() {
-        // TODO: Find out why this doesn't work!
-        this.repository.getData();
-    }
-
 }
