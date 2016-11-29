@@ -17,6 +17,10 @@ export class Assessment {
     }
 
     static getNameByType(type) {
+        if (! type) {
+            return null;
+        }
+
         return _.find(ASSESSMENT_TYPES, { id: type }).name;
     }
 
