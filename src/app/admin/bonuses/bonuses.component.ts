@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../../services/http.service';
-import * as _ from 'lodash';
+import {Component, OnInit} from '@angular/core';
 
-import { User } from '../../classes/user';
-import { UserService} from '../../shared/user.service';
+import {User} from '../../classes/user';
+import {ContributorsService} from '../../contributions/contributors.service';
 
 @Component({
   selector: 'xp-bonuses',
   template: `
     <h1>Submitted contributions</h1>
-    <div *ngFor="let user of users;" 
+    <div *ngFor="let user of contributorsService.repository.getData();"
         class="panel panel-primary">
         <div class="panel-heading">{{ user.getName() }}</div>
         <div class="panel-body">
@@ -58,22 +56,14 @@ import { UserService} from '../../shared/user.service';
   styles: []
 })
 export class BonusesComponent implements OnInit {
-    private users: User[] = [];
     private selectedUser: User = null;
 
     constructor(
-        private userService: UserService,
-        private httpService: HttpService,
+        private contributorsService: ContributorsService,
     ) { }
 
     ngOnInit() {
-        this.userService.repository.getAll(
-            this.httpService.get('users/contributors')
-        ).subscribe(
-            response => this.users = response.data.map(
-                el => User.newInstance(el)
-            )
-        )
+        this.contributorsService.setup();
     }
 
     openRewardForm(user) {

@@ -26,6 +26,7 @@ import { TaskService } from './admin/tasks/task.service';
 import { QuestionService } from './admin/assessments/question.service';
 import { NotificationService } from './shared/notification.service';
 import { TodoService } from './todos/todo.service';
+import { ContributorsService } from './contributions/contributors.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -121,7 +122,8 @@ import { BonusFormComponent } from './admin/bonuses/form.component';
     NotificationService,
     UserService,
     DragulaService,
-    TodoService
+    TodoService,
+    ContributorsService,
   ],
   bootstrap: [AppComponent]
 })

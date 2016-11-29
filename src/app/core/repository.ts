@@ -116,10 +116,12 @@ export class Repository {
      * @returns {Array<any>}
      */
     update(data) {
-        let id = data.id;
+        let id = parseInt(data.id, 10);
         let index = _.findIndex(this.data, { id });
 
-        this.data[index] = data;
+        if (typeof(this.data[index]) != 'undefined') {
+            this.data[index] = data;
+        }
 
         return this.data;
     }

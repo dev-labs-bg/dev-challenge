@@ -13,7 +13,7 @@ export class User {
         public active: number = 0,
         public created_at: string = '',
         public experience: number = 0,
-        public bonus: number = 0,
+        public bonus_points: number = 0,
         public roles: Role[] = [],
         public attributes: any = {},
     ) {}

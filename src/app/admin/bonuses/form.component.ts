@@ -6,6 +6,8 @@ import {NotificationService} from "../../shared/notification.service";
 
 import {User} from '../../classes/user';
 import {HttpService} from '../../services/http.service';
+import {ContributorsService} from "../../contributions/contributors.service";
+import {UserService} from "../../shared/user.service";
 
 @Component({
   selector: 'xp-bonus-form',
@@ -43,11 +45,13 @@ export class BonusFormComponent implements OnInit {
         private formBuilder: FormBuilder,
         private httpService: HttpService,
         private notificationService: NotificationService,
+        private contributorsService: ContributorsService,
+        private userService: UserService,
     ) { }
 
     ngOnInit() {
         this.form = this.formBuilder.group({
-            points: [this.user.bonus]
+            points: [this.user.bonus_points]
         });
     }
 
@@ -57,11 +61,12 @@ export class BonusFormComponent implements OnInit {
      */
     onSubmit() {
         this.httpService.post('user/' + this.user.id + '/reward',
-            this.form.value
+        this.form.value
         ).subscribe(
             response => {
                 this.notificationService.fireSuccess('User rewarded!');
                 this.cancel();
+                this.contributorsService.repository.update(User.newInstance(response.data));
             },
             error => console.log('Oops, something went wrong', error)
         );

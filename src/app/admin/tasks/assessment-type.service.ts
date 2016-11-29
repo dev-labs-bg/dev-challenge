@@ -25,7 +25,7 @@ export class AssessmentTypeService {
 
         return this.httpService.get('assessment-types/all').subscribe(
             response => {
-                this.assessmentTypes = response.assessmentTypes.map(
+                this.assessmentTypes = response.data.map(
                     el => new AssessmentType(
                         el.id,
                         el.type
