@@ -5,10 +5,22 @@ import {AuthService} from '../../services/auth.service';
 @Component({
   selector: 'xp-experience-block',
   templateUrl: `
-    <div class="panel panel-primary">
-        <div class="panel-heading">Experience</div>
+    <div class='panel panel-primary'>
+        <div class='panel-heading'>Experience</div>
         <div class="panel-body">
-            <p>{{ loggedUser.experience }} / 450</p>
+            <div class='progress'>
+                <div
+                    id='progress_bar'
+                    class='progress-bar'
+                    role='progressbar'
+                    aria-valuenow='70'
+                    aria-valuemin='0'
+                    aria-valuemax='100'>
+                    <span class='sr-only'>{{ loggedUser.experience }} / 500</span>
+                </div>
+            </div>
+            <p style='text-align: right;'>{{ loggedUser.experience }} / 500</p>
+            <p>You can track your progress here.</p>
         </div>
     </div>
   `,
@@ -23,6 +35,11 @@ export class ExperienceBlockComponent implements OnInit {
 
     ngOnInit() {
         this.loggedUser = this.authService.getLoggedUser();
+        document.getElementById('progress_bar').style.width = this.getProgress() + '%';
+    }
+
+    getProgress() {
+        return (this.loggedUser.experience / 500) * 100;
     }
 
 }
