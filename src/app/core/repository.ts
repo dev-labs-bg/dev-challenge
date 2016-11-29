@@ -27,6 +27,12 @@ export class Repository {
         );
     }
 
+    reset(httpObservable, className) {
+        this.data.length = 0;
+
+        return this.setup(httpObservable, className);
+    }
+
     /**
      * Get your data
      *

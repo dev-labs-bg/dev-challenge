@@ -20,4 +20,11 @@ export class TodoService {
         );
     }
 
+    reset() {
+        return this.repository.reset(
+            this.apiGetURLS.all,
+            Todo
+        );
+    }
+
 }

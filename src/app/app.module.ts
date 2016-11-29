@@ -21,11 +21,12 @@ import { AdminService } from './services/admin.service';
 import { SubmissionService } from './admin/submissions/submission.service';
 import { UserService } from './shared/user.service';
 import { CategoryService } from './admin/categories/category.service';
-import { AssessmentTypeService } from './admin/tasks/assessment-type.service';
+import { AssessmentService } from './admin/assessments/assessment.service';
 import { TaskService } from './admin/tasks/task.service';
 import { QuestionService } from './admin/assessments/question.service';
 import { NotificationService } from './shared/notification.service';
 import { TodoService } from './todos/todo.service';
+import { AssessmentService as UserAssessmentService }  from './assessment/assessment.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -58,6 +59,9 @@ import { AssessmentMicroProjectComponent } from './assessment/micro-project/asse
 import { AssessmentMicroProjectFormComponent } from './assessment/micro-project/form.component';
 import { AssessmentQuestionComponent } from './assessment/question/assessment-question.component';
 import { AssessmentQuestionFormComponent } from './assessment/question/form.component';
+import { AssessmentComponent } from './assessment/assessment.component';
+import { AdminAssessmentsListComponent } from './admin/assessments/list.component';
+import { CreateMicroProjectAssessmentComponent } from './assessment/micro-project/create.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +94,10 @@ import { AssessmentQuestionFormComponent } from './assessment/question/form.comp
     AssessmentMicroProjectComponent,
     AssessmentMicroProjectFormComponent,
     AssessmentQuestionComponent,
-    AssessmentQuestionFormComponent
+    AssessmentQuestionFormComponent,
+    AssessmentComponent,
+    AdminAssessmentsListComponent,
+    CreateMicroProjectAssessmentComponent
   ],
   imports: [
     BrowserModule,
@@ -113,13 +120,14 @@ import { AssessmentQuestionFormComponent } from './assessment/question/form.comp
     AdminGuard,
     CategoryService,
     TaskService,
-    AssessmentTypeService,
+    AssessmentService,
     QuestionService,
     SubmissionService,
     NotificationService,
     UserService,
     DragulaService,
-    TodoService
+    TodoService,
+    UserAssessmentService
   ],
   bootstrap: [AppComponent]
 })
