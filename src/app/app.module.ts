@@ -26,6 +26,7 @@ import { TaskService } from './admin/tasks/task.service';
 import { QuestionService } from './admin/assessments/question.service';
 import { NotificationService } from './shared/notification.service';
 import { TodoService } from './todos/todo.service';
+import { AssessmentService as UserAssessmentService }  from './assessment/assessment.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -58,6 +59,7 @@ import { AssessmentMicroProjectComponent } from './assessment/micro-project/asse
 import { AssessmentMicroProjectFormComponent } from './assessment/micro-project/form.component';
 import { AssessmentComponent } from './assessment/assessment.component';
 import { AdminAssessmentsListComponent } from './admin/assessments/list.component';
+import { CreateMicroProjectAssessmentComponent } from './assessment/micro-project/create.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +92,8 @@ import { AdminAssessmentsListComponent } from './admin/assessments/list.componen
     AssessmentMicroProjectComponent,
     AssessmentMicroProjectFormComponent,
     AssessmentComponent,
-    AdminAssessmentsListComponent
+    AdminAssessmentsListComponent,
+    CreateMicroProjectAssessmentComponent
   ],
   imports: [
     BrowserModule,
@@ -119,7 +122,8 @@ import { AdminAssessmentsListComponent } from './admin/assessments/list.componen
     NotificationService,
     UserService,
     DragulaService,
-    TodoService
+    TodoService,
+    UserAssessmentService
   ],
   bootstrap: [AppComponent]
 })

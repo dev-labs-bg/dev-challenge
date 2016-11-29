@@ -14,9 +14,12 @@ export class Todo {
 
     static newInstance(data) {
 
+        // Note: there will be always 1 item in the questions array
         const assessment = new Assessment(
             data.task.assessment_type_id,
-            data.task.questions[0].body
+            data.task.questions[0].body,
+            data.questions[0].id,
+            data.id
         );
 
         return new Todo(
