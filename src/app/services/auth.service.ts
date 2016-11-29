@@ -80,7 +80,7 @@ export class AuthService {
      * @param user
      */
     setLoggedUser(user: User) {
-        this.loggedUser = User.newUser(user);
+        this.loggedUser = User.newInstance(user);
     }
 
     /**
@@ -223,7 +223,7 @@ export class AuthService {
                 response => {
                     this.toggleAuthentication(true, response.user, response.loginToken);
 
-                    let adminGuardUser: User = User.newUser(response.user);
+                    let adminGuardUser: User = User.newInstance(response.user);
                     resolve(adminGuardUser.isAdmin());
                 },
                 error => {

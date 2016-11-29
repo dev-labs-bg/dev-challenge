@@ -23,7 +23,7 @@ export class User {
      * @param userData
      * @returns {User}
      */
-    public static newUser(userData) {
+    public static newInstance(userData) {
         let roles = [];
 
         if (userData.roles.length > 0) {
