@@ -21,6 +21,9 @@ import {AuthService} from '../../services/auth.service';
             </div>
             <p style='text-align: right;'>{{ loggedUser.experience }} / 500</p>
             <p>You can track your progress here.</p>
+            <p>You'd like some extra experience? Try filling out this form
+                <a routerLink="/contributions">here</a>
+            </p>
         </div>
     </div>
   `,

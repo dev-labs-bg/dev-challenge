@@ -14,6 +14,7 @@ export class User {
         public created_at: string = '',
         public experience: number = 0,
         public roles: Role[] = [],
+        public attributes: any = {},
     ) {}
 
     /**
@@ -39,7 +40,8 @@ export class User {
             userData.active,
             userData.created_at,
             userData.experience_points,
-            roles
+            roles,
+            userData.attributes,
         );
     }
 

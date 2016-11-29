@@ -55,6 +55,9 @@ import { VerifyEmailComponent } from './register/steps/verify-email.component';
 import { TodosListComponent } from './todos/list.component';
 import { TodoItemComponent } from './todos/item.component';
 import { ExperienceBlockComponent } from './components/experience-block/experience-block.component';
+import { BonusesComponent } from './admin/bonuses/bonuses.component';
+import { ContributionsComponent } from './contributions/contributions.component';
+import { ContributionsFormComponent } from './contributions/form.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +87,10 @@ import { ExperienceBlockComponent } from './components/experience-block/experien
     VerifyEmailComponent,
     TodosListComponent,
     TodoItemComponent,
-    ExperienceBlockComponent
+    ExperienceBlockComponent,
+    BonusesComponent,
+    ContributionsComponent,
+    ContributionsFormComponent
   ],
   imports: [
     BrowserModule,
