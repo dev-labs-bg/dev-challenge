@@ -14,7 +14,7 @@ import { Todo } from '../todos/todo';
         </button>
         <div *ngIf="isOpen" [ngSwitch]="assessment.type">
 
-            <div *ngSwitchCase="ASSESSMENT_TYPES.MICRO_PROJECT">
+            <div *ngSwitchCase="ASSESSMENT_TYPES.MICRO_PROJECT.id">
                 <xp-assessment-micro-project
                     [assessment]="assessment"
                     [todo]="todo">

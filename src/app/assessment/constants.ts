@@ -1,8 +1,17 @@
 // All assessment types
 export const ASSESSMENT_TYPES = {
-    MICRO_PROJECT: 1,
-    TYPE_EXAM: 2,
-    TYPE_QUESTION: 3
+    MICRO_PROJECT: {
+        id: 1,
+        name: 'Micro Project'
+    },
+    EXAM: {
+        id: 2,
+        name: 'Exam'
+    },
+    QUESTION: {
+        id: 3,
+        name: 'Question'
+    }
 };
 
 

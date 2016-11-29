@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+
+import { ASSESSMENT_TYPES } from '../../assessment/constants';
 import { TaskService } from '../tasks/task.service';
 import { Task } from '../tasks/task';
 import { QuestionService } from './question.service';
+import { Assessment } from './assessment';
 
 @Component({
   selector: 'xp-assessments',
@@ -9,10 +12,12 @@ import { QuestionService } from './question.service';
 })
 export class AssessmentsComponent implements OnInit {
     private selectedTask: Task = null;
+    private ASSESSMENT_TYPES = ASSESSMENT_TYPES;
+    private Assessment = Assessment;
 
     constructor(
         private taskService: TaskService,
-        private questionService: QuestionService,
+        private questionService: QuestionService
     ) { }
 
     ngOnInit() {
@@ -31,11 +36,6 @@ export class AssessmentsComponent implements OnInit {
 
         // find selected task out of tasks array
         this.selectedTask = this.taskService.repository.find(value);
-    }
-
-    isType(type) {
-        return (this.selectedTask != null &&
-        this.selectedTask.assessment.mappedType() === type);
     }
 
 }

@@ -1,25 +1,23 @@
-export class Assessment {
+import * as _ from 'lodash';
 
-    private mappedTypes = {
-        'Micro project': 'Open-Answer',
-        'Exam': 'Exam-Answer',
-        'Answer to a question': 'Open-Answer',
-    };
+import { ASSESSMENT_TYPES } from '../../assessment/constants';
+
+export class Assessment {
 
     constructor(
         public id: number,
         public type: string
     ) {}
 
-    public mappedType() {
-        return this.mappedTypes[this.type];
-    }
-
     static newInstance(data) {
         return new Assessment(
             data.id,
             data.type
         );
+    }
+
+    static getNameByType(type) {
+        return _.find(ASSESSMENT_TYPES, { id: type }).name;
     }
 
 }
