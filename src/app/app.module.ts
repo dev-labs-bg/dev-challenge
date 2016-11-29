@@ -21,11 +21,12 @@ import { AdminService } from './services/admin.service';
 import { SubmissionService } from './admin/submissions/submission.service';
 import { UserService } from './shared/user.service';
 import { CategoryService } from './admin/categories/category.service';
-import { AssessmentTypeService } from './admin/tasks/assessment-type.service';
+import { AssessmentService } from './admin/assessments/assessment.service';
 import { TaskService } from './admin/tasks/task.service';
 import { QuestionService } from './admin/assessments/question.service';
 import { NotificationService } from './shared/notification.service';
 import { TodoService } from './todos/todo.service';
+import { AssessmentService as UserAssessmentService }  from './assessment/assessment.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -54,6 +55,11 @@ import { AdditionalInfoComponent } from './register/steps/additional-info.compon
 import { VerifyEmailComponent } from './register/steps/verify-email.component';
 import { TodosListComponent } from './todos/list.component';
 import { TodoItemComponent } from './todos/item.component';
+import { AssessmentMicroProjectComponent } from './assessment/micro-project/assessment-micro-project.component';
+import { AssessmentMicroProjectFormComponent } from './assessment/micro-project/form.component';
+import { AssessmentComponent } from './assessment/assessment.component';
+import { AdminAssessmentsListComponent } from './admin/assessments/list.component';
+import { CreateMicroProjectAssessmentComponent } from './assessment/micro-project/create.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +88,12 @@ import { TodoItemComponent } from './todos/item.component';
     AdditionalInfoComponent,
     VerifyEmailComponent,
     TodosListComponent,
-    TodoItemComponent
+    TodoItemComponent,
+    AssessmentMicroProjectComponent,
+    AssessmentMicroProjectFormComponent,
+    AssessmentComponent,
+    AdminAssessmentsListComponent,
+    CreateMicroProjectAssessmentComponent
   ],
   imports: [
     BrowserModule,
@@ -105,13 +116,14 @@ import { TodoItemComponent } from './todos/item.component';
     AdminGuard,
     CategoryService,
     TaskService,
-    AssessmentTypeService,
+    AssessmentService,
     QuestionService,
     SubmissionService,
     NotificationService,
     UserService,
     DragulaService,
-    TodoService
+    TodoService,
+    UserAssessmentService
   ],
   bootstrap: [AppComponent]
 })
