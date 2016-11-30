@@ -80,7 +80,7 @@ export class AuthService {
      * @param user
      */
     setLoggedUser(user: User) {
-        this.loggedUser = User.newInstance(user);
+        return this.loggedUser = User.newInstance(user);
     }
 
     /**

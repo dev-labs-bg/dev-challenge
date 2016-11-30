@@ -59,14 +59,13 @@ import { TodoItemComponent } from './todos/item.component';
 import { ExperienceBlockComponent } from './components/experience-block/experience-block.component';
 import { BonusesComponent } from './admin/bonuses/bonuses.component';
 import { ContributionsComponent } from './contributions/contributions.component';
-import { ContributionsFormComponent } from './contributions/form.component';
 import { BonusFormComponent } from './admin/bonuses/form.component';
 import { AssessmentMicroProjectComponent } from './assessment/micro-project/assessment-micro-project.component';
 import { AssessmentMicroProjectFormComponent } from './assessment/micro-project/form.component';
 import { AssessmentComponent } from './assessment/assessment.component';
 import { AdminAssessmentsListComponent } from './admin/assessments/list.component';
 import { CreateMicroProjectAssessmentComponent } from './assessment/micro-project/create.component';
-import { StackOverflowComponent } from './contributions/stack-overflow.component';
+import { FormComponent as ContributionsFormComponent } from './contributions/form.component';
 
 
 @NgModule({
@@ -100,14 +99,13 @@ import { StackOverflowComponent } from './contributions/stack-overflow.component
     ExperienceBlockComponent,
     BonusesComponent,
     ContributionsComponent,
-    ContributionsFormComponent,
     BonusFormComponent,
     AssessmentMicroProjectComponent,
     AssessmentMicroProjectFormComponent,
     AssessmentComponent,
     AdminAssessmentsListComponent,
     CreateMicroProjectAssessmentComponent,
-    StackOverflowComponent
+    ContributionsFormComponent
   ],
   imports: [
     BrowserModule,
