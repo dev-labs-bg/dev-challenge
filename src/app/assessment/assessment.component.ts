@@ -12,18 +12,18 @@ import { Todo } from '../todos/todo';
             (click)="toggleOpen()">
             {{ isOpen ? 'close' : 'open' }} assessment
         </button>
-        <div *ngIf="isOpen" [ngSwitch]="assessment.type">
 
+        <div *ngIf="isOpen" [ngSwitch]="assessment.id">
             <xp-assessment-micro-project
-                *ngSwitchCase="ASSESSMENT_TYPES.MICRO_PROJECT.id"
+                *ngSwitchCase="ASSESSMENT_TYPES.MICRO_PROJECT"
                 [assessment]="assessment"
                 [todo]="todo">
             </xp-assessment-micro-project>
+
             <xp-assessment-question
-                *ngSwitchCase="ASSESSMENT_TYPES.QUESTION.id"
+                *ngSwitchCase="ASSESSMENT_TYPES.QUESTION"
                 [todo]="todo">
             </xp-assessment-question>
-
         </div>
     `
 })

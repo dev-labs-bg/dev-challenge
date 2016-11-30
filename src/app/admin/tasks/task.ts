@@ -22,7 +22,7 @@ export class Task {
 
         let assessment = new Assessment(
             data.assessment.id,
-            data.assessment_type_id
+            data.assessment.type
         );
 
         return new Task(
