@@ -62,7 +62,7 @@ import { ContributionsComponent } from './contributions/contributions.component'
 import { ContributionsFormComponent } from './contributions/form.component';
 import { BonusFormComponent } from './admin/bonuses/form.component';
 import { AssessmentMicroProjectComponent } from './assessment/micro-project/micro-project.component';
-import { AssessmentOpenQuestionFormComponent } from './assessment/form-open-question.component';
+import { AssessmentOpenAnswerFormComponent } from './assessment/form/open-answer.component';
 import { AssessmentQuestionComponent } from './assessment/question/question.component';
 import { AssessmentQuestionCreateComponent } from './assessment/question/create.component';
 import { AssessmentComponent } from './assessment/assessment.component';
@@ -104,7 +104,7 @@ import { CreateMicroProjectAssessmentComponent } from './assessment/micro-projec
     ContributionsFormComponent,
     BonusFormComponent,
     AssessmentMicroProjectComponent,
-    AssessmentOpenQuestionFormComponent,
+    AssessmentOpenAnswerFormComponent,
     AssessmentQuestionComponent,
     AssessmentQuestionCreateComponent,
     AssessmentComponent,
