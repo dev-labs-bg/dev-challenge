@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+import { Assessment } from '../assessment';
+import { AssessmentService } from '../assessment.service';
+import { TodoService } from '../../todos/todo.service';
+import { NotificationService } from '../../shared/notification.service';
 
 @Component({
     selector: 'xp-assessment-question-create',
@@ -9,15 +14,29 @@ import { Component, OnInit } from '@angular/core';
     `,
     styles: []
 })
-export class AssessmentQuestionCreateComponent implements OnInit {
+export class AssessmentQuestionCreateComponent {
+    @Input() private assessment: Assessment;
 
-    constructor() { }
+    constructor(
+        private assessmentService: AssessmentService,
+        private todoService: TodoService,
+        private notificationService: NotificationService
+    ) { }
 
-    ngOnInit() {
-    }
+    private handleSubmit(formData) {
+        const { message } = formData;
 
-    handleSubmit() {
-        // TODO: Create!
+        this.assessmentService.submitOpenQuestionAnswer(
+            this.assessment.todoId,
+            this.assessment.questionId,
+            message
+        ).subscribe(
+            response => {
+                this.todoService.reset();
+                this.notificationService.fireSuccess('Assessment submitted!');
+            },
+            error => console.log('Ah, assessment not submitted!', error)
+        );
     }
 
 }

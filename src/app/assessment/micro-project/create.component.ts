@@ -25,7 +25,7 @@ export class CreateMicroProjectAssessmentComponent {
     private handleSubmit(formData) {
         const { message } = formData;
 
-        this.assessmentService.createAssessment(
+        this.assessmentService.submitOpenQuestionAnswer(
             this.assessment.todoId,
             this.assessment.questionId,
             message

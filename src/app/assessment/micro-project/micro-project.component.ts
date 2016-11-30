@@ -15,12 +15,14 @@ import { TODO_STATUSES } from '../constants';
                 *ngSwitchCase="TODO_STATUSES.UNCOMPLETED"
                 [assessment]="assessment">
             </xp-create-micro-project-assessment>
+
             <div *ngSwitchCase="TODO_STATUSES.SUBMITTED_FOR_REVIEW">
                 <h3>Your submission</h3>
                 <div class="alert alert-info" role="alert">
                     {{ todo.submissions[todo.submissions.length - 1].body }}
                 </div>
             </div>
+
             <div *ngSwitchCase="TODO_STATUSES.COMPLETED">
                 <h3>Your submission</h3>
                 <div class="alert alert-success" role="alert">
