@@ -63,7 +63,7 @@ import { ContributionsFormComponent } from './contributions/form.component';
 import { BonusFormComponent } from './admin/bonuses/form.component';
 import { AssessmentMicroProjectComponent } from './assessment/micro-project/micro-project.component';
 import { AssessmentOpenQuestionFormComponent } from './assessment/form-open-question.component';
-import { AssessmentQuestionComponent } from './assessment/question/assessment-question.component';
+import { AssessmentQuestionComponent } from './assessment/question/question.component';
 import { AssessmentQuestionCreateComponent } from './assessment/question/create.component';
 import { AssessmentComponent } from './assessment/assessment.component';
 import { AdminAssessmentsListComponent } from './admin/assessments/list.component';
