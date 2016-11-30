@@ -8,10 +8,9 @@ import { Task } from '../../tasks/task';
 @Component({
     selector: 'xp-admin-assessments-micro-project-create',
     template: `
-        <h2>Create Micro Project</h2>
-
         <xp-loading-indicator [wait]="subscription">
             <xp-admin-assessment-form-open-answer
+                submitText="Create"
                 [task]="task"
                 (onSubmit)="handleSubmit($event)">
             </xp-admin-assessment-form-open-answer>

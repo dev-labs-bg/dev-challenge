@@ -9,10 +9,9 @@ import { Question } from '../question';
 @Component({
     selector: 'xp-admin-assessments-micro-project-edit',
     template: `
-        <h2>Update Micro Project</h2>
-
         <xp-loading-indicator [wait]="subscription">
             <xp-admin-assessment-form-open-answer
+                submitText="Update"
                 [task]="task"
                 [question]="question"
                 (onSubmit)="handleSubmit($event)">

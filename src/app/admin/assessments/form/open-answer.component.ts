@@ -20,8 +20,8 @@ import {QuestionService} from '../question.service';
             <div class="form-group">
                 <button
                     type="submit"
-                    class="btn btn-default">
-                    Submit
+                    class="btn btn-primary">
+                    {{ submitText }}
                 </button>
             </div>
         </form>
@@ -30,6 +30,7 @@ import {QuestionService} from '../question.service';
 export class AdminAssessmentOpenAnswerForm implements OnInit {
     @Input() private task: Task = new Task();
     @Input() private question: Question = new Question();
+    @Input() private submitText: string = 'Submit';
     @Output() onSubmit = new EventEmitter();
     private form: FormGroup;
 
