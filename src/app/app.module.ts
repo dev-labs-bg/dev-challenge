@@ -66,6 +66,7 @@ import { AssessmentMicroProjectFormComponent } from './assessment/micro-project/
 import { AssessmentComponent } from './assessment/assessment.component';
 import { AdminAssessmentsListComponent } from './admin/assessments/list.component';
 import { CreateMicroProjectAssessmentComponent } from './assessment/micro-project/create.component';
+import { StackOverflowComponent } from './contributions/stack-overflow.component';
 
 
 @NgModule({
@@ -105,7 +106,8 @@ import { CreateMicroProjectAssessmentComponent } from './assessment/micro-projec
     AssessmentMicroProjectFormComponent,
     AssessmentComponent,
     AdminAssessmentsListComponent,
-    CreateMicroProjectAssessmentComponent
+    CreateMicroProjectAssessmentComponent,
+    StackOverflowComponent
   ],
   imports: [
     BrowserModule,
