@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 
-import {User} from '../../classes/user';
 import {ContributorsService} from '../../contributions/contributors.service';
 
 @Component({
@@ -11,42 +10,45 @@ import {ContributorsService} from '../../contributions/contributors.service';
         class="panel panel-primary">
         <div class="panel-heading">{{ user.getName() }}</div>
         <div class="panel-body">
-            <div *ngIf="!! user.attributes.stack_overflow_account">
+            <div *ngIf="user.attributes.stack_overflow_account">
                 <h4>Stack overflow account:</h4>
                 <p>
                     <a href="{{ user.attributes.stack_overflow_account }}" target="_blank">
                         Click here to view
                     </a>
                 </p>
+                <xp-bonus-form
+                    bonusType="stack_overflow_account"
+                    [user]="user">
+                </xp-bonus-form>
             </div>
-            <div *ngIf="!! user.attributes.public_activity">
+            <div *ngIf="user.attributes.public_activity">
                 <h4>Public activity</h4>
                 <p>
                     {{ user.attributes.public_activity }}
                 </p>
+                <xp-bonus-form
+                    bonusType="public_activity"
+                    [user]="user">
+                </xp-bonus-form>
             </div>
-            <div *ngIf="!! user.attributes.side_project">
+            <div *ngIf="user.attributes.side_project">
                 <h4>Side project</h4>
                 <p>
                     {{ user.attributes.side_project }}
                 </p>
+                <xp-bonus-form
+                    bonusType="side_project"
+                    [user]="user">
+                </xp-bonus-form>
             </div>
-            <div *ngIf="!! user.attributes.open_source_contributions">
+            <div *ngIf="user.attributes.open_source_contributions">
                 <h4>Open Source Contributions</h4>
                 <p>
                     {{ user.attributes.open_source_contributions }}
                 </p>
-            </div>
-            <div class="form-group">
-                <div
-                    (click)="openRewardForm(user)"
-                    class="btn btn-primary">
-                    Reward
-                </div>
-            </div>
-            <div *ngIf="selectedUser == user">
                 <xp-bonus-form
-                    (onCancel)="handleCancel($event)"
+                    bonusType="open_source_contributions"
                     [user]="user">
                 </xp-bonus-form>
             </div>
@@ -56,7 +58,6 @@ import {ContributorsService} from '../../contributions/contributors.service';
   styles: []
 })
 export class BonusesComponent implements OnInit {
-    private selectedUser: User = null;
 
     constructor(
         private contributorsService: ContributorsService,
@@ -64,13 +65,5 @@ export class BonusesComponent implements OnInit {
 
     ngOnInit() {
         this.contributorsService.setup();
-    }
-
-    openRewardForm(user) {
-        this.selectedUser = user;
-    }
-
-    handleCancel($event) {
-        this.selectedUser = null;
     }
 }
