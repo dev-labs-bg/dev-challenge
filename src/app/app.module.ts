@@ -70,6 +70,7 @@ import { AdminAssessmentsListComponent } from './admin/assessments/list.componen
 import { CreateMicroProjectAssessmentComponent } from './assessment/micro-project/create.component';
 import { AdminAssessmentsMicroProjectComponent } from './admin/assessments/micro-project/micro-project.component';
 import { AdminAssessmentsMicroProjectCreateComponent } from './admin/assessments/micro-project/create.component';
+import { AdminAssessmentsMicroProjectEditComponent } from './admin/assessments/micro-project/edit.component';
 
 
 @NgModule({
@@ -113,7 +114,8 @@ import { AdminAssessmentsMicroProjectCreateComponent } from './admin/assessments
     AdminAssessmentsListComponent,
     CreateMicroProjectAssessmentComponent,
     AdminAssessmentsMicroProjectComponent,
-    AdminAssessmentsMicroProjectCreateComponent
+    AdminAssessmentsMicroProjectCreateComponent,
+    AdminAssessmentsMicroProjectEditComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 import {Question} from '../question';
 import {Task} from '../../tasks/task';
@@ -29,8 +29,8 @@ import {QuestionService} from '../question.service';
 })
 export class AdminAssessmentOpenAnswerForm implements OnInit {
     @Input() private task: Task = new Task();
+    @Input() private question: Question = new Question();
     @Output() onSubmit = new EventEmitter();
-    private question: Question = new Question();
     private form: FormGroup;
 
     constructor(
@@ -40,65 +40,12 @@ export class AdminAssessmentOpenAnswerForm implements OnInit {
 
     ngOnInit() {
         this.form = this.formBuilder.group({
-            // TODO: default values here
             'task_id': [this.task.id, Validators.required],
             'body': [this.question.body, Validators.required]
         });
     }
 
-    // /**
-    //  * Init form
-    //  */
-    // ngOnInit() {
-    //     this.form = this.buildForm();
-    // }
-
-    // /**
-    //  * Recompile form on each @Input() task change;
-    //  */
-    // ngOnChanges() {
-    //     this.form = this.buildForm();
-    // }
-
-    // /**
-    //  * Build the form component
-    //  *
-    //  * @returns {FormGroup}
-    //  */
-    // buildForm() {
-    //     // find questions related to task
-    //     let questions = this.questionService.findByTaskId(this.task.id);
-
-    //     // get the question
-    //     this.question = (questions.length > 0) ? questions[0] : new Question();
-
-    //     return this.formBuilder.group({
-    //         'task_id': [this.task.id, Validators.required],
-    //         'body': [this.question.body, Validators.required]
-    //     });
-    // }
-
     handleSubmit() {
         this.onSubmit.emit(this.form.value);
     }
-
-    /**
-     * Handle form update
-     *
-     * @param id - question id
-     */
-    onUpdate(id) {
-        let value = this.form.value;
-
-        return this.questionService.update(id, value).subscribe(
-            response => {
-                if (response.success) {
-                    this.questionService.updateMainArray(Question.newQuestion(response.question));
-                } else {
-                    console.log(response);
-                }
-            }
-        );
-    }
-
 }
