@@ -61,10 +61,10 @@ import { BonusesComponent } from './admin/bonuses/bonuses.component';
 import { ContributionsComponent } from './contributions/contributions.component';
 import { ContributionsFormComponent } from './contributions/form.component';
 import { BonusFormComponent } from './admin/bonuses/form.component';
-import { AssessmentMicroProjectComponent } from './assessment/micro-project/assessment-micro-project.component';
-import { AssessmentMicroProjectFormComponent } from './assessment/micro-project/form.component';
+import { AssessmentMicroProjectComponent } from './assessment/micro-project/micro-project.component';
+import { AssessmentOpenQuestionFormComponent } from './assessment/form-open-question.component';
 import { AssessmentQuestionComponent } from './assessment/question/assessment-question.component';
-import { AssessmentQuestionFormComponent } from './assessment/question/form.component';
+import { AssessmentQuestionCreateComponent } from './assessment/question/create.component';
 import { AssessmentComponent } from './assessment/assessment.component';
 import { AdminAssessmentsListComponent } from './admin/assessments/list.component';
 import { CreateMicroProjectAssessmentComponent } from './assessment/micro-project/create.component';
@@ -104,9 +104,9 @@ import { CreateMicroProjectAssessmentComponent } from './assessment/micro-projec
     ContributionsFormComponent,
     BonusFormComponent,
     AssessmentMicroProjectComponent,
-    AssessmentMicroProjectFormComponent,
+    AssessmentOpenQuestionFormComponent,
     AssessmentQuestionComponent,
-    AssessmentQuestionFormComponent,
+    AssessmentQuestionCreateComponent,
     AssessmentComponent,
     AdminAssessmentsListComponent,
     CreateMicroProjectAssessmentComponent

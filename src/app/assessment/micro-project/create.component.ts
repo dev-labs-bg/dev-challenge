@@ -8,9 +8,9 @@ import { NotificationService } from '../../shared/notification.service';
 @Component({
     selector: 'xp-create-micro-project-assessment',
     template: `
-        <xp-assessment-micro-project-form
+        <xp-assessment-form-open-question
             (onSubmit)="handleSubmit($event)">
-        </xp-assessment-micro-project-form>
+        </xp-assessment-form-open-question>
     `
 })
 export class CreateMicroProjectAssessmentComponent {
