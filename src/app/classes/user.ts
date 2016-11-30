@@ -12,7 +12,10 @@ export class User {
         public email: string = '',
         public active: number = 0,
         public created_at: string = '',
+        public experience: number = 0,
+        public bonus_points: number = 0,
         public roles: Role[] = [],
+        public attributes: any = {},
     ) {}
 
     /**
@@ -21,7 +24,7 @@ export class User {
      * @param userData
      * @returns {User}
      */
-    public static newUser(userData) {
+    public static newInstance(userData) {
         let roles = [];
 
         if (userData.roles.length > 0) {
@@ -37,7 +40,10 @@ export class User {
             userData.email,
             userData.active,
             userData.created_at,
-            roles
+            userData.experience_points,
+            userData.bonus_points,
+            roles,
+            userData.attributes,
         );
     }
 

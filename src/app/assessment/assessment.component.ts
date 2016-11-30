@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 import { ASSESSMENT_TYPES } from './constants';
 import { Assessment } from './assessment';
@@ -24,7 +24,7 @@ import { Todo } from '../todos/todo';
         </div>
     `
 })
-export class AssessmentComponent {
+export class AssessmentComponent implements OnInit {
     @Input() private assessment: Assessment;
     @Input() private todo: Todo;
     private ASSESSMENT_TYPES = ASSESSMENT_TYPES;
@@ -34,6 +34,9 @@ export class AssessmentComponent {
 
     private toggleOpen() {
         this.isOpen = ! this.isOpen;
+    }
+
+    ngOnInit() {
     }
 
 }

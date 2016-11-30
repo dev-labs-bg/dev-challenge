@@ -4,7 +4,7 @@ import {Subscription} from 'rxjs/Rx';
 import {Submission} from '../submission';
 import {Task} from '../../tasks/task';
 import {Question} from '../../assessments/question';
-    import {User} from '../../../classes/user';
+import {User} from '../../../classes/user';
 import {HttpService} from '../../../services/http.service';
 import {SubmissionService} from '../submission.service';
 import {NotificationService} from '../../../shared/notification.service';
@@ -38,7 +38,7 @@ export class SingleComponent implements OnInit, OnDestroy {
                             response => {
                                 this.submission = Submission.newSubmission(response.submission);
                                 this.task = Task.newInstance(response.task);
-                                this.user = User.newUser(response.user);
+                                this.user = User.newInstance(response.user);
                                 this.question = Question.newQuestion(response.questions[0]);
                                 resolve(response.success);
                             },

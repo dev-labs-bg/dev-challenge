@@ -26,6 +26,7 @@ import { TaskService } from './admin/tasks/task.service';
 import { QuestionService } from './admin/assessments/question.service';
 import { NotificationService } from './shared/notification.service';
 import { TodoService } from './todos/todo.service';
+import { ContributorsService } from './contributions/contributors.service';
 import { AssessmentService as UserAssessmentService }  from './assessment/assessment.service';
 
 import { AppComponent } from './app.component';
@@ -55,11 +56,17 @@ import { AdditionalInfoComponent } from './register/steps/additional-info.compon
 import { VerifyEmailComponent } from './register/steps/verify-email.component';
 import { TodosListComponent } from './todos/list.component';
 import { TodoItemComponent } from './todos/item.component';
+import { ExperienceBlockComponent } from './components/experience-block/experience-block.component';
+import { BonusesComponent } from './admin/bonuses/bonuses.component';
+import { ContributionsComponent } from './contributions/contributions.component';
+import { ContributionsFormComponent } from './contributions/form.component';
+import { BonusFormComponent } from './admin/bonuses/form.component';
 import { AssessmentMicroProjectComponent } from './assessment/micro-project/assessment-micro-project.component';
 import { AssessmentMicroProjectFormComponent } from './assessment/micro-project/form.component';
 import { AssessmentComponent } from './assessment/assessment.component';
 import { AdminAssessmentsListComponent } from './admin/assessments/list.component';
 import { CreateMicroProjectAssessmentComponent } from './assessment/micro-project/create.component';
+
 
 @NgModule({
   declarations: [
@@ -89,6 +96,11 @@ import { CreateMicroProjectAssessmentComponent } from './assessment/micro-projec
     VerifyEmailComponent,
     TodosListComponent,
     TodoItemComponent,
+    ExperienceBlockComponent,
+    BonusesComponent,
+    ContributionsComponent,
+    ContributionsFormComponent,
+    BonusFormComponent,
     AssessmentMicroProjectComponent,
     AssessmentMicroProjectFormComponent,
     AssessmentComponent,
@@ -123,6 +135,7 @@ import { CreateMicroProjectAssessmentComponent } from './assessment/micro-projec
     UserService,
     DragulaService,
     TodoService,
+    ContributorsService,
     UserAssessmentService
   ],
   bootstrap: [AppComponent]
