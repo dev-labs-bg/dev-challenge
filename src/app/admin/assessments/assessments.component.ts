@@ -7,8 +7,47 @@ import { QuestionService } from './question.service';
 import { Assessment } from './assessment';
 
 @Component({
-  selector: 'xp-assessments',
-  templateUrl: './assessments.component.html'
+    selector: 'xp-assessments',
+    template: `
+        <h1>Assessment Center</h1>
+        <h2>Please select a task</h2>
+
+        <div class="form-group">
+            <label for="task">Task</label>
+            <select
+                name="task"
+                id="task"
+                (ngModelChange)="onTaskChange($event)" [ngModel]="task_id">
+                <option value="0" disabled selected>Select Task</option>
+                <option *ngFor="let task of taskService.repository.getData()"
+                        value="{{ task.id }}">
+                    {{ task.title }}
+                </option>
+            </select>
+        </div>
+
+        <p *ngIf="(selectedTask != null)">
+            Task type:
+            <strong>{{ selectedTask?.assessment.type }}</strong>
+        </p>
+
+        <div [ngSwitch]="selectedTask?.assessment.id">
+            <xp-open-answer-form
+                *ngSwitchCase="ASSESSMENT_TYPES.MICRO_PROJECT"
+                [task]="selectedTask">
+            </xp-open-answer-form>
+
+            <xp-open-answer-form
+                *ngSwitchCase="ASSESSMENT_TYPES.QUESTION"
+                [task]="selectedTask">
+            </xp-open-answer-form>
+
+            <xp-exam-answer-form
+                *ngSwitchCase="ASSESSMENT_TYPES.EXAM"
+                [task]="selectedTask">
+            </xp-exam-answer-form>
+        </div>
+    `
 })
 export class AssessmentsComponent implements OnInit {
     private selectedTask: Task = null;

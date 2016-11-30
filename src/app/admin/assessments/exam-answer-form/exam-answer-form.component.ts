@@ -7,8 +7,7 @@ import {Subscription} from 'rxjs/Rx';
 
 @Component({
   selector: 'xp-exam-answer-form',
-  templateUrl: './exam-answer-form.component.html',
-  styleUrls: ['./exam-answer-form.component.scss']
+  templateUrl: './exam-answer-form.component.html'
 })
 export class ExamAnswerFormComponent implements OnInit, OnChanges {
     @Input() private task: Task;
