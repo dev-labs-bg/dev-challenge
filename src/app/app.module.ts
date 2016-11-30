@@ -41,7 +41,7 @@ import { AdminCategoriesComponent } from './admin/categories/categories.componen
 import { TasksComponent } from './admin/tasks/tasks.component';
 import { CategoryFormComponent } from './admin/categories/form/form.component';
 import { AssessmentsComponent } from './admin/assessments/assessments.component';
-import { OpenAnswerFormComponent } from './admin/assessments/open-answer-form/open-answer-form.component';
+import { AdminAssessmentOpenAnswerForm } from './admin/assessments/form/open-answer.component';
 import { ExamAnswerFormComponent } from './admin/assessments/exam-answer-form/exam-answer-form.component';
 import { ListComponent } from './admin/categories/list.component';
 import { CreateComponent } from './admin/categories/create.component';
@@ -83,7 +83,7 @@ import { CreateMicroProjectAssessmentComponent } from './assessment/micro-projec
     TasksComponent,
     CategoryFormComponent,
     AssessmentsComponent,
-    OpenAnswerFormComponent,
+    AdminAssessmentOpenAnswerForm,
     ExamAnswerFormComponent,
     ListComponent,
     CreateComponent,

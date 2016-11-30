@@ -1,15 +1,37 @@
 import {Component, OnInit, Input, OnChanges} from '@angular/core';
-import {Question} from '../question';
-import {Task} from '../../tasks/task';
 import {FormGroup, Validators, FormBuilder} from '@angular/forms';
-import {QuestionService} from '../question.service';
 import {Subscription} from 'rxjs/Rx';
 
+import {Question} from '../question';
+import {Task} from '../../tasks/task';
+import {QuestionService} from '../question.service';
+
 @Component({
-  selector: 'xp-open-answer-form',
-  templateUrl: './open-answer-form.component.html'
+    selector: 'xp-admin-assessment-form-open-answer',
+    template: `
+        <xp-loading-indicator [wait]="formSubscription">
+            <form [formGroup]="form" (ngSubmit)="handleSubmit()">
+                <div class="form-group">
+                    <label for="open_question">State your question / project</label>
+                    <textarea
+                        formControlName="body"
+                        class="form-control"
+                        name="open_question"
+                        rows="5"
+                        id="open_question"></textarea>
+                </div>
+                <div class="form-group">
+                    <button
+                        type="submit"
+                        class="btn btn-default">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </xp-loading-indicator>
+    `
 })
-export class OpenAnswerFormComponent implements OnInit, OnChanges {
+export class AdminAssessmentOpenAnswerForm implements OnInit, OnChanges {
     @Input() private task: Task;
     private form: FormGroup;
     private question: Question;
