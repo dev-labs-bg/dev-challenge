@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { AssessmentTypeService } from './assessment-type.service';
+import { Subscription } from 'rxjs/Rx';
+import * as _ from 'lodash';
+
 import { CategoryService } from '../categories/category.service';
 import { Category } from '../categories/category';
-import { Subscription } from 'rxjs/Rx';
 import { Task } from './task';
 import { TaskService } from './task.service';
-import * as _ from 'lodash';
 
 @Component({
     selector: 'xp-admin-tasks',
-    templateUrl: './tasks.component.html',
-    styleUrls: ['./tasks.component.scss']
+    templateUrl: './tasks.component.html'
 })
 export class TasksComponent implements OnInit {
     private taskFormSubscription: Subscription;
@@ -26,13 +24,11 @@ export class TasksComponent implements OnInit {
     constructor(
         private taskService: TaskService,
         private categoryService: CategoryService,
-        private assessmentTypeService: AssessmentTypeService,
         private formBuilder: FormBuilder
     ) {}
 
     ngOnInit() {
         this.categoryService.getAll();
-        this.assessmentTypeService.getAll();
 
         this.taskService.repository.setup(
             this.taskService.apiGetURLS.all,

@@ -1,4 +1,4 @@
-import { AssessmentType } from './assessment-type';
+import { Assessment } from '../assessments/assessment';
 import { Category } from '../categories/category';
 
 export class Task {
@@ -6,7 +6,7 @@ export class Task {
     constructor(
         public id: number,
         public category: Category,
-        public assessment: AssessmentType,
+        public assessment: Assessment,
         public title: string,
         public description: string,
         public time_estimation: number,
@@ -20,9 +20,9 @@ export class Task {
             data.category.name,
         );
 
-        let assessment = new AssessmentType(
+        let assessment = new Assessment(
             data.assessment.id,
-            data.assessment.type,
+            data.assessment_type_id
         );
 
         return new Task(

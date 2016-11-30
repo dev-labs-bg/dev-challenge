@@ -21,12 +21,13 @@ import { AdminService } from './services/admin.service';
 import { SubmissionService } from './admin/submissions/submission.service';
 import { UserService } from './shared/user.service';
 import { CategoryService } from './admin/categories/category.service';
-import { AssessmentTypeService } from './admin/tasks/assessment-type.service';
+import { AssessmentService } from './admin/assessments/assessment.service';
 import { TaskService } from './admin/tasks/task.service';
 import { QuestionService } from './admin/assessments/question.service';
 import { NotificationService } from './shared/notification.service';
 import { TodoService } from './todos/todo.service';
 import { ContributorsService } from './contributions/contributors.service';
+import { AssessmentService as UserAssessmentService }  from './assessment/assessment.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -60,6 +61,12 @@ import { BonusesComponent } from './admin/bonuses/bonuses.component';
 import { ContributionsComponent } from './contributions/contributions.component';
 import { ContributionsFormComponent } from './contributions/form.component';
 import { BonusFormComponent } from './admin/bonuses/form.component';
+import { AssessmentMicroProjectComponent } from './assessment/micro-project/assessment-micro-project.component';
+import { AssessmentMicroProjectFormComponent } from './assessment/micro-project/form.component';
+import { AssessmentComponent } from './assessment/assessment.component';
+import { AdminAssessmentsListComponent } from './admin/assessments/list.component';
+import { CreateMicroProjectAssessmentComponent } from './assessment/micro-project/create.component';
+
 
 @NgModule({
   declarations: [
@@ -93,7 +100,12 @@ import { BonusFormComponent } from './admin/bonuses/form.component';
     BonusesComponent,
     ContributionsComponent,
     ContributionsFormComponent,
-    BonusFormComponent
+    BonusFormComponent,
+    AssessmentMicroProjectComponent,
+    AssessmentMicroProjectFormComponent,
+    AssessmentComponent,
+    AdminAssessmentsListComponent,
+    CreateMicroProjectAssessmentComponent
   ],
   imports: [
     BrowserModule,
@@ -116,7 +128,7 @@ import { BonusFormComponent } from './admin/bonuses/form.component';
     AdminGuard,
     CategoryService,
     TaskService,
-    AssessmentTypeService,
+    AssessmentService,
     QuestionService,
     SubmissionService,
     NotificationService,
@@ -124,6 +136,7 @@ import { BonusFormComponent } from './admin/bonuses/form.component';
     DragulaService,
     TodoService,
     ContributorsService,
+    UserAssessmentService
   ],
   bootstrap: [AppComponent]
 })
