@@ -58,7 +58,9 @@ export class TodoItemComponent implements OnInit {
 
     constructor() { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        //
+    }
 
     private toggleOpenDetails() {
         this.areDetailsOpen = ! this.areDetailsOpen;

@@ -28,7 +28,7 @@
             <a
                 *ngFor="let submission of taskService.findSubmissions(task.id)"
                 routerLink="/admin/submissions/{{ submission.id }}">
-                Submitted by {{ userService.getById(submission.user_id).getName() }}
+                Submitted by {{ userService.repository.find(submission.user_id).getName() }}
             </a>
         </li>
     </ul>

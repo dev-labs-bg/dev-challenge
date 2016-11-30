@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 import { Assessment } from '../assessment';
 import { Todo } from '../../todos/todo';
@@ -30,11 +30,15 @@ import { TODO_STATUSES } from '../constants';
         </div>
     `
 })
-export class AssessmentMicroProjectComponent {
+export class AssessmentMicroProjectComponent implements OnInit {
     @Input() private assessment: Assessment;
     @Input() private todo: Todo;
     private TODO_STATUSES = TODO_STATUSES;
 
     constructor() { }
+
+    ngOnInit() {
+        //
+    }
 
 }

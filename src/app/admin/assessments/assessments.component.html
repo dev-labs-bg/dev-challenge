@@ -18,10 +18,10 @@
 
 <p *ngIf="(selectedTask != null)">
     Task type:
-    <strong>{{ Assessment.getNameByType(selectedTask.assessment.type) }}</strong>
+    <strong>{{ Assessment.getNameByType(selectedTask.assessment.id) }}</strong>
 </p>
 
-<div [ngSwitch]="selectedTask?.assessment.type">
+<div [ngSwitch]="selectedTask?.assessment.id">
     <xp-open-answer-form
         *ngSwitchCase="ASSESSMENT_TYPES.MICRO_PROJECT.id"
         [task]="selectedTask">

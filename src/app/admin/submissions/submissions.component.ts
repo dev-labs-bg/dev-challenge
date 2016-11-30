@@ -29,7 +29,7 @@ export class SubmissionsComponent implements OnInit {
             this.taskService.apiGetURLS.all,
             Task
         );
-        this.userService.getAll();
+        this.userService.setup();
     }
 
     onCategoryChange(val) {
