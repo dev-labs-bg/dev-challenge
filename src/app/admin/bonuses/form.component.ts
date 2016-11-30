@@ -6,8 +6,8 @@ import {NotificationService} from "../../shared/notification.service";
 
 import {User} from '../../classes/user';
 import {HttpService} from '../../services/http.service';
-import {ContributorsService} from "../../contributions/contributors.service";
-import {UserService} from "../../shared/user.service";
+import {ContributorsService} from '../../contributions/contributors.service';
+import {UserService} from '../../shared/user.service';
 
 @Component({
   selector: 'xp-bonus-form',
