@@ -6,14 +6,15 @@ import { TodoService } from '../../todos/todo.service';
 import { NotificationService } from '../../shared/notification.service';
 
 @Component({
-    selector: 'xp-create-micro-project-assessment',
+    selector: 'xp-assessment-question-create',
     template: `
         <xp-assessment-form-open-question
             (onSubmit)="handleSubmit($event)">
         </xp-assessment-form-open-question>
-    `
+    `,
+    styles: []
 })
-export class CreateMicroProjectAssessmentComponent {
+export class AssessmentQuestionCreateComponent {
     @Input() private assessment: Assessment;
 
     constructor(

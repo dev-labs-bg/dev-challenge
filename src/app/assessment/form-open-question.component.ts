@@ -1,10 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import Utils from '../../shared/utils';
+import Utils from '../shared/utils';
 
 @Component({
-    selector: 'xp-assessment-micro-project-form',
+    selector: 'xp-assessment-form-open-question',
     template: `
         <form [formGroup]="form" (ngSubmit)="handleSubmit()">
             <div class="form-group">
@@ -34,7 +34,7 @@ import Utils from '../../shared/utils';
         </form>
     `
 })
-export class AssessmentMicroProjectFormComponent implements OnInit {
+export class AssessmentOpenQuestionFormComponent implements OnInit {
     @Output() onSubmit = new EventEmitter();
     private form: FormGroup;
     private wordsLimit = 110;
