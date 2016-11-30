@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
 
 import {Question} from '../question';
 import {Task} from '../../tasks/task';
@@ -27,7 +27,7 @@ import {QuestionService} from '../question.service';
         </form>
     `
 })
-export class AdminAssessmentOpenAnswerForm implements OnInit {
+export class AdminAssessmentOpenAnswerForm implements OnInit, OnChanges {
     @Input() private task: Task = new Task();
     @Input() private question: Question = new Question();
     @Input() private submitText: string = 'Submit';
@@ -44,6 +44,20 @@ export class AdminAssessmentOpenAnswerForm implements OnInit {
             'task_id': [this.task.id, Validators.required],
             'body': [this.question.body, Validators.required]
         });
+    }
+
+    /**
+     * If new input (data) comes, without the component being re-rendered,
+     * we need to update the form values.
+     * Otherwise, we end up with not-updated values (set in ngOnInit).
+     */
+    ngOnChanges() {
+        if (this.form) {
+            this.form.patchValue({
+                'task_id': this.task.id,
+                'body': this.question.body
+            });
+        }
     }
 
     handleSubmit() {
