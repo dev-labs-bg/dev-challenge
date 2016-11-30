@@ -60,8 +60,10 @@ import { ExperienceBlockComponent } from './components/experience-block/experien
 import { BonusesComponent } from './admin/bonuses/bonuses.component';
 import { ContributionsComponent } from './contributions/contributions.component';
 import { BonusFormComponent } from './admin/bonuses/form.component';
-import { AssessmentMicroProjectComponent } from './assessment/micro-project/assessment-micro-project.component';
-import { AssessmentMicroProjectFormComponent } from './assessment/micro-project/form.component';
+import { AssessmentMicroProjectComponent } from './assessment/micro-project/micro-project.component';
+import { AssessmentOpenQuestionFormComponent } from './assessment/form-open-question.component';
+import { AssessmentQuestionComponent } from './assessment/question/question.component';
+import { AssessmentQuestionCreateComponent } from './assessment/question/create.component';
 import { AssessmentComponent } from './assessment/assessment.component';
 import { AdminAssessmentsListComponent } from './admin/assessments/list.component';
 import { CreateMicroProjectAssessmentComponent } from './assessment/micro-project/create.component';
@@ -101,7 +103,9 @@ import { FormComponent as ContributionsFormComponent } from './contributions/for
     ContributionsComponent,
     BonusFormComponent,
     AssessmentMicroProjectComponent,
-    AssessmentMicroProjectFormComponent,
+    AssessmentOpenQuestionFormComponent,
+    AssessmentQuestionComponent,
+    AssessmentQuestionCreateComponent,
     AssessmentComponent,
     AdminAssessmentsListComponent,
     CreateMicroProjectAssessmentComponent,

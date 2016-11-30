@@ -54,7 +54,7 @@ import { Todo } from './todo';
 })
 export class TodoItemComponent implements OnInit {
     @Input() todo: Todo;
-    private areDetailsOpen: boolean = true;
+    private areDetailsOpen: boolean = false;
 
     constructor() { }
 
