@@ -25,6 +25,12 @@ export class QuestionService {
         );
     }
 
+    reset() {
+        this.questions.length = 0;
+
+        this.getAll();
+    }
+
     getQuestions() {
         return this.questions;
     }

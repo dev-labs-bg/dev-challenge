@@ -32,10 +32,10 @@ import { Assessment } from './assessment';
         </p>
 
         <div [ngSwitch]="selectedTask?.assessment.id">
-            <xp-admin-assessment-form-open-answer
+            <xp-admin-assessments-micro-project
                 *ngSwitchCase="ASSESSMENT_TYPES.MICRO_PROJECT"
                 [task]="selectedTask">
-            </xp-admin-assessment-form-open-answer>
+            </xp-admin-assessments-micro-project>
 
             <xp-admin-assessment-form-open-answer
                 *ngSwitchCase="ASSESSMENT_TYPES.QUESTION"

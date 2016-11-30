@@ -1,108 +1,85 @@
-import {Component, OnInit, Input, OnChanges} from '@angular/core';
-import {FormGroup, Validators, FormBuilder} from '@angular/forms';
-import {Subscription} from 'rxjs/Rx';
+import { Component, OnInit, Input, OnChanges, EventEmitter, Output } from '@angular/core';
 
 import {Question} from '../question';
 import {Task} from '../../tasks/task';
+import {FormGroup, Validators, FormBuilder} from '@angular/forms';
 import {QuestionService} from '../question.service';
 
 @Component({
     selector: 'xp-admin-assessment-form-open-answer',
     template: `
-        <xp-loading-indicator [wait]="formSubscription">
-            <form [formGroup]="form" (ngSubmit)="handleSubmit()">
-                <div class="form-group">
-                    <label for="open_question">State your question / project</label>
-                    <textarea
-                        formControlName="body"
-                        class="form-control"
-                        name="open_question"
-                        rows="5"
-                        id="open_question"></textarea>
-                </div>
-                <div class="form-group">
-                    <button
-                        type="submit"
-                        class="btn btn-default">
-                        Submit
-                    </button>
-                </div>
-            </form>
-        </xp-loading-indicator>
+        <form [formGroup]="form" (ngSubmit)="handleSubmit()">
+            <div class="form-group">
+                <textarea
+                    formControlName="body"
+                    class="form-control"
+                    name="open_question"
+                    rows="5"
+                    id="open_question"></textarea>
+            </div>
+            <div class="form-group">
+                <button
+                    type="submit"
+                    class="btn btn-default">
+                    Submit
+                </button>
+            </div>
+        </form>
     `
 })
-export class AdminAssessmentOpenAnswerForm implements OnInit, OnChanges {
-    @Input() private task: Task;
+export class AdminAssessmentOpenAnswerForm implements OnInit {
+    @Input() private task: Task = new Task();
+    @Output() onSubmit = new EventEmitter();
+    private question: Question = new Question();
     private form: FormGroup;
-    private question: Question;
-    private formSubscription: Subscription;
 
     constructor(
         private formBuilder: FormBuilder,
         private questionService: QuestionService
     ) { }
 
-    /**
-     * Init form
-     */
     ngOnInit() {
-        this.form = this.buildForm();
-    }
-
-    /**
-     * Recompile form on each @Input() task change;
-     */
-    ngOnChanges() {
-        this.form = this.buildForm();
-    }
-
-    /**
-     * Build the form component
-     *
-     * @returns {FormGroup}
-     */
-    buildForm() {
-        // find questions related to task
-        let questions = this.questionService.findByTaskId(this.task.id);
-
-        // get the question
-        this.question = (questions.length > 0) ? questions[0] : new Question();
-
-        return this.formBuilder.group({
+        this.form = this.formBuilder.group({
+            // TODO: default values here
             'task_id': [this.task.id, Validators.required],
             'body': [this.question.body, Validators.required]
         });
     }
 
-    /**
-     * Handle form submit
-     *
-     * @returns {Subscription}
-     */
+    // /**
+    //  * Init form
+    //  */
+    // ngOnInit() {
+    //     this.form = this.buildForm();
+    // }
+
+    // /**
+    //  * Recompile form on each @Input() task change;
+    //  */
+    // ngOnChanges() {
+    //     this.form = this.buildForm();
+    // }
+
+    // /**
+    //  * Build the form component
+    //  *
+    //  * @returns {FormGroup}
+    //  */
+    // buildForm() {
+    //     // find questions related to task
+    //     let questions = this.questionService.findByTaskId(this.task.id);
+
+    //     // get the question
+    //     this.question = (questions.length > 0) ? questions[0] : new Question();
+
+    //     return this.formBuilder.group({
+    //         'task_id': [this.task.id, Validators.required],
+    //         'body': [this.question.body, Validators.required]
+    //     });
+    // }
+
     handleSubmit() {
-        if (this.question.id === -1) {
-            return this.onSubmit();
-        }
-
-        return this.onUpdate(this.question.id);
-    }
-
-    /**
-     * Handle form create
-     */
-    onSubmit() {
-        let value = this.form.value;
-
-        return this.formSubscription = this.questionService.create(value).subscribe(
-            response => {
-                if (response.success) {
-                    this.questionService.add(Question.newQuestion(response.question));
-                    this.form = this.buildForm();
-                } else {
-                    console.log(response);
-                }
-            }
-        );
+        this.onSubmit.emit(this.form.value);
     }
 
     /**
@@ -113,7 +90,7 @@ export class AdminAssessmentOpenAnswerForm implements OnInit, OnChanges {
     onUpdate(id) {
         let value = this.form.value;
 
-        return this.formSubscription = this.questionService.update(id, value).subscribe(
+        return this.questionService.update(id, value).subscribe(
             response => {
                 if (response.success) {
                     this.questionService.updateMainArray(Question.newQuestion(response.question));

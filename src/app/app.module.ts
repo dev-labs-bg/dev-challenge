@@ -68,6 +68,8 @@ import { AssessmentQuestionCreateComponent } from './assessment/question/create.
 import { AssessmentComponent } from './assessment/assessment.component';
 import { AdminAssessmentsListComponent } from './admin/assessments/list.component';
 import { CreateMicroProjectAssessmentComponent } from './assessment/micro-project/create.component';
+import { AdminAssessmentsMicroProjectComponent } from './admin/assessments/micro-project/micro-project.component';
+import { AdminAssessmentsMicroProjectCreateComponent } from './admin/assessments/micro-project/create.component';
 
 
 @NgModule({
@@ -109,7 +111,9 @@ import { CreateMicroProjectAssessmentComponent } from './assessment/micro-projec
     AssessmentQuestionCreateComponent,
     AssessmentComponent,
     AdminAssessmentsListComponent,
-    CreateMicroProjectAssessmentComponent
+    CreateMicroProjectAssessmentComponent,
+    AdminAssessmentsMicroProjectComponent,
+    AdminAssessmentsMicroProjectCreateComponent
   ],
   imports: [
     BrowserModule,
