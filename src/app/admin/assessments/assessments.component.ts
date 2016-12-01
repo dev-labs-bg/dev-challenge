@@ -42,10 +42,10 @@ import { Assessment } from './assessment';
                 [task]="selectedTask">
             </xp-admin-assessments-question>
 
-            <xp-admin-assessment-form-exam
+            <xp-admin-assessments-exam
                 *ngSwitchCase="ASSESSMENT_TYPES.EXAM"
                 [task]="selectedTask">
-            </xp-admin-assessment-form-exam>
+            </xp-admin-assessments-exam>
         </div>
     `
 })

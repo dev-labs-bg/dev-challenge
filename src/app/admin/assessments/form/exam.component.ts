@@ -1,19 +1,122 @@
-import {Component, OnInit, Input, OnChanges} from '@angular/core';
-import {FormGroup, FormBuilder, Validators, FormArray} from '@angular/forms';
-import {Question} from '../question';
-import {Task} from '../../tasks/task';
-import {QuestionService} from '../question.service';
-import {Subscription} from 'rxjs/Rx';
+import { Component, OnInit, Input, Output, OnChanges, EventEmitter } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+
+import { Question } from '../question';
+import { Task } from '../../tasks/task';
+import { QuestionService } from '../question.service';
 
 @Component({
-  selector: 'xp-admin-assessment-form-exam',
-  templateUrl: './exam.component.html'
+    selector: 'xp-admin-assessment-form-exam',
+    template: `
+        <form [formGroup]="form" (ngSubmit)="handleSubmit()">
+            <div
+                class="question-group-holder"
+                *ngFor="let question of formQuestions.controls; let i = index;">
+                <div
+                    class="form-group"
+                    formArrayName="formQuestions">
+                    <div [formGroupName]="i">
+                        <input
+                            formControlName="id"
+                            type="hidden"
+                        >
+                        <label>
+                            <span>Question #{{ i + 1 }}</span>
+                            <input
+                                type="text"
+                                class="form-control"
+                                formControlName="body"
+                            />
+                        </label>
+                    </div>
+                </div>
+                <div
+                    class="holder">
+                    <div
+                        class="form-group"
+                        formArrayName="correctAnswers">
+                        <div [formGroupName]="i">
+                            <input
+                                type="hidden"
+                                formControlName="id"
+                            />
+                            <label>
+                                <span>Correct Answer</span>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="body"
+                                />
+                            </label>
+                        </div>
+                    </div>
+                    <div
+                        class="form-group"
+                        formArrayName="correctAnswers">
+                        <div [formGroupName]="i">
+                            <label>
+                                <span>Why is the answer correct?</span>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="explanation"
+                                />
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col-lg-12">3 wrong answers</label>
+                        </div>
+                        <div
+                            class="row"
+                            formArrayName="wrongAnswers">
+                            <div
+                                *ngFor="let answer of form.controls.wrongAnswers.at(i).controls; let k = index;"
+                                [formArrayName]="i"
+                                class="col-lg-4">
+                                <div [formGroupName]="k">
+                                    <input
+                                        type="hidden"
+                                        formControlName="id"
+                                    />
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        formControlName="body"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div
+                        class="btn btn-danger"
+                        (click)="deleteQuestion(i)">
+                        Delete question
+                    </div>
+                </div>
+            </div>
+            <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="!form.valid">
+                Save form
+            </button>
+            <div
+                class="btn btn-default"
+                (click)="addQuestion()">
+                Add question
+            </div>
+        </form>
+    `
 })
 export class ExamAnswerFormComponent implements OnInit, OnChanges {
     @Input() private task: Task;
-    private questions: Question[] = [];
+    @Input() private questions: Question[] = [];
+    @Output() onSubmit = new EventEmitter();
     private form: FormGroup;
-    private formSubscription: Subscription;
 
     constructor(
         private questionService: QuestionService,
@@ -24,7 +127,56 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
      * Init form on component init
      */
     ngOnInit() {
-        this.buildExamForm();
+        let formQuestions = new FormArray([]);
+        let correctAnswers = new FormArray([]);
+        let wrongAnswers = new FormArray([]);
+
+        let innerFormBuilder = this.formBuilder;
+
+        this.questions.forEach(function (question) {
+            formQuestions.push(
+                innerFormBuilder.group({
+                        id: [question.id],
+                        body: [question.body, Validators.required],
+                    }
+                ));
+
+            let wrongAnswersBody = new FormArray([]);
+
+            question.examAnswers.forEach(function (answer) {
+                if (answer.is_correct) {
+                    correctAnswers.push(
+                        innerFormBuilder.group({
+                            id: [answer.id],
+                            body: [answer.body, Validators.required],
+                            explanation: [answer.why_correct, Validators.required],
+                        })
+                    );
+                } else {
+                    wrongAnswersBody.push(
+                        innerFormBuilder.group({
+                            id: [answer.id],
+                            body: [answer.body, Validators.required]
+                        })
+                    );
+                }
+            });
+
+            wrongAnswers.push(wrongAnswersBody);
+        });
+
+        // Init form
+        this.form = this.formBuilder.group({
+            'task_id': [this.task.id, Validators.required],
+            'formQuestions': formQuestions,
+            'correctAnswers': correctAnswers,
+            'wrongAnswers': wrongAnswers,
+        });
+
+        // if form is empty, add a default empty question
+        if (this.formQuestions.length === 0) {
+            this.addQuestion();
+        }
     }
 
     /**
@@ -33,6 +185,10 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
      */
     ngOnChanges() {
         this.buildExamForm();
+    }
+
+    handleSubmit() {
+        this.onSubmit.emit(this.form.value);
     }
 
     /**
@@ -84,46 +240,9 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
     get wrongAnswers(): FormArray { return this.form.get('wrongAnswers') as FormArray; }
 
     /**
-     * Send the whole form on submit
-     *
-     * @returns {Subscription}
-     */
-    onSubmit() {
-        let formValue = this.form.value;
-
-        let thisInstance = this;
-
-        return this.formSubscription = this.questionService.saveExam(formValue).subscribe(
-            response => {
-                if (response.success) {
-                    // noinspection TypeScriptUnresolvedVariable
-                    response.allQuestions.forEach(function (question) {
-                        let foundQuestion = thisInstance.questionService.find(question.id);
-
-                        if (foundQuestion == null) {
-                            thisInstance.questionService.add(new Question(
-                                question.id,
-                                question.task_id,
-                                question.body,
-                                question.answers,
-                            ));
-                        }
-
-                    });
-
-                    thisInstance.buildExamForm();
-                }
-            }
-        );
-    }
-
-    /**
      * Build the exam form instance
      */
     buildExamForm() {
-        // find questions related to task
-        this.questions = this.questionService.findByTaskId(this.task.id);
-
         let formQuestions = new FormArray([]);
         let correctAnswers = new FormArray([]);
         let wrongAnswers = new FormArray([]);
@@ -187,7 +306,7 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
 
         // if there's a question id, delete the question
         if (typeof(questionId) === 'number' && questionId > 0) {
-            this.formSubscription = this.questionService.delete(questionId).subscribe(
+            this.questionService.delete(questionId).subscribe(
                 response => {
                     this.questionService.remove(questionId);
                     this.buildExamForm();

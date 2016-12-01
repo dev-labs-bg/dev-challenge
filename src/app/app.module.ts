@@ -74,6 +74,9 @@ import { FormComponent as ContributionsFormComponent } from './contributions/for
 import { AdminAssessmentsQuestionComponent } from './admin/assessments/question/question.component';
 import { AdminAssessmentsQuestionCreateComponent } from './admin/assessments/question/create.component';
 import { AdminAssessmentsQuestionEditComponent } from './admin/assessments/question/edit.component';
+import { AdminAssessmentsExamCreateComponent } from './admin/assessments/exam/create.component';
+import { AdminAssessmentsExamComponent } from './admin/assessments/exam/exam.component';
+import { AdminAssessmentsExamEditComponent } from './admin/assessments/exam/edit.component';
 
 @NgModule({
   declarations: [
@@ -120,7 +123,10 @@ import { AdminAssessmentsQuestionEditComponent } from './admin/assessments/quest
     ContributionsFormComponent,
     AdminAssessmentsQuestionComponent,
     AdminAssessmentsQuestionCreateComponent,
-    AdminAssessmentsQuestionEditComponent
+    AdminAssessmentsQuestionEditComponent,
+    AdminAssessmentsExamCreateComponent,
+    AdminAssessmentsExamComponent,
+    AdminAssessmentsExamEditComponent
   ],
   imports: [
     BrowserModule,
