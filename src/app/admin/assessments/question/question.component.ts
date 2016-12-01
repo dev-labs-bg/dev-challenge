@@ -4,26 +4,19 @@ import { QuestionService } from '../question.service';
 import { Task } from '../../tasks/task';
 import { Question } from '../question';
 
-/**
- * Question create/edit are the same as micro-project create/edit,
- * they share the same data structure and they hit the same API endpoints.
- *
- * Therefore, the <xp-admin-assessments-micro-project-create>
- * and <xp-admin-assessments-micro-project-edit> are re-used here.
- */
 @Component({
     selector: 'xp-admin-assessments-question',
     template: `
         <div [ngSwitch]="currentMode">
-            <xp-admin-assessments-micro-project-create
+            <xp-admin-assessments-question-create
                 *ngSwitchCase="modes.CREATE"
                 [task]="task">
-            </xp-admin-assessments-micro-project-create>
-            <xp-admin-assessments-micro-project-edit
+            </xp-admin-assessments-question-create>
+            <xp-admin-assessments-question-edit
                 *ngSwitchCase="modes.EDIT"
                 [task]="task"
                 [question]="assessmentEntry">
-            </xp-admin-assessments-micro-project-edit>
+            </xp-admin-assessments-question-edit>
         </div>
     `
 })

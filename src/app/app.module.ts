@@ -42,7 +42,7 @@ import { TasksComponent } from './admin/tasks/tasks.component';
 import { CategoryFormComponent } from './admin/categories/form/form.component';
 import { AssessmentsComponent } from './admin/assessments/assessments.component';
 import { AdminAssessmentOpenAnswerForm } from './admin/assessments/form/open-answer.component';
-import { ExamAnswerFormComponent } from './admin/assessments/exam-answer-form/exam-answer-form.component';
+import { ExamAnswerFormComponent } from './admin/assessments/form/exam.component';
 import { ListComponent } from './admin/categories/list.component';
 import { CreateComponent } from './admin/categories/create.component';
 import { EditComponent } from './admin/categories/edit.component';
@@ -72,6 +72,8 @@ import { AdminAssessmentsMicroProjectCreateComponent } from './admin/assessments
 import { AdminAssessmentsMicroProjectEditComponent } from './admin/assessments/micro-project/edit.component';
 import { FormComponent as ContributionsFormComponent } from './contributions/form.component';
 import { AdminAssessmentsQuestionComponent } from './admin/assessments/question/question.component';
+import { AdminAssessmentsQuestionCreateComponent } from './admin/assessments/question/create.component';
+import { AdminAssessmentsQuestionEditComponent } from './admin/assessments/question/edit.component';
 
 @NgModule({
   declarations: [
@@ -116,7 +118,9 @@ import { AdminAssessmentsQuestionComponent } from './admin/assessments/question/
     AdminAssessmentsMicroProjectCreateComponent,
     AdminAssessmentsMicroProjectEditComponent,
     ContributionsFormComponent,
-    AdminAssessmentsQuestionComponent
+    AdminAssessmentsQuestionComponent,
+    AdminAssessmentsQuestionCreateComponent,
+    AdminAssessmentsQuestionEditComponent
   ],
   imports: [
     BrowserModule,
