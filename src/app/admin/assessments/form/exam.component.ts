@@ -93,7 +93,7 @@ import { QuestionService } from '../question.service';
                 <div class="form-group">
                     <div
                         class="btn btn-danger"
-                        (click)="deleteQuestion(i)">
+                        (click)="handleDelete(i)">
                         Delete question
                     </div>
                 </div>
@@ -116,6 +116,7 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
     @Input() private task: Task;
     @Input() private questions: Question[] = [];
     @Output() onSubmit = new EventEmitter();
+    @Output() onDelete = new EventEmitter();
     private form: FormGroup;
 
     constructor(
@@ -189,6 +190,26 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
 
     handleSubmit() {
         this.onSubmit.emit(this.form.value);
+    }
+
+    /**
+     * Delete a question
+     *
+     * @param index - form group index
+     */
+    handleDelete(index) {
+        let questionId = +this.formQuestions.at(index).value.id;
+
+        // if there's no question id, just empty the fields
+        if (! questionId || questionId === -1) {
+            this.formQuestions.at(index).reset();
+            this.correctAnswers.at(index).reset();
+            this.wrongAnswers.at(index).reset();
+
+            return;
+        }
+
+        this.onDelete.emit(questionId);
     }
 
     /**
@@ -294,30 +315,4 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
             this.addQuestion();
         }
     }
-
-    /**
-     * Delete a question
-     *
-     * @param index - form group index
-     */
-    deleteQuestion(index) {
-        // get question id from formQuestions
-        let questionId = parseInt(this.formQuestions.at(index).value.id, 10);
-
-        // if there's a question id, delete the question
-        if (typeof(questionId) === 'number' && questionId > 0) {
-            this.questionService.delete(questionId).subscribe(
-                response => {
-                    this.questionService.remove(questionId);
-                    this.buildExamForm();
-                }
-            );
-        // if there's no question id, just empty the fields
-        } else {
-            this.formQuestions.at(index).reset();
-            this.correctAnswers.at(index).reset();
-            this.wrongAnswers.at(index).reset();
-        }
-    }
-
 }
