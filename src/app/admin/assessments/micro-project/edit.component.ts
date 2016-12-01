@@ -36,7 +36,7 @@ export class AdminAssessmentsMicroProjectEditComponent implements OnInit {
         this.subscription = this.questionService.update(this.task.id, formData).subscribe(
             response => {
                 this.questionService.reset();
-                this.notificationService.fireSuccess('Category updated!');
+                this.notificationService.fireSuccess('Assessment updated!');
             },
             error => console.log('Ah, record not updated!', error)
         );

@@ -71,6 +71,7 @@ import { AdminAssessmentsMicroProjectComponent } from './admin/assessments/micro
 import { AdminAssessmentsMicroProjectCreateComponent } from './admin/assessments/micro-project/create.component';
 import { AdminAssessmentsMicroProjectEditComponent } from './admin/assessments/micro-project/edit.component';
 import { FormComponent as ContributionsFormComponent } from './contributions/form.component';
+import { AdminAssessmentsQuestionComponent } from './admin/assessments/question/question.component';
 
 @NgModule({
   declarations: [
@@ -114,7 +115,8 @@ import { FormComponent as ContributionsFormComponent } from './contributions/for
     AdminAssessmentsMicroProjectComponent,
     AdminAssessmentsMicroProjectCreateComponent,
     AdminAssessmentsMicroProjectEditComponent,
-    ContributionsFormComponent
+    ContributionsFormComponent,
+    AdminAssessmentsQuestionComponent
   ],
   imports: [
     BrowserModule,

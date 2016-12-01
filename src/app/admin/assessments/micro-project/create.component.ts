@@ -33,7 +33,7 @@ export class AdminAssessmentsMicroProjectCreateComponent implements OnInit {
         this.subscription = this.questionService.create(formData).subscribe(
             response => {
                 this.questionService.reset();
-                this.notificationService.fireSuccess('Category added!');
+                this.notificationService.fireSuccess('Assessment added!');
             },
             error => console.log('Ah, record not created!', error)
         );
