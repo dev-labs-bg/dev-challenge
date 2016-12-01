@@ -15,5 +15,6 @@ export const ASSESSMENT_ANSWER_TYPES = {
 export const TODO_STATUSES = {
     UNCOMPLETED: 0,
     SUBMITTED_FOR_REVIEW: 1,
-    COMPLETED: 2
+    DENIED: 2,
+    COMPLETED: 3
 };

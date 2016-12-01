@@ -59,7 +59,6 @@ import { TodoItemComponent } from './todos/item.component';
 import { ExperienceBlockComponent } from './components/experience-block/experience-block.component';
 import { BonusesComponent } from './admin/bonuses/bonuses.component';
 import { ContributionsComponent } from './contributions/contributions.component';
-import { ContributionsFormComponent } from './contributions/form.component';
 import { BonusFormComponent } from './admin/bonuses/form.component';
 import { AssessmentMicroProjectComponent } from './assessment/micro-project/micro-project.component';
 import { AssessmentOpenAnswerFormComponent } from './assessment/form/open-answer.component';
@@ -71,7 +70,7 @@ import { CreateMicroProjectAssessmentComponent } from './assessment/micro-projec
 import { AdminAssessmentsMicroProjectComponent } from './admin/assessments/micro-project/micro-project.component';
 import { AdminAssessmentsMicroProjectCreateComponent } from './admin/assessments/micro-project/create.component';
 import { AdminAssessmentsMicroProjectEditComponent } from './admin/assessments/micro-project/edit.component';
-
+import { FormComponent as ContributionsFormComponent } from './contributions/form.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +103,6 @@ import { AdminAssessmentsMicroProjectEditComponent } from './admin/assessments/m
     ExperienceBlockComponent,
     BonusesComponent,
     ContributionsComponent,
-    ContributionsFormComponent,
     BonusFormComponent,
     AssessmentMicroProjectComponent,
     AssessmentOpenAnswerFormComponent,
@@ -115,7 +113,8 @@ import { AdminAssessmentsMicroProjectEditComponent } from './admin/assessments/m
     CreateMicroProjectAssessmentComponent,
     AdminAssessmentsMicroProjectComponent,
     AdminAssessmentsMicroProjectCreateComponent,
-    AdminAssessmentsMicroProjectEditComponent
+    AdminAssessmentsMicroProjectEditComponent,
+    ContributionsFormComponent
   ],
   imports: [
     BrowserModule,

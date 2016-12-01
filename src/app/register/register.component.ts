@@ -51,13 +51,14 @@ export class RegisterComponent {
     private user: User = new User();
     // Additional user attributes
     private userProps: { password: string, spent_time: string, city: string,
-        university: string, year_of_study: number, date_of_birth: number } = {
+        university: string, year_of_study: number, date_of_birth: number, category_id: number } = {
         password: '',
         spent_time: '',
         city: '',
         university: '',
         year_of_study: -1,
-        date_of_birth: -1
+        date_of_birth: -1,
+        category_id: -1
     };
 
     constructor(private authService: AuthService) {}
@@ -78,6 +79,7 @@ export class RegisterComponent {
 
     handleTimeInvestmentSubmit(timeInvestment) {
         this.userProps.spent_time = timeInvestment.spent_time;
+        this.userProps.category_id = timeInvestment.category_id;
 
         this.toggleMode(this.modes.ADDITIONAL_INFO);
     }

@@ -80,7 +80,7 @@ export class AuthService {
      * @param user
      */
     setLoggedUser(user: User) {
-        this.loggedUser = User.newInstance(user);
+        return this.loggedUser = User.newInstance(user);
     }
 
     /**
@@ -147,7 +147,8 @@ export class AuthService {
             date_of_birth: userProps.date_of_birth,
             city: userProps.city,
             university: userProps.university,
-            year_of_study: userProps.year_of_study
+            year_of_study: userProps.year_of_study,
+            category_id: userProps.category_id,
         };
 
         return this.httpService.post('register', data);
