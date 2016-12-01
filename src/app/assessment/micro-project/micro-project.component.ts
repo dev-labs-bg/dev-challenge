@@ -22,9 +22,16 @@ import { TODO_STATUSES } from '../constants';
                     {{ todo.submissions[todo.submissions.length - 1].body }}
                 </div>
             </div>
+            
+            <div *ngSwitchCase="TODO_STATUSES.DENIED">
+                <h3>Sadly, your submission was denied :(</h3>
+                <div class="alert alert-danger" role="alert">
+                    {{ todo.submissions[todo.submissions.length - 1].body }}
+                </div>
+            </div>
 
             <div *ngSwitchCase="TODO_STATUSES.COMPLETED">
-                <h3>Your submission</h3>
+                <h3>Good job!</h3>
                 <div class="alert alert-success" role="alert">
                     {{ todo.submissions[todo.submissions.length - 1].body }}
                 </div>
