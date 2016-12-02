@@ -68,6 +68,11 @@ import { AssessmentComponent } from './assessment/assessment.component';
 import { AdminAssessmentsListComponent } from './admin/assessments/list.component';
 import { CreateMicroProjectAssessmentComponent } from './assessment/micro-project/create.component';
 import { FormComponent as ContributionsFormComponent } from './contributions/form.component';
+import { StackOverflowComponent } from './contributions/stack-overflow.component';
+import { PublicActivityComponent } from './contributions/public-activity.component';
+import { SideProjectComponent } from './contributions/side-project.component';
+import { OpenSourceComponent } from './contributions/open-source.component';
+import { StatusComponent } from './contributions/status.component';
 
 
 @NgModule({
@@ -109,7 +114,12 @@ import { FormComponent as ContributionsFormComponent } from './contributions/for
     AssessmentComponent,
     AdminAssessmentsListComponent,
     CreateMicroProjectAssessmentComponent,
-    ContributionsFormComponent
+    ContributionsFormComponent,
+    StackOverflowComponent,
+    PublicActivityComponent,
+    SideProjectComponent,
+    OpenSourceComponent,
+    StatusComponent
   ],
   imports: [
     BrowserModule,
