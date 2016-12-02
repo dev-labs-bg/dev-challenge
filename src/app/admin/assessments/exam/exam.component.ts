@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Subscription } from 'rxjs/Rx';
 
 import { Question } from '../question';
 import { Task } from '../../tasks/task';
@@ -28,6 +29,7 @@ export class AdminAssessmentsExamComponent implements OnInit {
         EDIT: 1
     };
     private currentMode: number = -1;
+    private subscription: Subscription;
 
     constructor(private questionService: QuestionService) { }
 
@@ -39,7 +41,9 @@ export class AdminAssessmentsExamComponent implements OnInit {
          * the questions @Input we're passing to the child components,
          * so they have fresh data too.
          */
-        this.questionService.dataChanged.subscribe( () => this.setMode() );
+        this.subscription = this.questionService.dataChanged.subscribe(
+            () => this.setMode()
+        );
     }
 
     /**
@@ -62,6 +66,10 @@ export class AdminAssessmentsExamComponent implements OnInit {
         } else {
             this.currentMode = this.modes.CREATE;
         }
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
 }
