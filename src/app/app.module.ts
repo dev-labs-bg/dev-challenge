@@ -77,6 +77,11 @@ import { AdminAssessmentsQuestionEditComponent } from './admin/assessments/quest
 import { AdminAssessmentsExamCreateComponent } from './admin/assessments/exam/create.component';
 import { AdminAssessmentsExamComponent } from './admin/assessments/exam/exam.component';
 import { AdminAssessmentsExamEditComponent } from './admin/assessments/exam/edit.component';
+import { StackOverflowComponent } from './contributions/stack-overflow.component';
+import { PublicActivityComponent } from './contributions/public-activity.component';
+import { SideProjectComponent } from './contributions/side-project.component';
+import { OpenSourceComponent } from './contributions/open-source.component';
+import { StatusComponent } from './contributions/status.component';
 
 @NgModule({
   declarations: [
@@ -120,13 +125,18 @@ import { AdminAssessmentsExamEditComponent } from './admin/assessments/exam/edit
     AdminAssessmentsMicroProjectComponent,
     AdminAssessmentsMicroProjectCreateComponent,
     AdminAssessmentsMicroProjectEditComponent,
-    ContributionsFormComponent,
     AdminAssessmentsQuestionComponent,
     AdminAssessmentsQuestionCreateComponent,
     AdminAssessmentsQuestionEditComponent,
     AdminAssessmentsExamCreateComponent,
     AdminAssessmentsExamComponent,
-    AdminAssessmentsExamEditComponent
+    AdminAssessmentsExamEditComponent,
+    ContributionsFormComponent,
+    StackOverflowComponent,
+    PublicActivityComponent,
+    SideProjectComponent,
+    OpenSourceComponent,
+    StatusComponent
   ],
   imports: [
     BrowserModule,
