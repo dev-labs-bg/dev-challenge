@@ -33,6 +33,13 @@ export class AdminAssessmentsExamComponent implements OnInit {
 
     ngOnInit() {
         this.setMode();
+
+        /**
+         * When the questionsService data is changed, we need to update
+         * the questions @Input we're passing to the child components,
+         * so they have fresh data too.
+         */
+        this.questionService.dataChanged.subscribe( () => this.setMode() );
     }
 
     /**

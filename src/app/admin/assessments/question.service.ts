@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 import {Question} from './question';
 import {HttpService} from '../../services/http.service';
@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 @Injectable()
 export class QuestionService {
     private questions: Question[] = [];
+    dataChanged = new EventEmitter();
 
     constructor(
          private httpService: HttpService
@@ -18,9 +19,13 @@ export class QuestionService {
         }
 
         return this.httpService.get('question/all').subscribe(
-            response => this.questions = response.questions.map(
-                el => Question.newQuestion(el)
-            ),
+            response => {
+                this.questions = response.questions.map(
+                    el => Question.newQuestion(el)
+                );
+
+                this.dataChanged.emit(this.questions);
+            },
             error => console.log('Sorry, no questions found', error)
         );
     }

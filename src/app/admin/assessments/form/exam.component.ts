@@ -11,7 +11,7 @@ import { QuestionService } from '../question.service';
         <form [formGroup]="form" (ngSubmit)="handleSubmit()">
             <div
                 class="question-group-holder"
-                *ngFor="let question of formQuestions.controls; let i = index;">
+                *ngFor="let question of formQuestions?.controls; let i = index;">
                 <div
                     class="form-group"
                     formArrayName="formQuestions">
@@ -125,9 +125,19 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
     ) { }
 
     /**
-     * Init form on component init
+     * Form var getters
+     * Creates a variable called @varName (e.g. formQuestions)
+     * and appends the return statement to it
+     *
+     * @returns {FormArray}
      */
-    ngOnInit() {
+    get formQuestions(): FormArray { return this.form.get('formQuestions') as FormArray; }
+
+    get correctAnswers(): FormArray { return this.form.get('correctAnswers') as FormArray; }
+
+    get wrongAnswers(): FormArray { return this.form.get('wrongAnswers') as FormArray; }
+
+    getFormValues() {
         let formQuestions = new FormArray([]);
         let correctAnswers = new FormArray([]);
         let wrongAnswers = new FormArray([]);
@@ -166,18 +176,11 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
             wrongAnswers.push(wrongAnswersBody);
         });
 
-        // Init form
-        this.form = this.formBuilder.group({
-            'task_id': [this.task.id, Validators.required],
-            'formQuestions': formQuestions,
-            'correctAnswers': correctAnswers,
-            'wrongAnswers': wrongAnswers,
-        });
-
-        // if form is empty, add a default empty question
-        if (this.formQuestions.length === 0) {
-            this.addQuestion();
-        }
+        return {
+            formQuestions,
+            correctAnswers,
+            wrongAnswers
+        };
     }
 
     /**
@@ -216,59 +219,10 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
     }
 
     /**
-     * Form var getters
-     * Creates a variable called @varName (e.g. formQuestions)
-     * and appends the return statement to it
-     *
-     * @returns {FormArray}
+     * Init form on component init
      */
-    get formQuestions(): FormArray { return this.form.get('formQuestions') as FormArray; }
-
-    get correctAnswers(): FormArray { return this.form.get('correctAnswers') as FormArray; }
-
-    get wrongAnswers(): FormArray { return this.form.get('wrongAnswers') as FormArray; }
-
-    /**
-     * Build the exam form instance
-     */
-    buildExamForm() {
-        let formQuestions = new FormArray([]);
-        let correctAnswers = new FormArray([]);
-        let wrongAnswers = new FormArray([]);
-
-        let innerFormBuilder = this.formBuilder;
-
-        this.questions.forEach(function (question) {
-            formQuestions.push(
-                innerFormBuilder.group({
-                        id: [question.id],
-                        body: [question.body, Validators.required],
-                    }
-                ));
-
-            let wrongAnswersBody = new FormArray([]);
-
-            question.examAnswers.forEach(function (answer) {
-                if (answer.is_correct) {
-                    correctAnswers.push(
-                        innerFormBuilder.group({
-                            id: [answer.id],
-                            body: [answer.body, Validators.required],
-                            explanation: [answer.why_correct, Validators.required],
-                        })
-                    );
-                } else {
-                    wrongAnswersBody.push(
-                        innerFormBuilder.group({
-                            id: [answer.id],
-                            body: [answer.body, Validators.required]
-                        })
-                    );
-                }
-            });
-
-            wrongAnswers.push(wrongAnswersBody);
-        });
+    ngOnInit() {
+        const { formQuestions, correctAnswers, wrongAnswers } = this.getFormValues();
 
         // Init form
         this.form = this.formBuilder.group({
@@ -289,7 +243,30 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
      * and re init the form each time
      */
     ngOnChanges() {
-        this.buildExamForm();
+        if (! this.form || ! this.questions) {
+            return;
+        }
+
+        const { formQuestions, correctAnswers, wrongAnswers } = this.getFormValues();
+
+        /**
+         * Using form.patchValue here breaks the stupid form.
+         * The reason is because the
+         * 'formQuestions', 'correctAnswers' and the 'wrongAnswers'
+         * are inner `formBuilder`-s. And therefore - form.patchValue breaks.
+         * So, just completely reinit the form, until we find a better solution.
+         */
+        this.form = this.formBuilder.group({
+            'task_id': [this.task.id, Validators.required],
+            'formQuestions': formQuestions,
+            'correctAnswers': correctAnswers,
+            'wrongAnswers': wrongAnswers,
+        });
+
+        // if form is empty, add a default empty question
+        if (this.formQuestions.length === 0) {
+            this.addQuestion();
+        }
     }
 
     handleSubmit() {
