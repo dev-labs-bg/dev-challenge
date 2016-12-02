@@ -181,38 +181,6 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
     }
 
     /**
-     * Look for changes on @Input() task
-     * and re init the form each time
-     */
-    ngOnChanges() {
-        this.buildExamForm();
-    }
-
-    handleSubmit() {
-        this.onSubmit.emit(this.form.value);
-    }
-
-    /**
-     * Delete a question
-     *
-     * @param index - form group index
-     */
-    handleDelete(index) {
-        let questionId = +this.formQuestions.at(index).value.id;
-
-        // if there's no question id, just empty the fields
-        if (! questionId || questionId === -1) {
-            this.formQuestions.at(index).reset();
-            this.correctAnswers.at(index).reset();
-            this.wrongAnswers.at(index).reset();
-
-            return;
-        }
-
-        this.onDelete.emit(questionId);
-    }
-
-    /**
      * Add a question to the form
      */
     addQuestion() {
@@ -314,5 +282,37 @@ export class ExamAnswerFormComponent implements OnInit, OnChanges {
         if (this.formQuestions.length === 0) {
             this.addQuestion();
         }
+    }
+
+    /**
+     * Look for changes on @Input() task
+     * and re init the form each time
+     */
+    ngOnChanges() {
+        this.buildExamForm();
+    }
+
+    handleSubmit() {
+        this.onSubmit.emit(this.form.value);
+    }
+
+    /**
+     * Delete a question
+     *
+     * @param index - form group index
+     */
+    handleDelete(index) {
+        let questionId = +this.formQuestions.at(index).value.id;
+
+        // if there's no question id, just empty the fields
+        if (! questionId || questionId === -1) {
+            this.formQuestions.at(index).reset();
+            this.correctAnswers.at(index).reset();
+            this.wrongAnswers.at(index).reset();
+
+            return;
+        }
+
+        this.onDelete.emit(questionId);
     }
 }
