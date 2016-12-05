@@ -1,25 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { PushNotificationsService } from 'angular2-notifications';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'xp-dashboard',
     template: `
         <xp-todos-list></xp-todos-list>
         <xp-experience-block></xp-experience-block>
+        <xp-one-signal-notifications></xp-one-signal-notifications>
     `
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
 
-    constructor(
-        private pushNotificationsService: PushNotificationsService
-    ) { }
-
-    ngOnInit() {
-        this.pushNotificationsService.requestPermission();
-        this.pushNotificationsService.create('Test', {body: 'something'}).subscribe(
-            res => console.log(res),
-            err => console.log(err)
-        )
-    }
+    constructor() { }
 
 }
