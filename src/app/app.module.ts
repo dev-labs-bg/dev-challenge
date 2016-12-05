@@ -41,8 +41,8 @@ import { AdminCategoriesComponent } from './admin/categories/categories.componen
 import { TasksComponent } from './admin/tasks/tasks.component';
 import { CategoryFormComponent } from './admin/categories/form/form.component';
 import { AssessmentsComponent } from './admin/assessments/assessments.component';
-import { OpenAnswerFormComponent } from './admin/assessments/open-answer-form/open-answer-form.component';
-import { ExamAnswerFormComponent } from './admin/assessments/exam-answer-form/exam-answer-form.component';
+import { AdminAssessmentOpenAnswerForm } from './admin/assessments/form/open-answer.component';
+import { ExamAnswerFormComponent } from './admin/assessments/form/exam.component';
 import { ListComponent } from './admin/categories/list.component';
 import { CreateComponent } from './admin/categories/create.component';
 import { EditComponent } from './admin/categories/edit.component';
@@ -61,19 +61,27 @@ import { BonusesComponent } from './admin/bonuses/bonuses.component';
 import { ContributionsComponent } from './contributions/contributions.component';
 import { BonusFormComponent } from './admin/bonuses/form.component';
 import { AssessmentMicroProjectComponent } from './assessment/micro-project/micro-project.component';
-import { AssessmentOpenQuestionFormComponent } from './assessment/form-open-question.component';
+import { AssessmentOpenAnswerFormComponent } from './assessment/form/open-answer.component';
 import { AssessmentQuestionComponent } from './assessment/question/question.component';
 import { AssessmentQuestionCreateComponent } from './assessment/question/create.component';
 import { AssessmentComponent } from './assessment/assessment.component';
 import { AdminAssessmentsListComponent } from './admin/assessments/list.component';
 import { CreateMicroProjectAssessmentComponent } from './assessment/micro-project/create.component';
+import { AdminAssessmentsMicroProjectComponent } from './admin/assessments/micro-project/micro-project.component';
+import { AdminAssessmentsMicroProjectCreateComponent } from './admin/assessments/micro-project/create.component';
+import { AdminAssessmentsMicroProjectEditComponent } from './admin/assessments/micro-project/edit.component';
 import { FormComponent as ContributionsFormComponent } from './contributions/form.component';
+import { AdminAssessmentsQuestionComponent } from './admin/assessments/question/question.component';
+import { AdminAssessmentsQuestionCreateComponent } from './admin/assessments/question/create.component';
+import { AdminAssessmentsQuestionEditComponent } from './admin/assessments/question/edit.component';
+import { AdminAssessmentsExamCreateComponent } from './admin/assessments/exam/create.component';
+import { AdminAssessmentsExamComponent } from './admin/assessments/exam/exam.component';
+import { AdminAssessmentsExamEditComponent } from './admin/assessments/exam/edit.component';
 import { StackOverflowComponent } from './contributions/stack-overflow.component';
 import { PublicActivityComponent } from './contributions/public-activity.component';
 import { SideProjectComponent } from './contributions/side-project.component';
 import { OpenSourceComponent } from './contributions/open-source.component';
 import { StatusComponent } from './contributions/status.component';
-
 
 @NgModule({
   declarations: [
@@ -88,7 +96,7 @@ import { StatusComponent } from './contributions/status.component';
     TasksComponent,
     CategoryFormComponent,
     AssessmentsComponent,
-    OpenAnswerFormComponent,
+    AdminAssessmentOpenAnswerForm,
     ExamAnswerFormComponent,
     ListComponent,
     CreateComponent,
@@ -108,12 +116,21 @@ import { StatusComponent } from './contributions/status.component';
     ContributionsComponent,
     BonusFormComponent,
     AssessmentMicroProjectComponent,
-    AssessmentOpenQuestionFormComponent,
+    AssessmentOpenAnswerFormComponent,
     AssessmentQuestionComponent,
     AssessmentQuestionCreateComponent,
     AssessmentComponent,
     AdminAssessmentsListComponent,
     CreateMicroProjectAssessmentComponent,
+    AdminAssessmentsMicroProjectComponent,
+    AdminAssessmentsMicroProjectCreateComponent,
+    AdminAssessmentsMicroProjectEditComponent,
+    AdminAssessmentsQuestionComponent,
+    AdminAssessmentsQuestionCreateComponent,
+    AdminAssessmentsQuestionEditComponent,
+    AdminAssessmentsExamCreateComponent,
+    AdminAssessmentsExamComponent,
+    AdminAssessmentsExamEditComponent,
     ContributionsFormComponent,
     StackOverflowComponent,
     PublicActivityComponent,

@@ -4,13 +4,13 @@ import { Category } from '../categories/category';
 export class Task {
 
     constructor(
-        public id: number,
-        public category: Category,
-        public assessment: Assessment,
-        public title: string,
-        public description: string,
-        public time_estimation: number,
-        public created_at: string
+        public id: number = -1,
+        public category: Category = new Category(),
+        public assessment: Assessment = new Assessment(),
+        public title: string = '',
+        public description: string = '',
+        public time_estimation: number = -1,
+        public created_at: string = ''
     ) {}
 
     static newInstance(data) {
