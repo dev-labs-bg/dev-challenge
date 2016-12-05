@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs/Rx';
 
 import { ASSESSMENT_TYPES } from '../../assessment/constants';
 import { TaskService } from '../tasks/task.service';
@@ -14,16 +15,18 @@ import { Assessment } from './assessment';
 
         <div class="form-group">
             <label for="task">Task</label>
-            <select
-                name="task"
-                id="task"
-                (ngModelChange)="onTaskChange($event)" [ngModel]="task_id">
-                <option value="0" disabled selected>Select Task</option>
-                <option *ngFor="let task of taskService.repository.getData()"
-                        value="{{ task.id }}">
-                    {{ task.title }}
-                </option>
-            </select>
+            <xp-loading-indicator [wait]="subscription">
+                <select
+                    name="task"
+                    id="task"
+                    (ngModelChange)="onTaskChange($event)" [ngModel]="task_id">
+                    <option value="0" disabled selected>Select Task</option>
+                    <option *ngFor="let task of taskService.repository.getData()"
+                            value="{{ task.id }}">
+                        {{ task.title }}
+                    </option>
+                </select>
+            </xp-loading-indicator>
         </div>
 
         <p *ngIf="(selectedTask != null)">
@@ -53,6 +56,7 @@ export class AssessmentsComponent implements OnInit {
     private selectedTask: Task = null;
     private ASSESSMENT_TYPES = ASSESSMENT_TYPES;
     private Assessment = Assessment;
+    private subscription: Subscription;
 
     constructor(
         private taskService: TaskService,
@@ -60,10 +64,7 @@ export class AssessmentsComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.taskService.repository.setup(
-            this.taskService.apiGetURLS.all,
-            Task
-        );
+        this.subscription = this.taskService.setup();
 
         this.questionService.getAll();
     }
