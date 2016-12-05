@@ -82,6 +82,8 @@ import { PublicActivityComponent } from './contributions/public-activity.compone
 import { SideProjectComponent } from './contributions/side-project.component';
 import { OpenSourceComponent } from './contributions/open-source.component';
 import { StatusComponent } from './contributions/status.component';
+import { AssessmentExamComponent } from './assessment/exam/exam.component';
+import { AssessmentExamCreateComponent } from './assessment/exam/create.component';
 
 @NgModule({
   declarations: [
@@ -136,7 +138,9 @@ import { StatusComponent } from './contributions/status.component';
     PublicActivityComponent,
     SideProjectComponent,
     OpenSourceComponent,
-    StatusComponent
+    StatusComponent,
+    AssessmentExamComponent,
+    AssessmentExamCreateComponent
   ],
   imports: [
     BrowserModule,

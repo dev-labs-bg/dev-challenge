@@ -8,7 +8,7 @@ export class Todo {
             title: '',
             description: '',
             time_estimation: '',
-            questions: []
+            questions: {}
         },
         public assessment: Assessment,
         private status: number = 0,

@@ -24,6 +24,11 @@ import { Todo } from '../todos/todo';
                 *ngSwitchCase="ASSESSMENT_TYPES.QUESTION"
                 [todo]="todo">
             </xp-assessment-question>
+
+            <xp-assessment-exam
+                *ngSwitchCase="ASSESSMENT_TYPES.EXAM"
+                [todo]="todo">
+            </xp-assessment-exam>
         </div>
     `
 })
