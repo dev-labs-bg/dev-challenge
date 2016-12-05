@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'xp-assessment-exam-form-item',
@@ -14,11 +15,13 @@ import { Component, OnInit, Input } from '@angular/core';
         </button>
 
         <div [ngSwitch]="mode">
-            <div *ngSwitchCase="modes.CORRECT_ANSWER">
-                Correct answer!
+            <div *ngSwitchCase="modes.CORRECT_ANSWER" class="alert alert-success">
+                Correct answer!<br />
+                {{ whyCorrect }}
             </div>
-            <div *ngSwitchCase="modes.WRONG_ANSWER">
-                Wrong answer!
+            <div *ngSwitchCase="modes.WRONG_ANSWER" class="alert alert-danger">
+                Wrong answer!<br />
+                {{ whyCorrect }}
             </div>
         </div>
     `,
@@ -28,6 +31,7 @@ export class AssessmentExamFormItemComponent implements OnInit {
     @Input() private todoId;
     @Input() private questionId;
     @Input() private question;
+    private whyCorrect: string;
     private modes = {
         CHOOSE_ANSWER: 0,
         CORRECT_ANSWER: 1,
@@ -38,6 +42,13 @@ export class AssessmentExamFormItemComponent implements OnInit {
     constructor() { }
 
     ngOnInit() {
+        /**
+         * Out of all the answers,
+         * only the correct answer has `why_correct` explanation.
+         * Find the correct answer and get the explanation, so then we can display it.
+         */
+        const correctAnswer = _.find(this.question.answers, item => !! item.is_correct);
+        this.whyCorrect = correctAnswer.why_correct;
     }
 
     handleAnswerSubmit(answer) {
