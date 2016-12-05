@@ -84,6 +84,7 @@ import { OpenSourceComponent } from './contributions/open-source.component';
 import { StatusComponent } from './contributions/status.component';
 import { AssessmentExamComponent } from './assessment/exam/exam.component';
 import { AssessmentExamCreateComponent } from './assessment/exam/create.component';
+import { AssessmentExamFormItemComponent } from './assessment/exam/form-item.component';
 
 @NgModule({
   declarations: [
@@ -140,7 +141,8 @@ import { AssessmentExamCreateComponent } from './assessment/exam/create.componen
     OpenSourceComponent,
     StatusComponent,
     AssessmentExamComponent,
-    AssessmentExamCreateComponent
+    AssessmentExamCreateComponent,
+    AssessmentExamFormItemComponent
   ],
   imports: [
     BrowserModule,
