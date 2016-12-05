@@ -6,6 +6,8 @@ import { HttpModule } from '@angular/http';
 // 3rd party plugins
 import { ToastyModule } from 'ng2-toasty';
 import { BusyModule } from 'angular2-busy';
+import { PushNotificationsModule } from 'angular2-notifications';
+import { PushNotificationsService } from 'angular2-notifications';
 import {
     AlertModule, DatepickerModule, ModalModule
 } from 'ng2-bootstrap/ng2-bootstrap';
@@ -132,7 +134,8 @@ import { StatusComponent } from './contributions/status.component';
     ModalModule,
     BusyModule,
     ToastyModule.forRoot(),
-    DragulaModule
+    DragulaModule,
+    PushNotificationsModule
   ],
   providers: [
     AuthService,
@@ -150,7 +153,8 @@ import { StatusComponent } from './contributions/status.component';
     DragulaService,
     TodoService,
     ContributorsService,
-    UserAssessmentService
+    UserAssessmentService,
+    PushNotificationsService
   ],
   bootstrap: [AppComponent]
 })
