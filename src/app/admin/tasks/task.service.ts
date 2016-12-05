@@ -17,6 +17,13 @@ export class TaskService {
         private submissionService: SubmissionService
     ) {}
 
+    setup() {
+        return this.repository.setup(
+            this.apiGetURLS.all,
+            Task
+        );
+    }
+
     /**
      * Create task http request
      *
