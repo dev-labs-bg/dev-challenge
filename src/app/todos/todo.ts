@@ -1,15 +1,9 @@
-import { Assessment } from '../assessment/assessment';
+import { Assessment, Question, Answer, Task } from '../assessment/assessment';
 
 export class Todo {
 
     constructor(
-        private task = {
-            assessment_type_id: '',
-            title: '',
-            description: '',
-            time_estimation: '',
-            questions: {}
-        },
+        public task: Task,
         public assessment: Assessment,
         private status: number = 0,
         private submissions = []
@@ -26,13 +20,26 @@ export class Todo {
         );
 
         return new Todo(
-            {
-                assessment_type_id: data.task.assessment_type_id,
-                title: data.task.title,
-                description: data.task.description,
-                time_estimation: data.task.time_estimation,
-                questions: data.task.questions,
-            },
+            new Task(
+                data.task.assessment_type_id,
+                data.task.title,
+                data.task.description,
+                data.task.time_estimation,
+                data.task.questions.map(question =>
+                    new Question(
+                        question.id,
+                        question.body,
+                        question.answers.map(answer =>
+                            new Answer(
+                                answer.id,
+                                answer.body,
+                                !! answer.is_correct,
+                                answer.why_correct
+                            )
+                        )
+                    )
+                )
+            ),
             assessment,
             data.status,
             data.submissions

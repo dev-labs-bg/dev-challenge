@@ -31,6 +31,7 @@ export class AssessmentExamFormItemComponent implements OnInit {
     @Input() private todoId;
     @Input() private questionId;
     @Input() private question;
+    //@Output() onSubmit = new EventEmitter();
     private whyCorrect: string;
     private modes = {
         CHOOSE_ANSWER: 0,
@@ -47,7 +48,7 @@ export class AssessmentExamFormItemComponent implements OnInit {
          * only the correct answer has `why_correct` explanation.
          * Find the correct answer and get the explanation, so then we can display it.
          */
-        const correctAnswer = _.find(this.question.answers, item => !! item.is_correct);
+        const correctAnswer = _.find(this.question.answers, item => item.is_correct);
         this.whyCorrect = correctAnswer.why_correct;
     }
 
@@ -57,14 +58,13 @@ export class AssessmentExamFormItemComponent implements OnInit {
         console.log('questionId', this.questionId);
         console.log('answerId', answerId);
 
-        const isCorrectAnswer = !! answer.is_correct;
-
-        if (isCorrectAnswer) {
+        if (answer.is_correct) {
             this.mode = this.modes.CORRECT_ANSWER;
         } else {
             this.mode = this.modes.WRONG_ANSWER;
         }
 
+        //this.onSubmit.emit(this.question);
         // this.assessmentService.submitExamAnswer(todoId, questionId, answerId);
     }
 
