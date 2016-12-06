@@ -10,7 +10,11 @@ import * as _ from 'lodash';
             (click)="handleAnswerSubmit(answer)"
             [disabled]="mode !== modes.CHOOSE_ANSWER"
             type="button"
-            class="btn btn-default">
+            class="btn btn-default"
+            [ngClass]="{
+                'btn-success': showCorrectAnswer(answer),
+                'btn-primary': answer === chosenAnswer
+            }">
             {{ answer.body }}
         </button>
 
@@ -39,6 +43,7 @@ export class AssessmentExamFormItemComponent implements OnInit {
     @Input() private questionId;
     @Input() private question;
     @Output() onNext = new EventEmitter();
+    private chosenAnswer;
     private whyCorrect: string;
     private modes = {
         CHOOSE_ANSWER: 0,
@@ -60,6 +65,8 @@ export class AssessmentExamFormItemComponent implements OnInit {
     }
 
     handleAnswerSubmit(answer) {
+        this.chosenAnswer = answer;
+
         const answerId = answer.id;
         console.log('todoId', this.todoId);
         console.log('questionId', this.questionId);
@@ -70,6 +77,14 @@ export class AssessmentExamFormItemComponent implements OnInit {
         } else {
             this.mode = this.modes.WRONG_ANSWER;
         }
+    }
+
+    /**
+     * Display the correct answer,
+     * but only if the user has made his choice
+     */
+    showCorrectAnswer(answer) {
+        return answer.is_correct && this.mode !== this.modes.CHOOSE_ANSWER;
     }
 
     handleNext() {
