@@ -42,6 +42,10 @@
             [disabled]="!loginForm.valid">
             Submit
         </button>
+        <span>OR</span>
+        <a href="http://dev-challenge.dev/auth/github">
+            Login with github
+        </a>
         <div
             *ngIf="authService.loginFail"
             class="alert alert-danger">

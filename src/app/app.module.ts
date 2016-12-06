@@ -83,6 +83,7 @@ import { SideProjectComponent } from './contributions/side-project.component';
 import { OpenSourceComponent } from './contributions/open-source.component';
 import { StatusComponent } from './contributions/status.component';
 import { OneSignalNotificationsComponent } from './shared/one-signal-notifications.component';
+import { SocialComponent } from './components/social/social.component';
 
 @NgModule({
   declarations: [
@@ -138,7 +139,8 @@ import { OneSignalNotificationsComponent } from './shared/one-signal-notificatio
     SideProjectComponent,
     OpenSourceComponent,
     StatusComponent,
-    OneSignalNotificationsComponent
+    OneSignalNotificationsComponent,
+    SocialComponent
   ],
   imports: [
     BrowserModule,

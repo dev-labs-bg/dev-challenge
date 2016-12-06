@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import {Http, Response, Headers, URLSearchParams} from '@angular/http';
 import {Router} from "@angular/router";
 
 import { AuthService } from '../../services/auth.service';
+import { HttpService } from '../../services/http.service';
 
 @Component({
     selector: 'xp-login',
@@ -14,7 +16,9 @@ export class LoginComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private authService: AuthService
+        private authService: AuthService,
+        private httpService: HttpService,
+        private http: Http,
     ) {}
 
     ngOnInit() {
@@ -33,5 +37,15 @@ export class LoginComponent implements OnInit {
         // call login
         this.authService.login(email, password);
     }
+
+    // githubLogin() {
+    //     this.httpService.get('auth/github').subscribe(
+    //         response => this.http.get(response.data)
+    //             .map((response: Response) => response.json())
+    //             .subscribe(
+    //                 data => console.log(data)
+    //             )
+    //     );
+    // }
 
 }
