@@ -4,11 +4,14 @@ import * as _ from 'lodash';
 @Component({
     selector: 'xp-assessment-exam-form-item',
     template: `
+        <p>
+            Question {{ questionNumber }} out of {{ questionsCount }}
+        </p>
         <h2>{{ question.body }}</h2>
         <button
             *ngFor="let answer of question.answers"
             (click)="handleAnswerSubmit(answer)"
-            [disabled]="mode !== modes.CHOOSE_ANSWER"
+            [disabled]="isAnswerChosen()"
             type="button"
             class="btn btn-default"
             [ngClass]="{
@@ -30,10 +33,10 @@ import * as _ from 'lodash';
         </div>
 
         <button
-            *ngIf="mode !== modes.CHOOSE_ANSWER"
+            *ngIf="isAnswerChosen()"
             (click)="handleNext()"
             class="btn btn-primary">
-            Next!
+            {{ isLastQuestion() ? 'Finish!' : 'Next!' }}
         </button>
     `,
     styles: []
@@ -42,6 +45,8 @@ export class AssessmentExamFormItemComponent implements OnInit {
     @Input() private todoId;
     @Input() private questionId;
     @Input() private question;
+    @Input() private questionNumber: number;
+    @Input() private questionsCount: number;
     @Output() onNext = new EventEmitter();
     private chosenAnswer;
     private whyCorrect: string;
@@ -79,6 +84,14 @@ export class AssessmentExamFormItemComponent implements OnInit {
         }
     }
 
+    isAnswerChosen() {
+        return this.mode !== this.modes.CHOOSE_ANSWER;
+    }
+
+    isLastQuestion() {
+        return this.questionNumber === this.questionsCount;
+    }
+
     /**
      * Display the correct answer,
      * but only if the user has made his choice
@@ -88,6 +101,6 @@ export class AssessmentExamFormItemComponent implements OnInit {
     }
 
     handleNext() {
-        this.onNext.emit();
+        this.onNext.emit(this.chosenAnswer.is_correct);
     }
 }

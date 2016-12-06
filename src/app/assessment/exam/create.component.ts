@@ -10,11 +10,10 @@ import { AssessmentService } from '../assessment.service';
 
             <div *ngSwitchCase="modes.IN_PROGRESS">
                 <div *ngFor="let question of todo.task.questions; let i = index">
-                    <p *ngIf="currentQuestionIndex === i">
-                        Question {{ i + 1 }} out of {{ questionsCount }}
-                    </p>
                     <xp-assessment-exam-form-item
                         *ngIf="currentQuestionIndex === i"
+                        [questionNumber]="i + 1"
+                        [questionsCount]="questionsCount"
                         [todoId]="todo.assessment.todoId"
                         [questionId]="todo.assessment.questionId"
                         [question]="question"
@@ -24,7 +23,26 @@ import { AssessmentService } from '../assessment.service';
             </div>
 
             <div *ngSwitchCase="modes.DONE">
-                Exam completed!
+                <div [ngSwitch]="areAllAnswersCorrect()">
+                    <p *ngSwitchCase="true" class="alert alert-success">
+                        <strong>Perfect! {{ correctAnswers }} correct answers
+                        out of {{ questionsCount }} questions!</strong><br />
+                        Exam completed successfully!
+                    </p>
+                    <p *ngSwitchCase="false" class="alert alert-warning">
+                        <strong>Ah! {{ correctAnswers }} correct answers
+                        out of {{ questionsCount }} questions!</strong>
+                        <br />
+
+                        In order to complete successfully the exam, you must answer correctly all questions.
+                        <a href="https://www.ted.com/talks/sal_khan_let_s_teach_for_mastery_not_test_scores" target="_blank">
+                            Here's why.
+                        </a>
+                        <br />
+
+                        PS: You can re-take the exam unlimited times.
+                    </p>
+
             </div>
         </div>
     `,
@@ -34,6 +52,7 @@ export class AssessmentExamCreateComponent implements OnChanges {
     @Input() private todo: Todo;
     private currentQuestionIndex: number = 0;
     private questionsCount: number;
+    private correctAnswers: number = 0;
     private modes = {
         IN_PROGRESS: 'IN PROGRESS',
         DONE: 'DONE'
@@ -46,8 +65,12 @@ export class AssessmentExamCreateComponent implements OnChanges {
         this.questionsCount = this.todo ? this.todo.task.questions.length : 0;
     }
 
-    handleNext() {
+    handleNext(isAnswerCorrect) {
         this.currentQuestionIndex++;
+
+        if (isAnswerCorrect) {
+            this.correctAnswers++;
+        }
 
         /**
          * Check if this was the last question in the exam,
@@ -59,6 +82,10 @@ export class AssessmentExamCreateComponent implements OnChanges {
 
             return;
         }
+    }
+
+    areAllAnswersCorrect() {
+        return this.correctAnswers === this.questionsCount;
     }
 
 }
