@@ -19,10 +19,9 @@ export class OneSignalNotificationsComponent implements OnInit {
     ngOnInit() {
         this.loggedUser = this.authService.getLoggedUser();
 
-        let OneSignal = window.OneSignal || [];
-        console.log(OneSignal);
+        let OneSignalClient = window['OneSignal'] || [];
 
-        OneSignal.push(["init", {
+        OneSignalClient.push(["init", {
             appId: ONE_SIGNAL_APP_KEY,
             autoRegister: true, /* Set to true to automatically prompt visitors */
             subdomainName: 'http://dev-challenge.onesignal.com',
@@ -32,7 +31,7 @@ export class OneSignalNotificationsComponent implements OnInit {
             persistNotification: false,
         }]);
 
-        OneSignal.push(["sendTags", {email: this.loggedUser.email}]);
+        OneSignalClient.push(["sendTags", {email: this.loggedUser.email}]);
     }
 
 }

@@ -22,7 +22,6 @@
     "@angular/router": "~3.1.0",
     "@types/lodash": "^4.14.39",
     "angular2-busy": "^1.0.2",
-    "angular2-notifications": "^0.4.47",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
     "dragula": "^3.7.2",
