@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnChanges, Input } from '@angular/core';
 
 import { Todo } from '../../todos/todo';
 import { AssessmentService } from '../assessment.service';
@@ -9,8 +9,11 @@ import { AssessmentService } from '../assessment.service';
         <div [ngSwitch]="mode">
 
             <div *ngSwitchCase="modes.IN_PROGRESS">
+
                 <div *ngFor="let question of todo.task.questions; let i = index">
-                    <p>Question {{ i }} out of {{ questionsCount }}</p>
+                    <p *ngIf="currentQuestionIndex === i">
+                        Question {{ i + 1 }} out of {{ questionsCount }}
+                    </p>
                     <xp-assessment-exam-form-item
                         *ngIf="currentQuestionIndex === i"
                         [todoId]="todo.assessment.todoId"
@@ -30,11 +33,10 @@ import { AssessmentService } from '../assessment.service';
     `,
     styles: []
 })
-export class AssessmentExamCreateComponent {
+export class AssessmentExamCreateComponent implements OnChanges {
     @Input() private todo: Todo;
     private currentQuestionIndex: number = 0;
-    // TODO: Find out why this doesn't work
-    private questionsCount: number = this.todo ? this.todo.task.questions.length : 0;
+    private questionsCount: number;
     private modes = {
         IN_PROGRESS: 'IN PROGRESS',
         DONE: 'DONE'
@@ -43,15 +45,23 @@ export class AssessmentExamCreateComponent {
 
     constructor(private assessmentService: AssessmentService) { }
 
+    ngOnChanges() {
+        this.questionsCount = this.todo ? this.todo.task.questions.length : 0;
+    }
+
     handleNext() {
-        // TODO: Find out why this doesn't work
-        if (this.currentQuestionIndex > this.questionsCount) {
+        this.currentQuestionIndex++;
+
+        /**
+         * Check if this was the last question in the exam,
+         * if so - no more questions to come. Exam is completed!
+         */
+        const isQuestionsLimitReached = this.currentQuestionIndex === this.questionsCount;
+        if (isQuestionsLimitReached) {
             this.mode = this.modes.DONE;
 
             return;
         }
-
-        this.currentQuestionIndex++;
     }
 
 }
