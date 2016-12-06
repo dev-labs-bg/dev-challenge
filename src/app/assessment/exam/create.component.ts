@@ -9,7 +9,6 @@ import { AssessmentService } from '../assessment.service';
         <div [ngSwitch]="mode">
 
             <div *ngSwitchCase="modes.IN_PROGRESS">
-
                 <div *ngFor="let question of todo.task.questions; let i = index">
                     <p *ngIf="currentQuestionIndex === i">
                         Question {{ i + 1 }} out of {{ questionsCount }}
@@ -18,12 +17,10 @@ import { AssessmentService } from '../assessment.service';
                         *ngIf="currentQuestionIndex === i"
                         [todoId]="todo.assessment.todoId"
                         [questionId]="todo.assessment.questionId"
-                        [question]="question">
+                        [question]="question"
+                        (onNext)="handleNext($event)">
                     </xp-assessment-exam-form-item>
                 </div>
-                <button (click)="handleNext()" class="btn btn-primary">
-                    Next!
-                </button>
             </div>
 
             <div *ngSwitchCase="modes.DONE">

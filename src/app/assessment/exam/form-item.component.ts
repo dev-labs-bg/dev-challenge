@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
 
 @Component({
@@ -24,6 +24,13 @@ import * as _ from 'lodash';
                 {{ whyCorrect }}
             </div>
         </div>
+
+        <button
+            *ngIf="mode !== modes.CHOOSE_ANSWER"
+            (click)="handleNext()"
+            class="btn btn-primary">
+            Next!
+        </button>
     `,
     styles: []
 })
@@ -31,7 +38,7 @@ export class AssessmentExamFormItemComponent implements OnInit {
     @Input() private todoId;
     @Input() private questionId;
     @Input() private question;
-    //@Output() onSubmit = new EventEmitter();
+    @Output() onNext = new EventEmitter();
     private whyCorrect: string;
     private modes = {
         CHOOSE_ANSWER: 0,
@@ -63,9 +70,9 @@ export class AssessmentExamFormItemComponent implements OnInit {
         } else {
             this.mode = this.modes.WRONG_ANSWER;
         }
-
-        //this.onSubmit.emit(this.question);
-        // this.assessmentService.submitExamAnswer(todoId, questionId, answerId);
     }
 
+    handleNext() {
+        this.onNext.emit();
+    }
 }
