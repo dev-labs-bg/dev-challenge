@@ -82,6 +82,7 @@ import { PublicActivityComponent } from './contributions/public-activity.compone
 import { SideProjectComponent } from './contributions/side-project.component';
 import { OpenSourceComponent } from './contributions/open-source.component';
 import { StatusComponent } from './contributions/status.component';
+import { OneSignalNotificationsComponent } from './shared/one-signal-notifications.component';
 
 @NgModule({
   declarations: [
@@ -136,7 +137,8 @@ import { StatusComponent } from './contributions/status.component';
     PublicActivityComponent,
     SideProjectComponent,
     OpenSourceComponent,
-    StatusComponent
+    StatusComponent,
+    OneSignalNotificationsComponent
   ],
   imports: [
     BrowserModule,
