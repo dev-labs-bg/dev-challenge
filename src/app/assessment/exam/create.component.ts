@@ -18,6 +18,7 @@ import { Modal } from '../../shared/modal.component';
             </div>
 
             <xp-modal
+                title="Exam"
                 (onShow)="toggleMode(modes.IN_PROGRESS)"
                 (onHide)="toggleMode(modes.GET_READY)">
                 <div *ngFor="let question of todo.task.questions; let i = index">

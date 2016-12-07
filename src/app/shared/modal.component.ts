@@ -1,4 +1,4 @@
-import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
 
 @Component({
@@ -23,7 +23,7 @@ import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
                             aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">Large modal</h4>
+                        <h4 class="modal-title">{{ title }}</h4>
                     </div>
                     <div class="modal-body">
 
@@ -38,6 +38,7 @@ import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
 })
 export class Modal {
     @ViewChild('lgModal') private childModal: ModalDirective;
+    @Input() title: string;
     @Output() onShow = new EventEmitter();
     @Output() onHide = new EventEmitter();
 
