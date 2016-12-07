@@ -33,7 +33,7 @@ const MediaStreamRecorder = require('msr');
 export class AudioRecorderComponent implements OnInit {
     @Output() private onUpload = new EventEmitter();
     private mediaRecorder; // :MediaStreamRecorder instance
-    private blobURL;
+    private audio;
     private mediaConstraints = {
         audio: true
     };
@@ -59,7 +59,7 @@ export class AudioRecorderComponent implements OnInit {
             this.mediaRecorder = new MediaStreamRecorder(stream);
             this.mediaRecorder.mimeType = 'audio/wav'; // check this line for audio/wav
             this.mediaRecorder.ondataavailable = (blob) => {
-                // POST/PUT "Blob" using FormData/XHR2
+                this.audio = blob;
                 this.blobURL = URL.createObjectURL(blob);
             };
             this.mediaRecorder.start(60 * 1000);
@@ -80,6 +80,7 @@ export class AudioRecorderComponent implements OnInit {
 
     reset() {
         this.mediaRecorder = null;
+        this.audio = null;
         this.toggleMode(this.modes.STAND_BY);
     }
 
@@ -89,7 +90,7 @@ export class AudioRecorderComponent implements OnInit {
     }
 
     upload() {
-        this.onUpload.emit(this.blobURL);
+        this.onUpload.emit(this.audio);
     }
 
 }
