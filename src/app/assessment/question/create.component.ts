@@ -8,6 +8,8 @@ import { NotificationService } from '../../shared/notification.service';
 @Component({
     selector: 'xp-assessment-question-create',
     template: `
+        <xp-audio-recorder></xp-audio-recorder>
+        <hr />
         <xp-assessment-form-open-answer
             (onSubmit)="handleSubmit($event)">
         </xp-assessment-form-open-answer>
