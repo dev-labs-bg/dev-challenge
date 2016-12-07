@@ -9,7 +9,7 @@ export class AssessmentService {
     constructor(private httpService: HttpService) { }
 
     uploadOpenQuestionAudio(todoId: number, questionId: number, audio) {
-        return this.httpService.post(`answer/${questionId}`, {
+        return this.httpService.upload(`answer/${questionId}`, {
             type: ASSESSMENT_ANSWER_TYPES.AUDIO_ANSWER,
             todo_id: todoId,
             audio

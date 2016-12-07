@@ -33,6 +33,7 @@ const MediaStreamRecorder = require('msr');
 export class AudioRecorderComponent implements OnInit {
     @Output() private onUpload = new EventEmitter();
     private mediaRecorder; // :MediaStreamRecorder instance
+    private blobURL;
     private audio;
     private mediaConstraints = {
         audio: true
