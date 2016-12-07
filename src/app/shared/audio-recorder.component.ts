@@ -5,6 +5,9 @@
  * It supports Chrome, Firefox, Opera and Microsoft Edge.
  * It even works on Android browsers.
  * It follows latest MediaRecorder API standards and provides similar APIs.
+ *
+ * TODO: Convert WAV to MP3 to reduce audio file size
+ *  - https://github.com/zhuker/lamejs
  */
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
