@@ -8,6 +8,14 @@ import { AssessmentService } from '../assessment.service';
     template: `
         <div [ngSwitch]="mode">
 
+            <div *ngSwitchCase="modes.GET_READY">
+                <button
+                    (click)="toggleMode(modes.IN_PROGRESS)"
+                    class="btn btn-success">
+                    Start Exam!
+                </button>
+            </div>
+
             <div *ngSwitchCase="modes.IN_PROGRESS">
                 <div *ngFor="let question of todo.task.questions; let i = index">
                     <xp-assessment-exam-form-item
@@ -54,15 +62,20 @@ export class AssessmentExamCreateComponent implements OnChanges {
     private questionsCount: number;
     private correctAnswers: number = 0;
     private modes = {
+        GET_READY: 'GET_READY',
         IN_PROGRESS: 'IN PROGRESS',
         DONE: 'DONE'
     };
-    private mode = this.modes.IN_PROGRESS;
+    private mode = this.modes.GET_READY;
 
     constructor(private assessmentService: AssessmentService) { }
 
     ngOnChanges() {
         this.questionsCount = this.todo ? this.todo.task.questions.length : 0;
+    }
+
+    toggleMode(nextMode) {
+        this.mode = nextMode;
     }
 
     handleNext(isAnswerCorrect) {
