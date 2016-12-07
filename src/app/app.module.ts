@@ -85,6 +85,10 @@ import { OpenSourceComponent } from './contributions/open-source.component';
 import { StatusComponent } from './contributions/status.component';
 import { OneSignalNotificationsComponent } from './shared/one-signal-notifications.component';
 import { SocialComponent } from './components/social/social.component';
+import { AssessmentExamComponent } from './assessment/exam/exam.component';
+import { AssessmentExamCreateComponent } from './assessment/exam/create.component';
+import { AssessmentExamFormItemComponent } from './assessment/exam/form-item.component';
+import { Modal } from './shared/modal.component';
 
 @NgModule({
   declarations: [
@@ -141,7 +145,11 @@ import { SocialComponent } from './components/social/social.component';
     OpenSourceComponent,
     StatusComponent,
     OneSignalNotificationsComponent,
-    SocialComponent
+    SocialComponent,
+    AssessmentExamComponent,
+    AssessmentExamCreateComponent,
+    AssessmentExamFormItemComponent,
+    Modal
   ],
   imports: [
     BrowserModule,
