@@ -82,6 +82,10 @@ import { PublicActivityComponent } from './contributions/public-activity.compone
 import { SideProjectComponent } from './contributions/side-project.component';
 import { OpenSourceComponent } from './contributions/open-source.component';
 import { StatusComponent } from './contributions/status.component';
+import { AssessmentExamComponent } from './assessment/exam/exam.component';
+import { AssessmentExamCreateComponent } from './assessment/exam/create.component';
+import { AssessmentExamFormItemComponent } from './assessment/exam/form-item.component';
+import { Modal } from './shared/modal.component';
 
 @NgModule({
   declarations: [
@@ -136,7 +140,11 @@ import { StatusComponent } from './contributions/status.component';
     PublicActivityComponent,
     SideProjectComponent,
     OpenSourceComponent,
-    StatusComponent
+    StatusComponent,
+    AssessmentExamComponent,
+    AssessmentExamCreateComponent,
+    AssessmentExamFormItemComponent,
+    Modal
   ],
   imports: [
     BrowserModule,
