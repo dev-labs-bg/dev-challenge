@@ -83,6 +83,24 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
                     You must specify a first name.
                 </div>
             </div>
+            <div class="form-group">
+                <label for="last_name">Last name</label>
+                <input
+                    type="last_name"
+                    name="last_name"
+                    class="form-control"
+                    id="last_name"
+                    formControlName="last_name"
+                    placeholder="Last Name"
+                    required
+                />
+                <div
+                    *ngIf="form.controls['last_name'].hasError('required') &&
+                    form.controls['last_name'].touched"
+                    class="alert alert-danger">
+                    You must specify a first name.
+                </div>
+             </div>
             <button
                 type="submit"
                 class="btn btn-primary"
@@ -103,7 +121,8 @@ export class MainInfoComponent implements OnInit {
             'email': ['', Validators.required],
             'password': ['', Validators.required],
             'password_confirmation': ['', Validators.required],
-            'first_name': ['', Validators.required]
+            'first_name': ['', Validators.required],
+            'last_name': ['', Validators.required]
         }, {
            validator: this.matchingPasswords('password', 'password_confirmation')
         });

@@ -16,6 +16,7 @@ export class User {
         public bonus_points: Array<any> = [],
         public roles: Role[] = [],
         public attributes: any = {},
+        public provider: any = {},
     ) {}
 
     /**
@@ -44,6 +45,7 @@ export class User {
             userData.bonus_points,
             roles,
             userData.attributes,
+            userData.provider,
         );
     }
 

@@ -16,6 +16,7 @@ import { routing } from './app.routing';
 
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './core/auth.guard';
+import { SocialGuard } from './core/social.guard';
 import { HttpService } from './services/http.service';
 import { AdminService } from './services/admin.service';
 import { SubmissionService } from './admin/submissions/submission.service';
@@ -171,7 +172,8 @@ import { SocialComponent } from './components/social/social.component';
     DragulaService,
     TodoService,
     ContributorsService,
-    UserAssessmentService
+    UserAssessmentService,
+    SocialGuard
   ],
   bootstrap: [AppComponent]
 })
