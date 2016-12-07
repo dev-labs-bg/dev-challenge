@@ -18,6 +18,7 @@ const MediaStreamRecorder = require('msr');
         <button class="btn btn-default" (click)="stop()">Stop</button>
         <button class="btn btn-default" (click)="save()">Save</button>
         <button class="btn btn-success" (click)="play()">Play</button>
+        <button class="btn btn-success" (click)="download()">Download</button>
         <button class="btn btn-success" (click)="upload()">Upload</button>
     `,
     styles: []
@@ -45,7 +46,7 @@ export class AudioRecorderComponent implements OnInit {
                 // POST/PUT "Blob" using FormData/XHR2
                 this.blobURL = URL.createObjectURL(blob);
             };
-            this.mediaRecorder.start(10000);
+            this.mediaRecorder.start(60 * 1000);
         };
 
         function onMediaError(e) {
@@ -57,6 +58,10 @@ export class AudioRecorderComponent implements OnInit {
 
     stop() {
         this.mediaRecorder.stop();
+    }
+
+    download() {
+        this.mediaRecorder.save();
     }
 
     play() {

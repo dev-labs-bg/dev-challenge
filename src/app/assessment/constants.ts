@@ -8,7 +8,8 @@ export const ASSESSMENT_TYPES = {
 
 export const ASSESSMENT_ANSWER_TYPES = {
     OPEN_ANSWER: 'openAnswer',
-    EXAM_ANSWER: 'examAnswer'
+    EXAM_ANSWER: 'examAnswer',
+    AUDIO_ANSWER: 'audioAnswer'
 };
 
 
