@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
 
+import { Answer } from '../assessment';
+
 @Component({
     selector: 'xp-assessment-exam-form-item',
     template: `
@@ -65,7 +67,9 @@ export class AssessmentExamFormItemComponent implements OnInit {
          * only the correct answer has `why_correct` explanation.
          * Find the correct answer and get the explanation, so then we can display it.
          */
-        const correctAnswer = _.find(this.question.answers, item => item.is_correct);
+        const correctAnswer: Answer = _.find(this.question.answers,
+            (item: Answer) => item.is_correct
+        );
         this.whyCorrect = correctAnswer.why_correct;
     }
 
