@@ -101,6 +101,28 @@ export class HttpService {
             .catch(this.handleError);
     }
 
+    upload(endPoint: string, data) {
+        var formData = new FormData();
+        _.forEach(data, (value, key) => {
+            formData.append(key, value);
+        });
+
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+
+        xhr.addEventListener('readystatechange', function () {
+         if (this.readyState === 4) {
+           console.log(this.responseText);
+         }
+        });
+
+        xhr.open('POST', API_ENDPOINT + endPoint);
+        xhr.setRequestHeader('authorization', APPLICATION_TOKEN);
+        xhr.setRequestHeader('logintoken', localStorage.getItem('xp_login_token'));
+
+        xhr.send(formData);
+    }
+
     /**
      * Modify a header
      *
