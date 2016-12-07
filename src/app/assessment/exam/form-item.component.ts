@@ -1,16 +1,25 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
+
+import { Answer } from '../assessment';
 
 @Component({
     selector: 'xp-assessment-exam-form-item',
     template: `
+        <p>
+            Question {{ questionNumber }} out of {{ questionsCount }}
+        </p>
         <h2>{{ question.body }}</h2>
         <button
             *ngFor="let answer of question.answers"
             (click)="handleAnswerSubmit(answer)"
-            [disabled]="mode !== modes.CHOOSE_ANSWER"
+            [disabled]="isAnswerChosen()"
             type="button"
-            class="btn btn-default">
+            class="btn btn-default"
+            [ngClass]="{
+                'btn-success': showCorrectAnswer(answer),
+                'btn-primary': answer === chosenAnswer
+            }">
             {{ answer.body }}
         </button>
 
@@ -24,6 +33,13 @@ import * as _ from 'lodash';
                 {{ whyCorrect }}
             </div>
         </div>
+
+        <button
+            *ngIf="isAnswerChosen()"
+            (click)="handleNext()"
+            class="btn btn-primary">
+            {{ isLastQuestion() ? 'Finish!' : 'Next!' }}
+        </button>
     `,
     styles: []
 })
@@ -31,7 +47,10 @@ export class AssessmentExamFormItemComponent implements OnInit {
     @Input() private todoId;
     @Input() private questionId;
     @Input() private question;
-    //@Output() onSubmit = new EventEmitter();
+    @Input() private questionNumber: number;
+    @Input() private questionsCount: number;
+    @Output() onNext = new EventEmitter();
+    private chosenAnswer;
     private whyCorrect: string;
     private modes = {
         CHOOSE_ANSWER: 0,
@@ -48,11 +67,15 @@ export class AssessmentExamFormItemComponent implements OnInit {
          * only the correct answer has `why_correct` explanation.
          * Find the correct answer and get the explanation, so then we can display it.
          */
-        const correctAnswer = _.find(this.question.answers, item => item.is_correct);
+        const correctAnswer: Answer = _.find(this.question.answers,
+            (item: Answer) => item.is_correct
+        );
         this.whyCorrect = correctAnswer.why_correct;
     }
 
     handleAnswerSubmit(answer) {
+        this.chosenAnswer = answer;
+
         const answerId = answer.id;
         console.log('todoId', this.todoId);
         console.log('questionId', this.questionId);
@@ -63,9 +86,25 @@ export class AssessmentExamFormItemComponent implements OnInit {
         } else {
             this.mode = this.modes.WRONG_ANSWER;
         }
-
-        //this.onSubmit.emit(this.question);
-        // this.assessmentService.submitExamAnswer(todoId, questionId, answerId);
     }
 
+    isAnswerChosen() {
+        return this.mode !== this.modes.CHOOSE_ANSWER;
+    }
+
+    isLastQuestion() {
+        return this.questionNumber === this.questionsCount;
+    }
+
+    /**
+     * Display the correct answer,
+     * but only if the user has made his choice
+     */
+    showCorrectAnswer(answer) {
+        return answer.is_correct && this.mode !== this.modes.CHOOSE_ANSWER;
+    }
+
+    handleNext() {
+        this.onNext.emit(this.chosenAnswer.is_correct);
+    }
 }
