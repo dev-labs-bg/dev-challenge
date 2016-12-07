@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
     template: `
         <xp-todos-list></xp-todos-list>
         <xp-experience-block></xp-experience-block>
+        <xp-one-signal-notifications></xp-one-signal-notifications>
     `
 })
 export class DashboardComponent {
