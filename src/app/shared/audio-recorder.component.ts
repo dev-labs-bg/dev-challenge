@@ -11,18 +11,22 @@
  */
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
+import { NotificationService } from './notification.service';
+
 // That is the only way to import the plugin
 const MediaStreamRecorder = require('msr');
 
 @Component({
     selector: 'xp-audio-recorder',
     template: `
-        <button class="btn btn-primary" (click)="start()">Start</button>
-        <button class="btn btn-default" (click)="stop()">Stop</button>
-        <button class="btn btn-default" (click)="save()">Save</button>
-        <button class="btn btn-success" (click)="play()">Play</button>
-        <button class="btn btn-success" (click)="download()">Download</button>
-        <button class="btn btn-success" (click)="upload()">Upload</button>
+        <button *ngIf="mode === modes.STAND_BY" class="btn btn-primary" (click)="start()">Start</button>
+        <button *ngIf="mode === modes.IN_PROGRESS" class="btn btn-default" (click)="stop()">Stop</button>
+
+        <div *ngIf="mode === modes.RECORDING_MADE">
+            <button class="btn btn-default" (click)="play()">Play</button>
+            <button class="btn btn-danger" (click)="reset()">Reset</button>
+            <button class="btn btn-success" (click)="upload()">Upload</button>
+        </div>
     `,
     styles: []
 })
@@ -30,18 +34,27 @@ export class AudioRecorderComponent implements OnInit {
     @Output() private onUpload = new EventEmitter();
     private mediaRecorder; // :MediaStreamRecorder instance
     private blobURL;
+    private mediaConstraints = {
+        audio: true
+    };
+    private modes = {
+        STAND_BY: 'STAND_BY',
+        IN_PROGRESS: 'IN_PROGRESS',
+        RECORDING_MADE: 'RECORDING_MADE'
+    };
+    private mode = this.modes.STAND_BY;
 
-    constructor() { }
+    constructor(private notificationService: NotificationService) { }
 
     ngOnInit() {
 
     }
 
-    start() {
-        const mediaConstraints = {
-            audio: true
-        };
+    toggleMode(nextMode) {
+        this.mode = nextMode;
+    }
 
+    start() {
         const onMediaSuccess = stream => {
             this.mediaRecorder = new MediaStreamRecorder(stream);
             this.mediaRecorder.mimeType = 'audio/wav'; // check this line for audio/wav
@@ -52,24 +65,26 @@ export class AudioRecorderComponent implements OnInit {
             this.mediaRecorder.start(60 * 1000);
         };
 
-        function onMediaError(e) {
-            console.error('media error', e);
-        }
+        const onMediaError = e => this.notificationService.fireError(
+            'An error occurred when trying to record an audio.'
+        );
 
-        navigator.getUserMedia(mediaConstraints, onMediaSuccess, onMediaError);
+        navigator.getUserMedia(this.mediaConstraints, onMediaSuccess, onMediaError);
+        this.toggleMode(this.modes.IN_PROGRESS);
     }
 
     stop() {
         this.mediaRecorder.stop();
+        this.toggleMode(this.modes.RECORDING_MADE);
     }
 
-    download() {
-        this.mediaRecorder.save();
+    reset() {
+        this.mediaRecorder = null;
+        this.toggleMode(this.modes.STAND_BY);
     }
 
     play() {
-        const audioPlayer = new Audio();
-        audioPlayer.src = this.blobURL;
+        const audioPlayer = new Audio(this.blobURL);
         audioPlayer.play();
     }
 
