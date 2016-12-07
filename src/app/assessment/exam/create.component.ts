@@ -1,7 +1,8 @@
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input, ViewChild } from '@angular/core';
 
 import { Todo } from '../../todos/todo';
 import { AssessmentService } from '../assessment.service';
+import { Modal } from '../../shared/modal.component';
 
 @Component({
     selector: 'xp-assessment-exam-create',
@@ -10,13 +11,15 @@ import { AssessmentService } from '../assessment.service';
 
             <div *ngSwitchCase="modes.GET_READY">
                 <button
-                    (click)="toggleMode(modes.IN_PROGRESS)"
+                    (click)="startExam()"
                     class="btn btn-success">
                     Start Exam!
                 </button>
             </div>
 
-            <div *ngSwitchCase="modes.IN_PROGRESS">
+            <xp-modal
+                (onShow)="toggleMode(modes.IN_PROGRESS)"
+                (onHide)="toggleMode(modes.GET_READY)">
                 <div *ngFor="let question of todo.task.questions; let i = index">
                     <xp-assessment-exam-form-item
                         *ngIf="currentQuestionIndex === i"
@@ -28,7 +31,7 @@ import { AssessmentService } from '../assessment.service';
                         (onNext)="handleNext($event)">
                     </xp-assessment-exam-form-item>
                 </div>
-            </div>
+            </xp-modal>
 
             <div *ngSwitchCase="modes.DONE">
                 <div [ngSwitch]="areAllAnswersCorrect()">
@@ -58,6 +61,8 @@ import { AssessmentService } from '../assessment.service';
 })
 export class AssessmentExamCreateComponent implements OnChanges {
     @Input() private todo: Todo;
+    @ViewChild(Modal) private modal: Modal;
+
     private currentQuestionIndex: number = 0;
     private questionsCount: number;
     private correctAnswers: number = 0;
@@ -72,6 +77,10 @@ export class AssessmentExamCreateComponent implements OnChanges {
 
     ngOnChanges() {
         this.questionsCount = this.todo ? this.todo.task.questions.length : 0;
+    }
+
+    startExam() {
+        this.modal.show();
     }
 
     toggleMode(nextMode) {
@@ -91,7 +100,8 @@ export class AssessmentExamCreateComponent implements OnChanges {
          */
         const isQuestionsLimitReached = this.currentQuestionIndex === this.questionsCount;
         if (isQuestionsLimitReached) {
-            this.mode = this.modes.DONE;
+            this.modal.hide();
+            this.toggleMode(this.modes.DONE);
 
             return;
         }
