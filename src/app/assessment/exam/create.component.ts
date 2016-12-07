@@ -17,10 +17,23 @@ import { Modal } from '../../shared/modal.component';
                 </button>
             </div>
 
+            <div *ngSwitchCase="modes.IN_PROGRESS">
+                <button
+                    (click)="startExam()"
+                    class="btn btn-warning">
+                    Resume Exam!
+                </button>
+                <button
+                    (click)="resetExam()"
+                    class="btn btn-danger">
+                    Reset Exam!
+                </button>
+            </div>
+
             <xp-modal
                 title="Exam"
                 (onShow)="toggleMode(modes.IN_PROGRESS)"
-                (onHide)="toggleMode(modes.GET_READY)">
+                (onHide)="stopExam()">
                 <div *ngFor="let question of todo.task.questions; let i = index">
                     <xp-assessment-exam-form-item
                         *ngIf="currentQuestionIndex === i"
@@ -84,8 +97,26 @@ export class AssessmentExamCreateComponent implements OnChanges {
         this.modal.show();
     }
 
+    stopExam() {
+        if (this.areAllQuestionsAnswered()) {
+            this.toggleMode(this.modes.DONE);
+        } else {
+            this.toggleMode(this.modes.IN_PROGRESS);
+        }
+    }
+
+    resetExam() {
+        this.correctAnswers = 0;
+        this.currentQuestionIndex = 0;
+        this.toggleMode(this.modes.GET_READY);
+    }
+
     toggleMode(nextMode) {
         this.mode = nextMode;
+    }
+
+    areAllQuestionsAnswered() {
+        return this.currentQuestionIndex === this.questionsCount;
     }
 
     handleNext(isAnswerCorrect) {
@@ -99,8 +130,7 @@ export class AssessmentExamCreateComponent implements OnChanges {
          * Check if this was the last question in the exam,
          * if so - no more questions to come. Exam is completed!
          */
-        const isQuestionsLimitReached = this.currentQuestionIndex === this.questionsCount;
-        if (isQuestionsLimitReached) {
+        if (this.areAllQuestionsAnswered()) {
             this.modal.hide();
             this.toggleMode(this.modes.DONE);
 
