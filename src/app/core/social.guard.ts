@@ -31,6 +31,11 @@ export class SocialGuard implements CanActivate {
                         this.authService.toggleAuthentication(false);
                         return resolve(false);
                     } else {
+                        // login if he's completed registration
+                        if (foundUser.attributes) {
+                            this.authService.toggleAuthentication(true, foundUser, route.params['token'], true);
+                        }
+
                         return resolve(true);
                     }
                 }
