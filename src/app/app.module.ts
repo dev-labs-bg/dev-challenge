@@ -83,6 +83,8 @@ import { PublicActivityComponent } from './contributions/public-activity.compone
 import { SideProjectComponent } from './contributions/side-project.component';
 import { OpenSourceComponent } from './contributions/open-source.component';
 import { StatusComponent } from './contributions/status.component';
+import { AudioRecorderComponent } from './shared/audio-recorder.component';
+import { AudioPlayerComponent } from './shared/audio-player.component';
 import { OneSignalNotificationsComponent } from './shared/one-signal-notifications.component';
 import { SocialComponent } from './components/social/social.component';
 import { AssessmentExamComponent } from './assessment/exam/exam.component';
@@ -144,6 +146,8 @@ import { Modal } from './shared/modal.component';
     SideProjectComponent,
     OpenSourceComponent,
     StatusComponent,
+    AudioRecorderComponent,
+    AudioPlayerComponent,
     OneSignalNotificationsComponent,
     SocialComponent,
     AssessmentExamComponent,

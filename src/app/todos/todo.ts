@@ -5,10 +5,10 @@ export class Todo {
     constructor(
         public task: Task,
         public assessment: Assessment,
-        private status: number = 0,
-        private active: number = 0,
-        private days_left: number = 0,
-        private submissions = []
+        public status: number = 0,
+        public active: number = 0,
+        public days_left: number = 0,
+        public submissions = []
     ) {}
 
     static newInstance(data) {
