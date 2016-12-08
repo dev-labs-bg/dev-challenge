@@ -11,12 +11,12 @@ import { NotificationService } from '../shared/notification.service';
 @Injectable()
 export class HttpService {
     private accessToken;
-
-    public headers: Headers = new Headers({
+    private headerEntries = {
         'Content-Type': 'application/json',
         'Authorization': APPLICATION_TOKEN,
         'loginToken': localStorage.getItem('xp_login_token')
-    });
+    };
+    public headers: Headers = new Headers(this.headerEntries);
 
     constructor(
         private http: Http,
@@ -96,6 +96,26 @@ export class HttpService {
      */
     delete(endPoint: string, params?: Object) {
         return this.http.delete(API_ENDPOINT + endPoint, { headers: this.headers })
+            .map((response: Response) => response.json())
+            .map(this.checkServerSuccess)
+            .catch(this.handleError);
+    }
+
+    upload(endPoint: string, data: Object) {
+        const formData = new FormData();
+        _.forEach(data, (value, key) => {
+            formData.append(key, value);
+        });
+
+        /**
+         * In order to upload a file,
+         * remove the 'Content-Type' header and leave all others.
+         */
+        const uploadHeaderEntries = Object.assign({}, this.headerEntries);
+        delete uploadHeaderEntries['Content-Type'];
+        const headers: Headers = new Headers(uploadHeaderEntries);
+
+        return this.http.post(API_ENDPOINT + endPoint, formData, { headers })
             .map((response: Response) => response.json())
             .map(this.checkServerSuccess)
             .catch(this.handleError);

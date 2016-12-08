@@ -6,7 +6,7 @@ export class Todo {
         public task: Task,
         public assessment: Assessment,
         private status: number = 0,
-        private submissions = []
+        public submissions = []
     ) {}
 
     static newInstance(data) {
