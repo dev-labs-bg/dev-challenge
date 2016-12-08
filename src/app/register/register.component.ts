@@ -68,10 +68,11 @@ export class RegisterComponent {
     }
 
     handleMainInfoSubmit(mainInfo) {
-        const { email, password, first_name } = mainInfo;
+        const { email, password, first_name, last_name } = mainInfo;
 
         this.user.email = email;
         this.user.first_name = first_name;
+        this.user.last_name = last_name;
         this.userProps.password = password;
 
         this.toggleMode(this.modes.TIME_INVESTMENT);
@@ -86,10 +87,9 @@ export class RegisterComponent {
 
     handleAdditionalInfoSubmit(additionalInfo) {
         const {
-            last_name, city, university, year_of_study, date_of_birth
+            city, university, year_of_study, date_of_birth
         } = additionalInfo;
 
-        this.user.last_name = last_name;
         this.userProps.city = city;
         this.userProps.university = university;
         this.userProps.year_of_study = year_of_study;
