@@ -11,12 +11,12 @@ import { NotificationService } from '../shared/notification.service';
 @Injectable()
 export class HttpService {
     private accessToken;
-
-    public headers: Headers = new Headers({
+    private headerEntries = {
         'Content-Type': 'application/json',
         'Authorization': APPLICATION_TOKEN,
         'loginToken': localStorage.getItem('xp_login_token')
-    });
+    };
+    public headers: Headers = new Headers(this.headerEntries);
 
     constructor(
         private http: Http,
@@ -101,26 +101,24 @@ export class HttpService {
             .catch(this.handleError);
     }
 
-    upload(endPoint: string, data) {
-        var formData = new FormData();
+    upload(endPoint: string, data: Object) {
+        const formData = new FormData();
         _.forEach(data, (value, key) => {
             formData.append(key, value);
         });
 
-        var xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
+        /**
+         * In order to upload a file,
+         * remove the 'Content-Type' header and leave all others.
+         */
+        const uploadHeaderEntries = Object.assign({}, this.headerEntries);
+        delete uploadHeaderEntries['Content-Type'];
+        const headers: Headers = new Headers(uploadHeaderEntries);
 
-        xhr.addEventListener('readystatechange', function () {
-         if (this.readyState === 4) {
-           console.log(this.responseText);
-         }
-        });
-
-        xhr.open('POST', API_ENDPOINT + endPoint);
-        xhr.setRequestHeader('authorization', APPLICATION_TOKEN);
-        xhr.setRequestHeader('logintoken', localStorage.getItem('xp_login_token'));
-
-        xhr.send(formData);
+        return this.http.post(API_ENDPOINT + endPoint, formData, { headers })
+            .map((response: Response) => response.json())
+            .map(this.checkServerSuccess)
+            .catch(this.handleError);
     }
 
     /**

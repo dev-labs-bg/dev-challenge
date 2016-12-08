@@ -49,15 +49,13 @@ export class AssessmentQuestionCreateComponent {
             this.assessment.todoId,
             this.assessment.questionId,
             audio
+        ).subscribe(
+            response => {
+                this.todoService.reset();
+                this.notificationService.fireSuccess('Assessment submitted!');
+            },
+            error => console.log('Ah, audio upload failed!', error)
         );
-
-        // .subscribe(
-        //     response => {
-        //         this.todoService.reset();
-        //         this.notificationService.fireSuccess('Assessment submitted!');
-        //     },
-        //     error => console.log('Ah, audio upload failed!', error)
-        // );
     }
 
 }
