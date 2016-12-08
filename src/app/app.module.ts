@@ -83,6 +83,7 @@ import { SideProjectComponent } from './contributions/side-project.component';
 import { OpenSourceComponent } from './contributions/open-source.component';
 import { StatusComponent } from './contributions/status.component';
 import { AudioRecorderComponent } from './shared/audio-recorder.component';
+import { AudioPlayerComponent } from './shared/audio-player.component';
 
 @NgModule({
   declarations: [
@@ -138,7 +139,8 @@ import { AudioRecorderComponent } from './shared/audio-recorder.component';
     SideProjectComponent,
     OpenSourceComponent,
     StatusComponent,
-    AudioRecorderComponent
+    AudioRecorderComponent,
+    AudioPlayerComponent
   ],
   imports: [
     BrowserModule,
