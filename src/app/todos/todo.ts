@@ -6,6 +6,8 @@ export class Todo {
         public task: Task,
         public assessment: Assessment,
         private status: number = 0,
+        private active: number = 0,
+        private days_left: number = 0,
         private submissions = []
     ) {}
 
@@ -42,6 +44,8 @@ export class Todo {
             ),
             assessment,
             data.status,
+            data.active,
+            data.days_left,
             data.submissions
         );
     }

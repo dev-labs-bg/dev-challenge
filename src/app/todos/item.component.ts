@@ -35,13 +35,19 @@ import { Todo } from './todo';
             &nbsp;
             {{ todo.task.title }}
             <span
-                *ngIf="todo.status == TODO_STATUSES.UNCOMPLETED"
+                *ngIf="isActive(todo) && todo.status == TODO_STATUSES.UNCOMPLETED"
                 class="label label-info">
-                3 days remaining
+                {{ todo.days_left }} days remaining
+            </span>
+            <span
+                *ngIf="!isActive(todo)"
+                class="label label-danger">
+                Locked
             </span>
         </h4>
         <p class="list-group-item-text">
             <button
+                *ngIf="isActive(todo)"
                 class="btn btn-default btn-xs"
                 (click)="toggleOpenDetails()">
                 {{ areDetailsOpen ? 'hide details' : 'see details' }}
@@ -72,6 +78,10 @@ export class TodoItemComponent implements OnInit {
 
     private toggleOpenDetails() {
         this.areDetailsOpen = ! this.areDetailsOpen;
+    }
+
+    private isActive(todo) {
+        return todo.active;
     }
 
 }
