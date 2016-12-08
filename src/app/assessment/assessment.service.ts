@@ -24,4 +24,12 @@ export class AssessmentService {
         });
     }
 
+    submitExamAnswer(todoId: number, questionId: number, answerId: number) {
+        return this.httpService.post(`answer/${questionId}`, {
+            type: ASSESSMENT_ANSWER_TYPES.EXAM_ANSWER,
+            todo_id: todoId,
+            question_answer_id: answerId
+        });
+    }
+
 }

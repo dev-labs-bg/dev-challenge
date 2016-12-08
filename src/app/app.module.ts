@@ -84,6 +84,11 @@ import { OpenSourceComponent } from './contributions/open-source.component';
 import { StatusComponent } from './contributions/status.component';
 import { AudioRecorderComponent } from './shared/audio-recorder.component';
 import { AudioPlayerComponent } from './shared/audio-player.component';
+import { OneSignalNotificationsComponent } from './shared/one-signal-notifications.component';
+import { AssessmentExamComponent } from './assessment/exam/exam.component';
+import { AssessmentExamCreateComponent } from './assessment/exam/create.component';
+import { AssessmentExamFormItemComponent } from './assessment/exam/form-item.component';
+import { Modal } from './shared/modal.component';
 
 @NgModule({
   declarations: [
@@ -140,7 +145,12 @@ import { AudioPlayerComponent } from './shared/audio-player.component';
     OpenSourceComponent,
     StatusComponent,
     AudioRecorderComponent,
-    AudioPlayerComponent
+    AudioPlayerComponent,
+    OneSignalNotificationsComponent,
+    AssessmentExamComponent,
+    AssessmentExamCreateComponent,
+    AssessmentExamFormItemComponent,
+    Modal
   ],
   imports: [
     BrowserModule,
