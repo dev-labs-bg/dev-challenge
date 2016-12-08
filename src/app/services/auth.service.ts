@@ -90,7 +90,7 @@ export class AuthService {
      * @param loginToken - user's login token if logged in
      * @returns void
      */
-    toggleAuthentication(isAuth: boolean, user?: User, loginToken?: string) {
+    toggleAuthentication(isAuth: boolean, user?: User, loginToken?: string, redirect: boolean = false) {
         if (isAuth) {
             localStorage.setItem('xp_login_token', loginToken);
             this.setLoginToken(loginToken);
@@ -100,7 +100,7 @@ export class AuthService {
             this.httpService.updateHeader('loginToken', loginToken);
 
             // redirect only if current route is login
-            if (this.router.url === '/login') {
+            if (this.router.url === '/login' || redirect) {
                 this.router.navigate(['dashboard']);
             }
         } else {

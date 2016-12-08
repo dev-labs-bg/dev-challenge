@@ -16,6 +16,7 @@ import { routing } from './app.routing';
 
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './core/auth.guard';
+import { SocialGuard } from './core/social.guard';
 import { HttpService } from './services/http.service';
 import { AdminService } from './services/admin.service';
 import { SubmissionService } from './admin/submissions/submission.service';
@@ -85,6 +86,7 @@ import { StatusComponent } from './contributions/status.component';
 import { AudioRecorderComponent } from './shared/audio-recorder.component';
 import { AudioPlayerComponent } from './shared/audio-player.component';
 import { OneSignalNotificationsComponent } from './shared/one-signal-notifications.component';
+import { SocialComponent } from './components/social/social.component';
 import { AssessmentExamComponent } from './assessment/exam/exam.component';
 import { AssessmentExamCreateComponent } from './assessment/exam/create.component';
 import { AssessmentExamFormItemComponent } from './assessment/exam/form-item.component';
@@ -147,6 +149,7 @@ import { Modal } from './shared/modal.component';
     AudioRecorderComponent,
     AudioPlayerComponent,
     OneSignalNotificationsComponent,
+    SocialComponent,
     AssessmentExamComponent,
     AssessmentExamCreateComponent,
     AssessmentExamFormItemComponent,
@@ -181,7 +184,8 @@ import { Modal } from './shared/modal.component';
     DragulaService,
     TodoService,
     ContributorsService,
-    UserAssessmentService
+    UserAssessmentService,
+    SocialGuard
   ],
   bootstrap: [AppComponent]
 })

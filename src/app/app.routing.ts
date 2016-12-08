@@ -14,10 +14,13 @@ import { SubmissionsComponent } from './admin/submissions/submissions.component'
 import { SingleComponent } from './admin/submissions/single/single.component';
 import { BonusesComponent } from './admin/bonuses/bonuses.component';
 import {ContributionsComponent} from "./contributions/contributions.component";
+import {SocialComponent} from "./components/social/social.component";
+import {SocialGuard} from "./core/social.guard";
 
 const APP_ROUTES: Routes = [
     {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
     {path: 'login', component: LoginComponent},
+    {path: 'social-login/:user/:token', component: SocialComponent, canActivate: [SocialGuard]},
     {path: 'account/activate/:email/:token', component: AccountActivationComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
