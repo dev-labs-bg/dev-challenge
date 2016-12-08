@@ -13,6 +13,12 @@ export const ASSESSMENT_ANSWER_TYPES = {
 };
 
 
+export const ASSESSMENT_OPEN_ANSWER_TYPES = {
+    AUDIO: '\\App\\UserAnswers\\AudioAnswers',
+    TEXT: '\\App\\UserAnswers\\OpenAnswers'
+};
+
+
 export const TODO_STATUSES = {
     UNCOMPLETED: 0,
     SUBMITTED_FOR_REVIEW: 1,
