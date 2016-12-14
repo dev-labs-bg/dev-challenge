@@ -54,9 +54,7 @@ import { Todo } from './todo';
             </button>
         </p>
         <div *ngIf="areDetailsOpen">
-            <p>
-                {{ todo.task.description }}
-            </p>
+            <pre class="line-break-pre">{{ todo.task.description }}</pre>
             <hr />
             <xp-assessment
                 [assessment]="todo.assessment"

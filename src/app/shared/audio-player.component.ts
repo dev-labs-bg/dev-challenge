@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 @Component({
     selector: 'xp-audio-player',
     template: `
-        <button class="btn btn-default">Play</button>
+        <button class="btn btn-default" (click)="play()">Play</button>
     `,
     styles: []
 })
