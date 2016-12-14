@@ -24,9 +24,7 @@ import {ContributorsService} from '../../contributions/contributors.service';
             </div>
             <div *ngIf="user.attributes.public_activity">
                 <h4>Public activity</h4>
-                <p>
-                    {{ user.attributes.public_activity }}
-                </p>
+                <pre class="line-break-pre">{{ user.attributes.public_activity }}</pre>
                 <xp-bonus-form
                     bonusType="public_activity"
                     [user]="user">
@@ -34,9 +32,7 @@ import {ContributorsService} from '../../contributions/contributors.service';
             </div>
             <div *ngIf="user.attributes.side_project">
                 <h4>Side project</h4>
-                <p>
-                    {{ user.attributes.side_project }}
-                </p>
+                <pre class="line-break-pre">{{ user.attributes.side_project }}</pre>
                 <xp-bonus-form
                     bonusType="side_project"
                     [user]="user">
@@ -44,9 +40,7 @@ import {ContributorsService} from '../../contributions/contributors.service';
             </div>
             <div *ngIf="user.attributes.open_source_contributions">
                 <h4>Open Source Contributions</h4>
-                <p>
-                    {{ user.attributes.open_source_contributions }}
-                </p>
+                <pre class="line-break-pre">{{ user.attributes.open_source_contributions }}</pre>
                 <xp-bonus-form
                     bonusType="open_source_contributions"
                     [user]="user">

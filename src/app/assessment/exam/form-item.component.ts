@@ -9,7 +9,9 @@ import { Answer } from '../assessment';
         <p>
             Question {{ questionNumber }} out of {{ questionsCount }}
         </p>
-        <h2>{{ question.body }}</h2>
+        <h2>
+            <pre class="line-break-pre">{{ question.body }}</pre>
+        </h2>
         <button
             *ngFor="let answer of question.answers"
             (click)="handleAnswerSubmit(answer)"
@@ -26,11 +28,11 @@ import { Answer } from '../assessment';
         <div [ngSwitch]="mode">
             <div *ngSwitchCase="modes.CORRECT_ANSWER" class="alert alert-success">
                 Correct answer!<br />
-                {{ whyCorrect }}
+                <pre class="line-break-pre">{{ whyCorrect }}</pre>
             </div>
             <div *ngSwitchCase="modes.WRONG_ANSWER" class="alert alert-danger">
                 Wrong answer!<br />
-                {{ whyCorrect }}
+                <pre class="line-break-pre">{{ whyCorrect }}</pre>
             </div>
         </div>
 
