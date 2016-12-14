@@ -9,7 +9,7 @@
  * TODO: Convert WAV to MP3 to reduce audio file size
  *  - https://github.com/zhuker/lamejs
  */
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
 
 import { NotificationService } from './notification.service';
@@ -35,7 +35,7 @@ const MediaStreamRecorder = require('msr');
     `,
     styles: []
 })
-export class AudioRecorderComponent implements OnInit {
+export class AudioRecorderComponent implements OnDestroy {
     @Output() private onUpload = new EventEmitter();
     private mediaRecorder; // :MediaStreamRecorder instance
     private blobURL;
@@ -51,12 +51,9 @@ export class AudioRecorderComponent implements OnInit {
     private mode = this.modes.STAND_BY;
     private timerValue: number = 0;
     private timer: Subscription;
-    private timerLimit: number = 5;
+    private timerLimit: number = 60; // seconds
 
     constructor(private notificationService: NotificationService) { }
-
-    ngOnInit() {
-    }
 
     toggleMode(nextMode) {
         this.mode = nextMode;
@@ -80,7 +77,10 @@ export class AudioRecorderComponent implements OnInit {
         navigator.getUserMedia(this.mediaConstraints, onMediaSuccess, onMediaError);
         this.toggleMode(this.modes.IN_PROGRESS);
 
-        this.startTimer(this.timerLimit * 1000);
+        // Add 1 second buffer
+        const limit = this.timerLimit * 1000;
+        console.log(limit);
+        this.startTimer(limit);
     }
 
     stop() {
@@ -115,9 +115,14 @@ export class AudioRecorderComponent implements OnInit {
                 this.timerValue = t;
 
                 if (this.timerValue * 1000 >= duration) {
+                    this.stop();
                     this.timer.unsubscribe();
                 }
             });
+    }
+
+    ngOnDestroy() {
+        this.timer.unsubscribe();
     }
 
 }
