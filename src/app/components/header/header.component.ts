@@ -1,23 +1,75 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from "../../core/auth.service";
+
+import { AuthService } from '../../core/auth.service';
 
 @Component({
-  selector: 'xp-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+    selector: 'xp-header',
+    template: `
+        <nav class="navbar navbar-default">
+            <div class="container">
+
+                <div class="navbar-header">
+                    <h1 class="no-margin">
+                        <a class="navbar-brand" routerLink="/dashboard">
+                            DevChallenge
+                        </a>
+                    </h1>
+
+                    <button
+                        type="button"
+                        class="navbar-toggle collapsed"
+                        data-toggle="collapse"
+                        (click)="toggleMobileNav()"
+                        aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" [class.in]="showMobileNav">
+                    <ul class="nav navbar-nav">
+                        <li
+                            *ngIf="authService.getLoggedUser() != null &&
+                            authService.getLoggedUser().isAdmin()">
+                            <a routerLink="/admin" routerLinkActive="active">Admin</a>
+                        </li>
+                        <li *ngIf="!authService.isAuthenticated()">
+                            <a routerLink="/login" routerLinkActive="active">Login</a>
+                        </li>
+                        <li *ngIf="!authService.isAuthenticated()">
+                            <a routerLink="/register" routerLinkActive="active">Register</a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li *ngIf="authService.isAuthenticated()">
+                            <a href="javascript:;" (click)="logout()">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+    `
 })
 export class HeaderComponent implements OnInit {
-  title = 'Dev Challenge';
+    private showMobileNav: boolean = false;
 
-  constructor(
-      private authService: AuthService
-  ) { }
+    constructor(
+            private authService: AuthService
+    ) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
-  logout() {
-      this.authService.logout();
-  }
+    logout() {
+        this.authService.logout();
+    }
+
+    toggleMobileNav() {
+        this.showMobileNav = ! this.showMobileNav;
+    }
 
 }
