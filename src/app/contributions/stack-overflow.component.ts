@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder} from "@angular/forms";
 
 import {User} from "../classes/user";
-import {AuthService} from "../services/auth.service";
+import {AuthService} from "../core/auth.service";
 
 @Component({
     selector: 'xp-stack-overflow',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ONE_SIGNAL_APP_KEY, ONE_SIGNAL_SAFARI } from '../config';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../core/auth.service';
 import { User } from '../classes/user';
 
 @Component({

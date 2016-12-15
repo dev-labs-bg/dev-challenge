@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from "../classes/user";
 import {FormGroup, FormBuilder} from "@angular/forms";
-import {AuthService} from "../services/auth.service";
+import {AuthService} from "../core/auth.service";
 
 @Component({
   selector: 'xp-side-project',
