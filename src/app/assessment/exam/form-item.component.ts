@@ -85,7 +85,7 @@ export class AssessmentExamFormItemComponent implements OnInit {
         const answerId = answer.id;
         this.chosenAnswer = answer;
 
-        this.subscription = this.assessmentService.submitOpenQuestionAnswer(
+        this.subscription = this.assessmentService.submitExamAnswer(
             this.todoId,
             this.questionId,
             answerId
