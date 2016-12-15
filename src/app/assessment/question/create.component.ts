@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Subscription } from 'rxjs/Rx';
 
 import { Assessment } from '../assessment';
 import { AssessmentService } from '../assessment.service';
@@ -8,18 +9,21 @@ import { NotificationService } from '../../shared/notification.service';
 @Component({
     selector: 'xp-assessment-question-create',
     template: `
-        <xp-assessment-form-open-answer
-            (onSubmit)="handleSubmit($event)">
-        </xp-assessment-form-open-answer>
-        <hr />
-        <xp-audio-recorder
-            (onUpload)="handleAudioUpload($event)">
-        </xp-audio-recorder>
+        <xp-loading-indicator [wait]="subscription">
+            <xp-assessment-form-open-answer
+                (onSubmit)="handleSubmit($event)">
+            </xp-assessment-form-open-answer>
+            <hr />
+            <xp-audio-recorder
+                (onUpload)="handleAudioUpload($event)">
+            </xp-audio-recorder>
+        </xp-loading-indicator>
     `,
     styles: []
 })
 export class AssessmentQuestionCreateComponent {
     @Input() private assessment: Assessment;
+    private subscription: Subscription;
 
     constructor(
         private assessmentService: AssessmentService,
@@ -30,7 +34,7 @@ export class AssessmentQuestionCreateComponent {
     private handleSubmit(formData) {
         const { message } = formData;
 
-        this.assessmentService.submitOpenQuestionAnswer(
+        this.subscription = this.assessmentService.submitOpenQuestionAnswer(
             this.assessment.todoId,
             this.assessment.questionId,
             message
@@ -44,8 +48,7 @@ export class AssessmentQuestionCreateComponent {
     }
 
     private handleAudioUpload(audio) {
-
-        this.assessmentService.uploadOpenQuestionAudio(
+        this.subscription = this.assessmentService.uploadOpenQuestionAudio(
             this.assessment.todoId,
             this.assessment.questionId,
             audio
