@@ -7,23 +7,25 @@ import { Todo } from '../todos/todo';
 @Component({
     selector: 'xp-assessment',
     template: `
-        <ng-container [ngSwitch]="assessment.id">
-            <xp-assessment-micro-project
-                *ngSwitchCase="ASSESSMENT_TYPES.MICRO_PROJECT"
-                [assessment]="assessment"
-                [todo]="todo">
-            </xp-assessment-micro-project>
+        <div class="panel panel-primary" [ngSwitch]="assessment.id">
+            <div class="panel-body">
+                <xp-assessment-micro-project
+                    *ngSwitchCase="ASSESSMENT_TYPES.MICRO_PROJECT"
+                    [assessment]="assessment"
+                    [todo]="todo">
+                </xp-assessment-micro-project>
 
-            <xp-assessment-question
-                *ngSwitchCase="ASSESSMENT_TYPES.QUESTION"
-                [todo]="todo">
-            </xp-assessment-question>
+                <xp-assessment-question
+                    *ngSwitchCase="ASSESSMENT_TYPES.QUESTION"
+                    [todo]="todo">
+                </xp-assessment-question>
 
-            <xp-assessment-exam
-                *ngSwitchCase="ASSESSMENT_TYPES.EXAM"
-                [todo]="todo">
-            </xp-assessment-exam>
-        </ng-container>
+                <xp-assessment-exam
+                    *ngSwitchCase="ASSESSMENT_TYPES.EXAM"
+                    [todo]="todo">
+                </xp-assessment-exam>
+            </div>
+        </div>
     `
 })
 export class AssessmentComponent {
