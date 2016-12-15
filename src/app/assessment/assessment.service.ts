@@ -32,4 +32,8 @@ export class AssessmentService {
         });
     }
 
+    resetExam(todoId: number) {
+        return this.httpService.post(`submission/${todoId}/reset`);
+    }
+
 }

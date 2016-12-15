@@ -3,6 +3,7 @@ import { Assessment, Question, Answer, Task } from '../assessment/assessment';
 export class Todo {
 
     constructor(
+        public id: number,
         public task: Task,
         public assessment: Assessment,
         public status: number = 0,
@@ -22,6 +23,7 @@ export class Todo {
         );
 
         return new Todo(
+            data.id,
             new Task(
                 data.task.assessment_type_id,
                 data.task.title,
