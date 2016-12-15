@@ -18,7 +18,6 @@ import { AuthService } from '../core/auth.service';
                     <button
                         type="button"
                         class="navbar-toggle collapsed"
-                        data-toggle="collapse"
                         (click)="toggleMobileNav()"
                         aria-expanded="false">
                         <span class="sr-only">Toggle navigation</span>
@@ -31,15 +30,20 @@ import { AuthService } from '../core/auth.service';
                 <div class="collapse navbar-collapse" [class.in]="showMobileNav">
                     <ul class="nav navbar-nav">
                         <li
-                            *ngIf="authService.getLoggedUser() != null &&
-                            authService.getLoggedUser().isAdmin()">
-                            <a routerLink="/admin" routerLinkActive="active">Admin</a>
+                            *ngIf="authService.getLoggedUser() &&
+                            authService.getLoggedUser().isAdmin()"
+                            routerLinkActive="active">
+                            <a routerLink="/admin">Admin</a>
                         </li>
-                        <li *ngIf="!authService.isAuthenticated()">
-                            <a routerLink="/login" routerLinkActive="active">Login</a>
+                        <li
+                            *ngIf="!authService.isAuthenticated()"
+                            routerLinkActive="active">
+                            <a routerLink="/login">Login</a>
                         </li>
-                        <li *ngIf="!authService.isAuthenticated()">
-                            <a routerLink="/register" routerLinkActive="active">Register</a>
+                        <li
+                            *ngIf="!authService.isAuthenticated()"
+                            routerLinkActive="active">
+                            <a routerLink="/register">Register</a>
                         </li>
                     </ul>
 
