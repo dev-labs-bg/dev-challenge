@@ -8,11 +8,10 @@ import { TodoService } from './todo.service';
     template: `
         <xp-loading-indicator [wait]="subscription">
             <div class="list-group">
-                <div
-                    *ngFor="let todo of todoService.repository.getData()"
-                    class="list-group-item">
+                <ng-container
+                    *ngFor="let todo of todoService.repository.getData()">
                     <xp-todo-item [todo]="todo"></xp-todo-item>
-                </div>
+                </ng-container>
             </div>
         </xp-loading-indicator>
     `,

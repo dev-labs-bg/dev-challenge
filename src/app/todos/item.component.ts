@@ -7,60 +7,49 @@ import { Todo } from './todo';
 @Component({
     selector: 'xp-todo-item',
     template: `
-        <h4 
-            [ngSwitch]="todo.status"
-            class="list-group-item-heading">
-            <span *ngSwitchCase="TODO_STATUSES.UNCOMPLETED">
-                <span
-                    class="label label-default">
+        <a class="list-group-item" [ngClass]="getStatusClass()">
+            <ng-container [ngSwitch]="todo.status">
+                <span *ngSwitchCase="TODO_STATUSES.UNCOMPLETED" class="badge text-uppercase">
                     Uncompleted
                 </span>
-            </span>
-            <span *ngSwitchCase="TODO_STATUSES.SUBMITTED_FOR_REVIEW">
-                <span
-                    class="label label-warning">
+                <span *ngSwitchCase="TODO_STATUSES.SUBMITTED_FOR_REVIEW" class="badge text-uppercase">
                     submitted for review
                 </span>
-            </span>
-            <span *ngSwitchCase="TODO_STATUSES.DENIED">
-                <span
-                    class="label label-danger">
+                <span *ngSwitchCase="TODO_STATUSES.DENIED" class="badge text-uppercase">
                     denied
                 </span>
-            </span>
-            <span *ngSwitchCase="TODO_STATUSES.COMPLETED" class="text-success">
-                <i class="glyphicon glyphicon-check"></i>
-                completed
-            </span>
-            &nbsp;
-            {{ todo.task.title }}
-            <span
-                *ngIf="isActive(todo) && todo.status == TODO_STATUSES.UNCOMPLETED"
-                class="label label-info">
-                {{ todo.days_left }} days remaining
-            </span>
-            <span
-                *ngIf="!isActive(todo)"
-                class="label label-danger">
-                Locked
-            </span>
-        </h4>
-        <p class="list-group-item-text">
-            <button
-                *ngIf="isActive(todo)"
-                class="btn btn-default btn-xs"
-                (click)="toggleOpenDetails()">
-                {{ areDetailsOpen ? 'hide details' : 'see details' }}
-            </button>
-        </p>
-        <div *ngIf="areDetailsOpen">
-            <pre class="line-break-pre">{{ todo.task.description }}</pre>
-            <hr />
-            <xp-assessment
-                [assessment]="todo.assessment"
-                [todo]="todo">
-            </xp-assessment>
-        </div>
+                <span *ngSwitchCase="TODO_STATUSES.COMPLETED" class="badge text-uppercase">
+                    completed
+                </span>
+            </ng-container>
+
+            <h4
+                class="list-group-item-heading"
+                (click)="toggleOpenDetails()"
+                style="cursor: pointer;">
+                {{ todo.task.title }}
+                <span
+                    *ngIf="isActive(todo) && todo.status == TODO_STATUSES.UNCOMPLETED"
+                    class="label label-info">
+                    ... {{ todo.days_left }} days remaining
+                </span>
+                <span
+                    *ngIf="!isActive(todo)"
+                    class="label label-danger">
+                    Locked
+                </span>
+            </h4>
+
+            <div *ngIf="areDetailsOpen" class="list-group-item-text">
+                <hr />
+                <pre class="line-break-pre">{{ todo.task.description }}</pre>
+                <hr />
+                <xp-assessment
+                    [assessment]="todo.assessment"
+                    [todo]="todo">
+                </xp-assessment>
+            </div>
+        </a>
     `
 })
 export class TodoItemComponent implements OnInit {
@@ -72,6 +61,19 @@ export class TodoItemComponent implements OnInit {
 
     ngOnInit() {
         //
+    }
+
+    getStatusClass() {
+        switch (this.todo.status) {
+            case TODO_STATUSES.UNCOMPLETED:
+                return '';
+            case TODO_STATUSES.COMPLETED:
+                return 'list-group-item-success';
+            case TODO_STATUSES.SUBMITTED_FOR_REVIEW:
+                return 'list-group-item-warning';
+            case TODO_STATUSES.DENIED:
+                return 'list-group-item-danger'
+        }
     }
 
     private toggleOpenDetails() {
