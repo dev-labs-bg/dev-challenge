@@ -11,7 +11,9 @@ import { AssessmentService } from '../assessment.service';
         <p>
             Question {{ questionNumber }} out of {{ questionsCount }}
         </p>
-        <h2>{{ question.body }}</h2>
+        <h2>
+            <pre class="line-break-pre">{{ question.body }}</pre>
+        </h2>
 
         <xp-loading-indicator [wait]="subscription">
             <button
@@ -30,11 +32,11 @@ import { AssessmentService } from '../assessment.service';
             <div [ngSwitch]="mode">
                 <div *ngSwitchCase="modes.CORRECT_ANSWER" class="alert alert-success">
                     Correct answer!<br />
-                    {{ whyCorrect }}
+                    <pre class="line-break-pre">{{ whyCorrect }}</pre>
                 </div>
                 <div *ngSwitchCase="modes.WRONG_ANSWER" class="alert alert-danger">
                     Wrong answer!<br />
-                    {{ whyCorrect }}
+                    <pre class="line-break-pre">{{ whyCorrect }}</pre>
                 </div>
             </div>
 
