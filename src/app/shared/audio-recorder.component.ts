@@ -24,11 +24,12 @@ const MediaStreamRecorder = require('msr');
 
         <div *ngIf="mode === modes.IN_PROGRESS">
             <button class="btn btn-default" (click)="stop()">Stop</button>
-            / {{ timerLimit - timerValue }} seconds remaining
+            / {{ timerLimit - timerCurrentValue }} seconds remaining
         </div>
 
         <div *ngIf="mode === modes.RECORDING_MADE">
-            <button class="btn btn-default" (click)="play()">Play</button>
+            <xp-audio-player [source]="blobURL"></xp-audio-player>
+
             <button class="btn btn-danger" (click)="reset()">Reset</button>
             <button class="btn btn-success" (click)="upload()">Upload</button>
         </div>
@@ -49,8 +50,8 @@ export class AudioRecorderComponent implements OnDestroy {
         RECORDING_MADE: 'RECORDING_MADE'
     };
     private mode = this.modes.STAND_BY;
-    private timerValue: number = 0;
     private timer: Subscription;
+    private timerCurrentValue: number = 0;
     private timerLimit: number = 60; // seconds
 
     constructor(private notificationService: NotificationService) { }
@@ -79,24 +80,24 @@ export class AudioRecorderComponent implements OnDestroy {
 
         // Add 1 second buffer
         const limit = this.timerLimit * 1000;
-        console.log(limit);
         this.startTimer(limit);
     }
 
     stop() {
         this.mediaRecorder.stop();
+        this.clearTimer();
+
         this.toggleMode(this.modes.RECORDING_MADE);
     }
 
     reset() {
+        this.timer.unsubscribe();
+
         this.mediaRecorder = null;
         this.audio = null;
-        this.toggleMode(this.modes.STAND_BY);
-    }
+        this.blobURL = null;
 
-    play() {
-        const audioPlayer = new Audio(this.blobURL);
-        audioPlayer.play();
+        this.toggleMode(this.modes.STAND_BY);
     }
 
     upload() {
@@ -104,7 +105,11 @@ export class AudioRecorderComponent implements OnDestroy {
     }
 
     clearTimer() {
-        this.timerValue = 0;
+        this.timerCurrentValue = 0;
+
+        if (this.timer) {
+            this.timer.unsubscribe();
+        }
     }
 
     startTimer(duration) {
@@ -112,11 +117,11 @@ export class AudioRecorderComponent implements OnDestroy {
 
         this.timer = Observable.timer(0, 1000)
             .subscribe( t => {
-                this.timerValue = t;
+                this.timerCurrentValue = t;
 
-                if (this.timerValue * 1000 >= duration) {
+                if (this.timerCurrentValue * 1000 >= duration) {
                     this.stop();
-                    this.timer.unsubscribe();
+                    this.clearTimer();
                 }
             });
     }
@@ -124,5 +129,4 @@ export class AudioRecorderComponent implements OnDestroy {
     ngOnDestroy() {
         this.timer.unsubscribe();
     }
-
 }
