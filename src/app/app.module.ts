@@ -14,7 +14,7 @@ import { DragulaService } from 'ng2-dragula/ng2-dragula';
 
 import { routing } from './app.routing';
 
-import { AuthService } from './services/auth.service';
+import { AuthService } from './core/auth.service';
 import { AuthGuard } from './core/auth.guard';
 import { SocialGuard } from './core/social.guard';
 import { HttpService } from './services/http.service';

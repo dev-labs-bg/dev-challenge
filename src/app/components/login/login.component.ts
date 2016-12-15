@@ -3,7 +3,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import {Http, Response, Headers, URLSearchParams} from '@angular/http';
 import {Router} from "@angular/router";
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../core/auth.service';
 import { HttpService } from '../../services/http.service';
 
 @Component({

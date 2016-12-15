@@ -2,7 +2,7 @@ import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 
 import {User} from '../classes/user';
-import {AuthService} from '../services/auth.service';
+import {AuthService} from '../core/auth.service';
 import {HttpService} from "../services/http.service";
 import {NotificationService} from "../shared/notification.service";
 
