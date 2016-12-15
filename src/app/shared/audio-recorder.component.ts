@@ -127,6 +127,8 @@ export class AudioRecorderComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
-        this.timer.unsubscribe();
+        if (this.timer) {
+            this.timer.unsubscribe();
+        }
     }
 }
