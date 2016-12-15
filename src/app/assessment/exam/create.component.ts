@@ -2,6 +2,8 @@ import { Component, OnChanges, Input, ViewChild } from '@angular/core';
 
 import { Todo } from '../../todos/todo';
 import { AssessmentService } from '../assessment.service';
+import { TodoService } from '../../todos/todo.service';
+import { NotificationService } from '../../shared/notification.service';
 import { Modal } from '../../shared/modal.component';
 
 @Component({
@@ -96,7 +98,11 @@ export class AssessmentExamCreateComponent implements OnChanges {
     };
     private mode = this.modes.GET_READY;
 
-    constructor(private assessmentService: AssessmentService) { }
+    constructor(
+        private assessmentService: AssessmentService,
+        private todoService: TodoService,
+        private notificationService: NotificationService,
+    ) { }
 
     ngOnChanges() {
         this.questionsCount = this.todo ? this.todo.task.questions.length : 0;
@@ -118,6 +124,13 @@ export class AssessmentExamCreateComponent implements OnChanges {
         this.correctAnswers = 0;
         this.currentQuestionIndex = 0;
         this.toggleMode(this.modes.GET_READY);
+
+        this.assessmentService.resetExam(this.todo.id).subscribe(
+            () => {
+                this.todoService.reset();
+            },
+            error => console.log('Ah, exam not reset!', error)
+        );
     }
 
     toggleMode(nextMode) {
