@@ -26,7 +26,7 @@ import { Modal } from '../../shared/modal.component';
                 <button
                     (click)="resetExam()"
                     class="btn btn-danger">
-                    Reset Exam!
+                    Restart Exam!
                 </button>
             </div>
 
@@ -64,8 +64,17 @@ import { Modal } from '../../shared/modal.component';
                             Here's why.
                         </a>
                         <br />
+                        <br />
 
                         PS: You can re-take the exam unlimited times.
+                        <br />
+                        <br />
+
+                        <button
+                            (click)="resetExam()"
+                            class="btn btn-success">
+                            Restart Exam!
+                        </button>
                     </p>
 
             </div>
