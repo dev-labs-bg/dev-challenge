@@ -7,7 +7,7 @@ import { TODO_STATUSES } from '../constants';
 @Component({
     selector: 'xp-assessment-micro-project',
     template: `
-        <h2>Assessment: Complete a micro-project</h2>
+        <h5>Assessment: Complete a micro-project</h5>
         <pre class="line-break-pre">{{ assessment.description }}</pre>
 
         <div [ngSwitch]="todo.status">
@@ -22,7 +22,7 @@ import { TODO_STATUSES } from '../constants';
                     <pre class="line-break-pre">{{ todo.submissions[todo.submissions.length - 1].body }}</pre>
                 </div>
             </div>
-            
+
             <div *ngSwitchCase="TODO_STATUSES.DENIED">
                 <h3>Sadly, your submission was denied :(</h3>
                 <div class="alert alert-danger" role="alert">

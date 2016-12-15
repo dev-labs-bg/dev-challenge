@@ -6,7 +6,7 @@ import { TODO_STATUSES, ASSESSMENT_OPEN_ANSWER_TYPES } from '../constants';
 @Component({
     selector: 'xp-assessment-question',
     template: `
-        <h2>Assessment: Answer a Question</h2>
+        <h5>Assessment: Answer a Question</h5>
         <p>{{ todo.assessment.description }}</p>
 
         <div [ngSwitch]="todo.status">
