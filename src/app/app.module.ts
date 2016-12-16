@@ -7,7 +7,7 @@ import { HttpModule } from '@angular/http';
 import { ToastyModule } from 'ng2-toasty';
 import { BusyModule } from 'angular2-busy';
 import {
-    AlertModule, DatepickerModule, ModalModule
+    AlertModule, DatepickerModule, ModalModule, ProgressbarModule
 } from 'ng2-bootstrap/ng2-bootstrap';
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
@@ -164,6 +164,7 @@ import { Modal } from './shared/modal.component';
     AlertModule,
     DatepickerModule,
     ModalModule,
+    ProgressbarModule,
     BusyModule,
     ToastyModule.forRoot(),
     DragulaModule
