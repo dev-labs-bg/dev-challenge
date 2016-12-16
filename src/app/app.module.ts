@@ -7,7 +7,7 @@ import { HttpModule } from '@angular/http';
 import { ToastyModule } from 'ng2-toasty';
 import { BusyModule } from 'angular2-busy';
 import {
-    AlertModule, DatepickerModule, ModalModule
+    AlertModule, DatepickerModule, ModalModule, ProgressbarModule
 } from 'ng2-bootstrap/ng2-bootstrap';
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
@@ -32,7 +32,7 @@ import { AssessmentService as UserAssessmentService }  from './assessment/assess
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
-import { HeaderComponent } from './components/header/header.component';
+import { HeaderComponent } from './shared/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegisterComponent } from './register/register.component';
 import { AccountActivationComponent } from './components/account-activation/account-activation.component';
@@ -164,6 +164,7 @@ import { Modal } from './shared/modal.component';
     AlertModule,
     DatepickerModule,
     ModalModule,
+    ProgressbarModule,
     BusyModule,
     ToastyModule.forRoot(),
     DragulaModule

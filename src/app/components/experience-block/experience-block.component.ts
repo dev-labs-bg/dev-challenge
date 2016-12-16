@@ -3,34 +3,25 @@ import {User} from '../../classes/user';
 import {AuthService} from '../../core/auth.service';
 
 @Component({
-  selector: 'xp-experience-block',
-  templateUrl: `
-    <div class='panel panel-primary'>
-        <div class='panel-heading'>Experience</div>
-        <div class="panel-body">
-            <div class='progress'>
-                <div
-                    id='progress_bar'
-                    class='progress-bar'
-                    role='progressbar'
-                    aria-valuenow='70'
-                    aria-valuemin='0'
-                    aria-valuemax='100'>
-                    <span class='sr-only'>{{ loggedUser.experience }} / 500</span>
-                </div>
-            </div>
-            <p style='text-align: right;'>{{ loggedUser.experience }} / 500</p>
-            <p>You can track your progress here.</p>
-            <p>You'd like some extra experience? Try filling out this form
-                <a routerLink="/contributions">here</a>
+    selector: 'xp-experience-block',
+    templateUrl: `
+        <div class="text-center">
+            <h3 class="mb">
+                {{ loggedUser.first_name }}'s Experience Points
+            </h3>
+            <progressbar value="{{ getProgress() }}"></progressbar>
+
+            <p class="text-right">
+                {{ loggedUser.experience }} / {{ maxPoints }} experience points
+                <br />
+                Apply for bonus experience <a routerLink="/contributions">here</a>
             </p>
         </div>
-    </div>
-  `,
-  styleUrls: []
+    `
 })
 export class ExperienceBlockComponent implements OnInit {
     private loggedUser: User;
+    private maxPoints: number = 500;
 
     constructor(
         private authService: AuthService
@@ -38,11 +29,10 @@ export class ExperienceBlockComponent implements OnInit {
 
     ngOnInit() {
         this.loggedUser = this.authService.getLoggedUser();
-        document.getElementById('progress_bar').style.width = this.getProgress() + '%';
     }
 
     getProgress() {
-        return (this.loggedUser.experience / 500) * 100;
+        return (this.loggedUser.experience / this.maxPoints) * 100;
     }
 
 }

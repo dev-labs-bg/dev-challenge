@@ -7,12 +7,12 @@ import { TodoService } from './todo.service';
     selector: 'xp-todos-list',
     template: `
         <xp-loading-indicator [wait]="subscription">
+            <h3>// TODO: Complete These</h3>
             <div class="list-group">
-                <div
+                <xp-todo-item
                     *ngFor="let todo of todoService.repository.getData()"
-                    class="list-group-item">
-                    <xp-todo-item [todo]="todo"></xp-todo-item>
-                </div>
+                    [todo]="todo">
+                </xp-todo-item>
             </div>
         </xp-loading-indicator>
     `,

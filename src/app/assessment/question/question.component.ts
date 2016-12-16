@@ -6,10 +6,16 @@ import { TODO_STATUSES, ASSESSMENT_OPEN_ANSWER_TYPES } from '../constants';
 @Component({
     selector: 'xp-assessment-question',
     template: `
-        <h2>Assessment: Answer a Question</h2>
-        <p>{{ todo.assessment.description }}</p>
+        <h4>Assessment: Answer a Question:</h4>
+        <p class="text-default">{{ todo.assessment.description }}</p>
 
-        <div [ngSwitch]="todo.status">
+        <div [ngSwitch]="todo.status" class="text-default">
+            <p>You have two available options to submit your assessment:</p>
+            <ul>
+                <li>Option 1: Write an answer, up to 110 words long;</li>
+                <li>Option 2: Record an audio answer, up to 1 min long.</li>
+            </ul>
+            <p>Choose one!</p>
             <xp-assessment-question-create
                 *ngSwitchCase="TODO_STATUSES.UNCOMPLETED"
                 [assessment]="todo.assessment">

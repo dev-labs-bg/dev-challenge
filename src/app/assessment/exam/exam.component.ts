@@ -6,9 +6,12 @@ import { Todo } from '../../todos/todo';
 @Component({
     selector: 'xp-assessment-exam',
     template: `
-        <h2>Assessment: Exam</h2>
+        <h5>Assessment: Exam</h5>
 
         <div [ngSwitch]="todo.status">
+            <p class="mb">
+                PS: No worries. You can re-take the exam unlimited times.
+            </p>
             <xp-assessment-exam-create
                 *ngSwitchCase="TODO_STATUSES.UNCOMPLETED"
                 [todo]="todo">

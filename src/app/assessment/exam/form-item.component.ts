@@ -8,26 +8,29 @@ import { AssessmentService } from '../assessment.service';
 @Component({
     selector: 'xp-assessment-exam-form-item',
     template: `
-        <p>
+        <p class="mb0">
             Question {{ questionNumber }} out of {{ questionsCount }}
         </p>
-        <h2>
+        <h2 class="mb+">
             <pre class="line-break-pre">{{ question.body }}</pre>
         </h2>
 
         <xp-loading-indicator [wait]="subscription">
-            <button
-                *ngFor="let answer of question.answers"
-                (click)="handleAnswerSubmit(answer)"
-                [disabled]="isAnswerChosen()"
-                type="button"
-                class="btn btn-default"
-                [ngClass]="{
-                    'btn-success': showCorrectAnswer(answer),
-                    'btn-primary': answer === chosenAnswer
-                }">
-                {{ answer.body }}
-            </button>
+            <div class="row">
+                <div class="col-sm-6 mb" *ngFor="let answer of question.answers">
+                    <button
+                        (click)="handleAnswerSubmit(answer)"
+                        [disabled]="isAnswerChosen()"
+                        type="button"
+                        class="btn btn-default btn-block"
+                        [ngClass]="{
+                            'btn-success': showCorrectAnswer(answer),
+                            'btn-primary': answer === chosenAnswer
+                        }">
+                        {{ answer.body }}
+                    </button>
+                </div>
+            </div>
 
             <div [ngSwitch]="mode">
                 <div *ngSwitchCase="modes.CORRECT_ANSWER" class="alert alert-success">

@@ -19,9 +19,9 @@
       "mobile": false,
       "styles": [
         "styles.scss",
-        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
         "../node_modules/ng2-toasty/style-bootstrap.css",
-        "../node_modules/dragula/dist/dragula.min.css"
+        "../node_modules/dragula/dist/dragula.min.css",
+        "assets/sass/app.scss"
       ],
       "scripts": [],
       "environments": {
