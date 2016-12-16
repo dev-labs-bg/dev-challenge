@@ -7,24 +7,19 @@ import { Todo } from './todo';
 @Component({
     selector: 'xp-todo-item',
     template: `
-        <div class="list-group-item" [ngClass]="getStatusClass()">
+        <div class="list-group-item" [ngClass]="getStatusClass()" [class.disabled]="!isActive()">
             <h4
                 class="list-group-item-heading mb0"
-                (click)="toggleOpenDetails()"
+                (click)="isActive() && toggleOpenDetails()"
                 style="cursor: pointer;">
                 {{ todo.task.title }}
                 <span
-                    *ngIf="isActive(todo) && todo.status == TODO_STATUSES.UNCOMPLETED"
+                    *ngIf="isActive() && todo.status == TODO_STATUSES.UNCOMPLETED"
                     class="label label-info">
                     ... {{ todo.days_left }} days remaining
                 </span>
-                <span
-                    *ngIf="!isActive(todo)"
-                    class="label label-danger">
-                    Locked
-                </span>
 
-                <ng-container [ngSwitch]="todo.status">
+                <ng-container [ngSwitch]="todo.status" *ngIf="isActive()">
                     <span *ngSwitchCase="TODO_STATUSES.UNCOMPLETED" class="label pull-right text-uppercase">
                         Uncompleted
                     </span>
@@ -38,6 +33,11 @@ import { Todo } from './todo';
                         completed
                     </span>
                 </ng-container>
+                <span
+                    *ngIf="!isActive()"
+                    class="label pull-right text-uppercase">
+                    Locked
+                </span>
             </h4>
 
             <div *ngIf="areDetailsOpen">
@@ -80,8 +80,8 @@ export class TodoItemComponent implements OnInit {
         this.areDetailsOpen = ! this.areDetailsOpen;
     }
 
-    private isActive(todo) {
-        return todo.active;
+    private isActive() {
+        return this.todo.active;
     }
 
 }
