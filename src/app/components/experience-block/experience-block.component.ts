@@ -6,7 +6,9 @@ import {AuthService} from '../../core/auth.service';
     selector: 'xp-experience-block',
     templateUrl: `
         <div class="text-center">
-            <h3 class="mb">Kaloyan Kosev's Experience Points</h3>
+            <h3 class="mb">
+                {{ loggedUser.first_name }}'s Experience Points
+            </h3>
             <progressbar value="{{ getProgress() }}"></progressbar>
 
             <p class="text-right">
