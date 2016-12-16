@@ -11,7 +11,7 @@ import { Todo } from './todo';
             <h4
                 class="list-group-item-heading mb0"
                 (click)="isActive() && toggleOpenDetails()"
-                style="cursor: pointer;">
+                [class.pointer]="isActive()">
                 {{ todo.task.title }}
                 <span
                     *ngIf="isActive() && todo.status == TODO_STATUSES.UNCOMPLETED"
