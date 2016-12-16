@@ -40,7 +40,7 @@ import { Todo } from './todo';
                 </span>
             </h4>
 
-            <div *ngIf="areDetailsOpen" class="list-group-item-text">
+            <div *ngIf="areDetailsOpen">
                 <hr />
                 <pre class="line-break-pre">{{ todo.task.description }}</pre>
                 <hr />

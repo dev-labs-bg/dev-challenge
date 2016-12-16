@@ -7,8 +7,8 @@ import { Todo } from '../todos/todo';
 @Component({
     selector: 'xp-assessment',
     template: `
-        <div class="panel panel-primary" [ngSwitch]="assessment.id">
-            <div class="panel-body">
+        <div class="panel" [ngSwitch]="assessment.id">
+            <div class="well">
                 <xp-assessment-micro-project
                     *ngSwitchCase="ASSESSMENT_TYPES.MICRO_PROJECT"
                     [assessment]="assessment"
