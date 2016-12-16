@@ -7,24 +7,9 @@ import { Todo } from './todo';
 @Component({
     selector: 'xp-todo-item',
     template: `
-        <a class="list-group-item" [ngClass]="getStatusClass()">
-            <ng-container [ngSwitch]="todo.status">
-                <span *ngSwitchCase="TODO_STATUSES.UNCOMPLETED" class="badge text-uppercase">
-                    Uncompleted
-                </span>
-                <span *ngSwitchCase="TODO_STATUSES.SUBMITTED_FOR_REVIEW" class="badge text-uppercase">
-                    submitted for review
-                </span>
-                <span *ngSwitchCase="TODO_STATUSES.DENIED" class="badge text-uppercase">
-                    denied
-                </span>
-                <span *ngSwitchCase="TODO_STATUSES.COMPLETED" class="badge text-uppercase">
-                    completed
-                </span>
-            </ng-container>
-
+        <div class="list-group-item" [ngClass]="getStatusClass()">
             <h4
-                class="list-group-item-heading"
+                class="list-group-item-heading mb0"
                 (click)="toggleOpenDetails()"
                 style="cursor: pointer;">
                 {{ todo.task.title }}
@@ -38,6 +23,21 @@ import { Todo } from './todo';
                     class="label label-danger">
                     Locked
                 </span>
+
+                <ng-container [ngSwitch]="todo.status">
+                    <span *ngSwitchCase="TODO_STATUSES.UNCOMPLETED" class="label pull-right text-uppercase">
+                        Uncompleted
+                    </span>
+                    <span *ngSwitchCase="TODO_STATUSES.SUBMITTED_FOR_REVIEW" class="label pull-right label-warning text-uppercase">
+                        submitted for review
+                    </span>
+                    <span *ngSwitchCase="TODO_STATUSES.DENIED" class="label pull-right label-danger text-uppercase">
+                        denied
+                    </span>
+                    <span *ngSwitchCase="TODO_STATUSES.COMPLETED" class="label pull-right label-success text-uppercase">
+                        completed
+                    </span>
+                </ng-container>
             </h4>
 
             <div *ngIf="areDetailsOpen">
@@ -49,7 +49,7 @@ import { Todo } from './todo';
                     [todo]="todo">
                 </xp-assessment>
             </div>
-        </a>
+        </div>
     `
 })
 export class TodoItemComponent implements OnInit {

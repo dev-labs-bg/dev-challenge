@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import Utils from '../../shared/utils';
@@ -29,12 +29,13 @@ import Utils from '../../shared/utils';
                 type="submit"
                 class="btn btn-primary"
                 [disabled]="! form.valid">
-                Submit
+                {{ submitText }}
             </button>
         </form>
     `
 })
 export class AssessmentOpenAnswerFormComponent implements OnInit {
+    @Input() private submitText: string = 'Submit';
     @Output() onSubmit = new EventEmitter();
     private form: FormGroup;
     private wordsLimit = 110;

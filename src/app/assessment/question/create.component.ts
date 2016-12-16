@@ -10,11 +10,15 @@ import { NotificationService } from '../../shared/notification.service';
     selector: 'xp-assessment-question-create',
     template: `
         <xp-loading-indicator [wait]="subscription">
+            <h4>Write:</h4>
             <xp-assessment-form-open-answer
+                submitText="Submit text answer"
                 (onSubmit)="handleSubmit($event)">
             </xp-assessment-form-open-answer>
             <hr />
+            <h4>... or record an audio:</h4>
             <xp-audio-recorder
+                uploadText="Submit audio answer"
                 (onUpload)="handleAudioUpload($event)">
             </xp-audio-recorder>
         </xp-loading-indicator>

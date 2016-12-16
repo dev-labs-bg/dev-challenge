@@ -9,7 +9,7 @@
  * TODO: Convert WAV to MP3 to reduce audio file size
  *  - https://github.com/zhuker/lamejs
  */
-import { Component, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
 
 import { NotificationService } from './notification.service';
@@ -20,23 +20,35 @@ const MediaStreamRecorder = require('msr');
 @Component({
     selector: 'xp-audio-recorder',
     template: `
-        <button *ngIf="mode === modes.STAND_BY" class="btn btn-primary" (click)="start()">Start</button>
+        <div class="mb-">
+            <button *ngIf="mode === modes.STAND_BY" class="btn btn-primary" (click)="start()">
+                <i class="glyphicon glyphicon-record" aria-hidden="true"></i>
+                Start Recording
+            </button>
 
-        <div *ngIf="mode === modes.IN_PROGRESS">
-            <button class="btn btn-default" (click)="stop()">Stop</button>
-            / {{ timerLimit - timerCurrentValue }} seconds remaining
+            <div *ngIf="mode === modes.IN_PROGRESS">
+                <button class="btn btn-default" (click)="stop()">
+                    <i class="glyphicon glyphicon-stop" aria-hidden="true"></i>
+                    Stop
+                </button>
+                &nbsp;&nbsp; {{ timerLimit - timerCurrentValue }} seconds remaining
+            </div>
+
+            <xp-audio-player
+                *ngIf="mode === modes.RECORDING_MADE"
+                [source]="blobURL">
+            </xp-audio-player>
         </div>
 
         <div *ngIf="mode === modes.RECORDING_MADE">
-            <xp-audio-player [source]="blobURL"></xp-audio-player>
-
             <button class="btn btn-danger" (click)="reset()">Reset</button>
-            <button class="btn btn-success" (click)="upload()">Upload</button>
+            <button class="btn btn-success" (click)="upload()">{{ uploadText }}</button>
         </div>
     `,
     styles: []
 })
 export class AudioRecorderComponent implements OnDestroy {
+    @Input() private uploadText: string = 'Upload';
     @Output() private onUpload = new EventEmitter();
     private mediaRecorder; // :MediaStreamRecorder instance
     private blobURL;
