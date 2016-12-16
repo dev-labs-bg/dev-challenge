@@ -7,9 +7,9 @@ import { TODO_STATUSES, ASSESSMENT_OPEN_ANSWER_TYPES } from '../constants';
     selector: 'xp-assessment-question',
     template: `
         <h4>Assessment: Answer a Question:</h4>
-        <p>{{ todo.assessment.description }}</p>
+        <p class="text-default">{{ todo.assessment.description }}</p>
 
-        <div [ngSwitch]="todo.status">
+        <div [ngSwitch]="todo.status" class="text-default">
             <p>You have two available options to submit your assessment:</p>
             <ul>
                 <li>Option 1: Write an answer, up to 110 words long;</li>

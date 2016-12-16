@@ -7,6 +7,7 @@ import { TodoService } from './todo.service';
     selector: 'xp-todos-list',
     template: `
         <xp-loading-indicator [wait]="subscription">
+            <h3>// TODO: Complete These</h3>
             <div class="list-group">
                 <xp-todo-item
                     *ngFor="let todo of todoService.repository.getData()"

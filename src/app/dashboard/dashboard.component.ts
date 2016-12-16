@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
     template: `
         <xp-experience-block></xp-experience-block>
 
-        <h3>// TODO: Complete These</h3>
         <xp-todos-list></xp-todos-list>
 
         <xp-one-signal-notifications></xp-one-signal-notifications>
