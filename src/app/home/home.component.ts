@@ -13,6 +13,9 @@ import { Component, OnInit } from '@angular/core';
                 <button routerLink="/register" class="btn btn-primary btn-lg">
                     Регистрирай се
                 </button>
+                <button routerLink="/login" class="btn btn-link btn-lg">
+                    ... или влез
+                </button>
             </p>
         </div>
 

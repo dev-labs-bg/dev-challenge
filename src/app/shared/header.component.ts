@@ -43,12 +43,12 @@ import { AuthService } from '../core/auth.service';
                         <li
                             *ngIf="!authService.isAuthenticated()"
                             routerLinkActive="active">
-                            <a routerLink="/login">Login</a>
+                            <a routerLink="/login">Вход</a>
                         </li>
                         <li
                             *ngIf="!authService.isAuthenticated()"
                             routerLinkActive="active">
-                            <a routerLink="/register">Register</a>
+                            <a routerLink="/register">Регистрация</a>
                         </li>
                     </ul>
 
