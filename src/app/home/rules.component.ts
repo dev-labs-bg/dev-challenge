@@ -5,19 +5,19 @@ import { Component, OnInit } from '@angular/core';
     template: `
         <h2>Какви са правилата?</h2>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-sm-4">
                 <h3>Стъпка #1</h3>
                 <p>
                     Определяш колко време за самообучение можеш да отделяш дневно.
                 </p>
             </div>
-            <div class="col-md-4">
+            <div class="col-sm-4">
                 <h3>Стъпка #2</h3>
                 <p>Получаваш списък с ресурси за самообучение (TODO-та).
                 Всяко TODO има срок,
                 съобразен времето, което можеш да отделяш на ден.</p>
          </div>
-            <div class="col-md-4">
+            <div class="col-sm-4">
                 <h3>Стъпка #3</h3>
                 <p>В края на всяко TODO има малък challenge -
                 отговор на отворен въпрос, микро-проект
