@@ -16,9 +16,10 @@ import { BonusesComponent } from './admin/bonuses/bonuses.component';
 import {ContributionsComponent} from "./contributions/contributions.component";
 import {SocialComponent} from "./components/social/social.component";
 import {SocialGuard} from "./core/social.guard";
+import { HomeComponent } from './home/home.component';
 
 const APP_ROUTES: Routes = [
-    {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+    {path: '', component: HomeComponent},
     {path: 'login', component: LoginComponent},
     {path: 'social-login/:user/:token', component: SocialComponent, canActivate: [SocialGuard]},
     {path: 'account/activate/:email/:token', component: AccountActivationComponent},
