@@ -91,6 +91,7 @@ import { AssessmentExamComponent } from './assessment/exam/exam.component';
 import { AssessmentExamCreateComponent } from './assessment/exam/create.component';
 import { AssessmentExamFormItemComponent } from './assessment/exam/form-item.component';
 import { Modal } from './shared/modal.component';
+import { FooterComponent } from './shared/footer.component';
 
 @NgModule({
   declarations: [
@@ -153,7 +154,8 @@ import { Modal } from './shared/modal.component';
     AssessmentExamComponent,
     AssessmentExamCreateComponent,
     AssessmentExamFormItemComponent,
-    Modal
+    Modal,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
