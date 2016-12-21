@@ -9,9 +9,10 @@ import { User } from '../classes/user';
 export class AuthService {
     private loginToken: string = null;
     private loggedUser: User;
-    public successfulActivation: boolean = null;
     private loggedIn: boolean = false;
     private isServerAuthCheckPerformed: boolean = false;
+    // TODO: This shouldn't live here. Move it in the component that needs it.
+    public successfulActivation: boolean = null;
 
     constructor(
         private router: Router,
