@@ -19,7 +19,7 @@ export class AuthService {
     ) {}
 
     init() {
-        this.toggleServerAuthenticationCheck();
+        return this.toggleServerAuthenticationCheck();
     }
 
     /**
