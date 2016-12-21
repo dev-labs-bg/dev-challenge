@@ -7,7 +7,7 @@ import { User } from '../classes/user';
 
 @Injectable()
 export class AuthService {
-    private loginToken: string = null;
+    private loginToken: string = localStorage.getItem('xp_login_token');
     private loggedUser: User;
     private loggedIn: boolean = false;
     private isServerAuthCheckPerformed: boolean = false;
@@ -90,7 +90,17 @@ export class AuthService {
      */
     toggleServerAuthenticationCheck(): Promise<boolean> {
        return new Promise( resolve => {
-            this.httpService.get('get-logged-user').subscribe(
+           /**
+            * If a login token is missing,
+            * an API call is not necessary, user is not logged-in for sure
+            */
+           if (! this.loginToken) {
+               resolve(false);
+
+               return;
+           }
+
+           this.httpService.get('get-logged-user').subscribe(
                 response => {
                     this.toggleAuthenticationState(true, response.user, response.loginToken);
                     this.isServerAuthCheckPerformed = true;
