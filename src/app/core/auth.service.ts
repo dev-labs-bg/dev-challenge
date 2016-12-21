@@ -51,7 +51,7 @@ export class AuthService {
 
         if (isAuth) {
             localStorage.setItem('xp_login_token', loginToken);
-            this.setLoginToken(loginToken);
+            this.loginToken = loginToken;
             this.setLoggedUser(user);
 
             this.httpService.updateHeader('loginToken', loginToken);
@@ -62,7 +62,7 @@ export class AuthService {
             }
         } else {
             localStorage.removeItem('xp_login_token');
-            this.setLoginToken(null);
+            this.loginToken = null;
             this.loggedUser = null;
 
             this.httpService.updateHeader('loginToken', null);
@@ -127,39 +127,10 @@ export class AuthService {
         );
     }
 
-    /**
-     * Get login token
-     *
-     * @param value
-     * @returns this.loginToken
-     */
-    getLoginToken() {
-        return this.loginToken;
-    }
-
-    /**
-     * Set login token value
-     *
-     * @param value
-     */
-    setLoginToken(value) {
-        this.loginToken = value;
-    }
-
-    /**
-     * Get the logged user
-     *
-     * @returns {User}
-     */
-    getLoggedUser() {
+    getLoggedUser(): User {
         return this.loggedUser;
     }
 
-    /**
-     * Set the logged user instance
-     *
-     * @param user
-     */
     setLoggedUser(user: User) {
         return this.loggedUser = User.newInstance(user);
     }
@@ -176,15 +147,6 @@ export class AuthService {
             },
             error => console.log('Logout failed! ', error)
         );
-    }
-
-    /**
-     * Check if user is authenticated
-     *
-     * @returns {Observable<boolean>}
-     */
-    isAuthenticated(): boolean {
-        return Boolean(this.getLoginToken());
     }
 
     register(user: User, userProps) {
