@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Rx';
 
 import { HttpService } from '../services/http.service';
 import { User } from '../classes/user';
@@ -9,7 +10,6 @@ export class AuthService {
     private loginToken: string = null;
     private loggedUser: User;
     public successfulActivation: boolean = null;
-    public loginFail: boolean = false;
     private loggedIn: boolean = false;
     private isServerAuthCheckPerformed: boolean = false;
 
@@ -18,7 +18,7 @@ export class AuthService {
         private httpService: HttpService
     ) {}
 
-    init() {
+    init(): Promise<boolean> {
         return this.toggleServerAuthenticationCheck();
     }
 
@@ -98,40 +98,27 @@ export class AuthService {
     }
 
     /**
-     * Login API request
+     * Logs user in
      *
-     * @param email
-     * @param password
-     * @returns void
+     * @param {string} email
+     * @param {string} password
+     * @return {Subscription}
      */
-    login(email, password) {
-        // instantiate authService
-        let authService = this;
-        this.loginFail = false;
-
-        // call login
-        this.httpService.post('login', {
-            email,
-            password
-        }).subscribe(
-            response => {
-                authService.toggleAuthenticationState(true, response.user, response.loginToken);
-                return true;
-            },
-            error => {
-                console.log('Login failed!', error);
-
-                this.loginFail = true;
-                return false;
-            }
-        );
+    login(email: string, password: string): Subscription {
+        return this.httpService.post('login', { email, password })
+            .subscribe(
+                response => this.authService.toggleAuthenticationState(
+                    true, response.user, response.loginToken
+                ),
+                error => console.log('Login failed!', error)
+            );
     }
 
     getLoggedUser(): User {
         return this.loggedUser;
     }
 
-    setLoggedUser(user: User) {
+    setLoggedUser(user: User): User {
         return this.loggedUser = User.newInstance(user);
     }
 
