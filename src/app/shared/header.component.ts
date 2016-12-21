@@ -35,8 +35,7 @@ import { AuthService } from '../core/auth.service';
                             <a routerLink="/dashboard">Dashboard</a>
                         </li>
                         <li
-                            *ngIf="authService.getLoggedUser() &&
-                            authService.getLoggedUser().isAdmin()"
+                            *ngIf="authService.isAdmin()"
                             routerLinkActive="active">
                             <a routerLink="/admin">Admin</a>
                         </li>

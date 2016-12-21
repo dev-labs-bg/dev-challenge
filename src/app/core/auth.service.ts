@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription, Observable } from 'rxjs/Rx';
 
 import { HttpService } from '../services/http.service';
 import { User } from '../classes/user';
@@ -29,6 +29,15 @@ export class AuthService {
      */
     isLoggedIn(): boolean {
         return this.loggedIn;
+    }
+
+    /**
+     * Check if the current logged-in user is admin or not
+     *
+     * @return {boolean}
+     */
+    isAdmin(): boolean {
+        return this.isLoggedIn() ? this.loggedUser.isAdmin() : false;
     }
 
     /**
@@ -107,7 +116,7 @@ export class AuthService {
     login(email: string, password: string): Subscription {
         return this.httpService.post('login', { email, password })
             .subscribe(
-                response => this.authService.toggleAuthenticationState(
+                response => this.toggleAuthenticationState(
                     true, response.user, response.loginToken
                 ),
                 error => console.log('Login failed!', error)
@@ -141,9 +150,9 @@ export class AuthService {
      *
      * @param  {User}         user
      * @param  {object}       userProps
-     * @return {Subscription}
+     * @return {Observable<any>}
      */
-    register(user: User, userProps): Subscription {
+    register(user: User, userProps): Observable<any> {
         const data = {
             first_name: user.first_name,
             last_name: user.last_name,
@@ -173,38 +182,5 @@ export class AuthService {
             response => this.successfulActivation = true,
             error => this.successfulActivation = false
         );
-    }
-
-    /**
-     * Check if the user is admin via API and
-     * send it back as a Promise.
-     * User for canActivate admin guard
-     *
-     * @returns {Promise<T>|Promise}
-     */
-    isUserAdmin(): Promise<boolean> | boolean {
-        let userInstance = this.getLoggedUser();
-
-        if (userInstance != null) {
-            return userInstance.isAdmin();
-        }
-
-        return new Promise((resolve, reject) => {
-            this.httpService.get('get-logged-user').subscribe(
-                response => {
-                    this.toggleAuthenticationState(true, response.user, response.loginToken);
-
-                    let adminGuardUser: User = User.newInstance(response.user);
-                    resolve(adminGuardUser.isAdmin());
-                },
-                error => {
-                    this.toggleAuthenticationState(false);
-                    // `resolve`, no `reject`, since we're using this method on a guard
-                    resolve(false);
-
-                    console.log('Could not check if user is admin.', error);
-                }
-            );
-        });
     }
 }
