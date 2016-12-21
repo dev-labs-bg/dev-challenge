@@ -10,6 +10,8 @@ export class AuthService {
     private loggedUser: User;
     public successfulActivation: boolean = null;
     public loginFail: boolean = false;
+    // Flag that indicates if an API call is in progress
+    public isUserLoggedCallInProgress: boolean = false;
 
     constructor(
         private router: Router,
@@ -182,23 +184,31 @@ export class AuthService {
      * @returns {Promise<T>|Promise}
      */
     isUserLogged(): Promise<boolean> | boolean {
-        let userInstance = this.getLoggedUser();
+        if (this.isUserLoggedCallInProgress) {
+            return false;
+        }
 
-        if (userInstance != null) {
+        const userInstance = this.getLoggedUser();
+        if (userInstance) {
             return true;
         }
+
+        this.isUserLoggedCallInProgress = true;
 
         return new Promise(resolve => {
             this.httpService.get('get-logged-user').subscribe(
                 response => {
                     this.toggleAuthentication(true, response.user, response.loginToken);
+                    this.isUserLoggedCallInProgress = false;
+
                     resolve(true);
                 },
                 error => {
                     this.toggleAuthentication(false);
+                    this.isUserLoggedCallInProgress = false;
+
                     // `resolve`, no `reject`, since we're using this method on a guard
                     resolve(false);
-
                     console.log('Could not check if user is logged-in. ', error);
                 }
             );
