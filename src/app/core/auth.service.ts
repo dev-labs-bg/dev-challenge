@@ -114,6 +114,18 @@ export class AuthService {
             );
     }
 
+    /**
+     * Logs user out
+     *
+     * @return {Subscription}
+     */
+    logout(): Subscription {
+        return this.httpService.post('logout').subscribe(
+            response => this.toggleAuthenticationState(false),
+            error => console.log('Logout failed! ', error)
+        );
+    }
+
     getLoggedUser(): User {
         return this.loggedUser;
     }
@@ -122,21 +134,16 @@ export class AuthService {
         return this.loggedUser = User.newInstance(user);
     }
 
-    /**
-     * Logout API request
-     *
-     * @returns void
-     */
-    logout() {
-        this.httpService.post('logout').subscribe(
-            response => {
-                this.toggleAuthenticationState(false);
-            },
-            error => console.log('Logout failed! ', error)
-        );
-    }
 
-    register(user: User, userProps) {
+    /**
+     * Registers a new user.
+     * TODO: Should live inside a user or account service, not here
+     *
+     * @param  {User}         user
+     * @param  {object}       userProps
+     * @return {Subscription}
+     */
+    register(user: User, userProps): Subscription {
         const data = {
             first_name: user.first_name,
             last_name: user.last_name,
@@ -154,7 +161,8 @@ export class AuthService {
     }
 
     /**
-     * Activate account api request
+     * Activate account API request
+     * TODO: Should live inside a user or account service, not here
      *
      * @param email - user email
      * @param token - user token
@@ -162,14 +170,8 @@ export class AuthService {
      */
     activateAccount(email, token) {
         this.httpService.post(`account/activate/${email}/${token}`).subscribe(
-            response => {
-                this.successfulActivation = true;
-            },
-            error => {
-                this.successfulActivation = false;
-
-                console.log('Account activation failed!', error);
-            }
+            response => this.successfulActivation = true,
+            error => this.successfulActivation = false
         );
     }
 
