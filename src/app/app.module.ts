@@ -16,6 +16,7 @@ import { routing } from './app.routing';
 
 import { AuthService } from './core/auth.service';
 import { AuthGuard } from './core/auth.guard';
+import { NoAuthGuard } from './core/no-auth.guard';
 import { SocialGuard } from './core/social.guard';
 import { HttpService } from './services/http.service';
 import { AdminService } from './services/admin.service';
@@ -178,6 +179,7 @@ import { FooterComponent } from './shared/footer.component';
   providers: [
     AuthService,
     AuthGuard,
+    NoAuthGuard,
     HttpService,
     AdminService,
     AdminGuard,
