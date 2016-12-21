@@ -87,7 +87,7 @@ export class SocialComponent implements OnInit {
             response => {
                 let user = User.newInstance(response.data);
                 this.userService.repository.update(user);
-                this.authService.toggleAuthentication(true, user, this.token, true);
+                this.authService.toggleAuthenticationState(true, user, this.token, true);
             },
             error => console.log('Oops... registration failed :(', error)
         );

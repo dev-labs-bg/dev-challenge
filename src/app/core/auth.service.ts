@@ -1,104 +1,69 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription, Observable } from 'rxjs/Rx';
 
 import { HttpService } from '../services/http.service';
 import { User } from '../classes/user';
 
 @Injectable()
 export class AuthService {
-    private loginToken: string = null;
+    private loginToken: string = localStorage.getItem('xp_login_token');
     private loggedUser: User;
+    private loggedIn: boolean = false;
+    private isServerAuthCheckPerformed: boolean = false;
+    // TODO: This shouldn't live here. Move it in the component that needs it.
     public successfulActivation: boolean = null;
-    public loginFail: boolean = false;
-    // Flag that indicates if an API call is in progress
-    public isUserLoggedCallInProgress: boolean = false;
 
     constructor(
         private router: Router,
         private httpService: HttpService
     ) {}
 
-    /**
-     * Login API request
-     *
-     * @param email
-     * @param password
-     * @returns void
-     */
-    login(email, password) {
-        // instantiate authService
-        let authService = this;
-        this.loginFail = false;
-
-        // call login
-        this.httpService.post('login', {
-            email,
-            password
-        }).subscribe(
-            response => {
-                authService.toggleAuthentication(true, response.user, response.loginToken);
-                return true;
-            },
-            error => {
-                console.log('Login failed!', error);
-
-                this.loginFail = true;
-                return false;
-            }
-        );
+    init(): Promise<boolean> {
+        return this.toggleServerAuthenticationCheck();
     }
 
     /**
-     * Get login token
+     * Access the flag if user is logged-in or not.
      *
-     * @param value
-     * @returns this.loginToken
+     * @return {boolean}
      */
-    getLoginToken() {
-        return this.loginToken;
+    isLoggedIn(): boolean {
+        return this.loggedIn;
     }
 
     /**
-     * Set login token value
+     * Check if the current logged-in user is admin or not
      *
-     * @param value
+     * @return {boolean}
      */
-    setLoginToken(value) {
-        this.loginToken = value;
+    isAdmin(): boolean {
+        return this.isLoggedIn() ? this.loggedUser.isAdmin() : false;
     }
 
     /**
-     * Get the logged user
+     * Change the app authentication state
+     * and therefore perform all necessary initializations / resets / clean-up
+     * depending on if user logs in or out.
      *
-     * @returns {User}
+     * @param {boolean}    isAuth - flag if user is authenticated
+     * @param {User}       user
+     * @param {string}     loginToken
+     * @param {boolean}    redirect - if user should be redirected or not
      */
-    getLoggedUser() {
-        return this.loggedUser;
-    }
+    toggleAuthenticationState(
+        isAuth: boolean,
+        user?: User,
+        loginToken?: string,
+        redirect: boolean = false
+    ): void {
+        this.loggedIn = isAuth;
 
-    /**
-     * Set the logged user instance
-     *
-     * @param user
-     */
-    setLoggedUser(user: User) {
-        return this.loggedUser = User.newInstance(user);
-    }
-
-    /**
-     * Change authentication state
-     *
-     * @param isAuth - is the user logged in
-     * @param loginToken - user's login token if logged in
-     * @returns void
-     */
-    toggleAuthentication(isAuth: boolean, user?: User, loginToken?: string, redirect: boolean = false) {
         if (isAuth) {
             localStorage.setItem('xp_login_token', loginToken);
-            this.setLoginToken(loginToken);
+            this.loginToken = loginToken;
             this.setLoggedUser(user);
 
-            // TODO: Maybe not here?
             this.httpService.updateHeader('loginToken', loginToken);
 
             // redirect only if current route is login
@@ -107,7 +72,7 @@ export class AuthService {
             }
         } else {
             localStorage.removeItem('xp_login_token');
-            this.setLoginToken(null);
+            this.loginToken = null;
             this.loggedUser = null;
 
             this.httpService.updateHeader('loginToken', null);
@@ -117,29 +82,88 @@ export class AuthService {
     }
 
     /**
-     * Logout API request
+     * Toggle an API call that checks if user is currently logged-in or not.
+     * Having this info available, toggle the authentication set-up logic,
+     * inside the `toggleAuthenticationState` method.
      *
-     * @returns void
+     * @return {Promise<boolean>}
      */
-    logout() {
-        this.httpService.post('logout').subscribe(
-            response => {
-                this.toggleAuthentication(false);
-            },
+    toggleServerAuthenticationCheck(): Promise<boolean> {
+       return new Promise( resolve => {
+           /**
+            * If a login token is missing,
+            * an API call is not necessary, user is not logged-in for sure
+            */
+           if (! this.loginToken) {
+               resolve(false);
+
+               return;
+           }
+
+           this.httpService.get('get-logged-user').subscribe(
+                response => {
+                    this.toggleAuthenticationState(true, response.user, response.loginToken);
+                    this.isServerAuthCheckPerformed = true;
+
+                    resolve(true);
+                },
+                error => {
+                    this.toggleAuthenticationState(false);
+                    this.isServerAuthCheckPerformed = true;
+
+                    resolve(false);
+                }
+            );
+        });
+    }
+
+    /**
+     * Logs user in
+     *
+     * @param {string} email
+     * @param {string} password
+     * @return {Subscription}
+     */
+    login(email: string, password: string): Subscription {
+        return this.httpService.post('login', { email, password })
+            .subscribe(
+                response => this.toggleAuthenticationState(
+                    true, response.user, response.loginToken
+                ),
+                error => console.log('Login failed!', error)
+            );
+    }
+
+    /**
+     * Logs user out
+     *
+     * @return {Subscription}
+     */
+    logout(): Subscription {
+        return this.httpService.post('logout').subscribe(
+            response => this.toggleAuthenticationState(false),
             error => console.log('Logout failed! ', error)
         );
     }
 
-    /**
-     * Check if user is authenticated
-     *
-     * @returns {Observable<boolean>}
-     */
-    isAuthenticated(): boolean {
-        return Boolean(this.getLoginToken());
+    getLoggedUser(): User {
+        return this.loggedUser;
     }
 
-    register(user: User, userProps) {
+    setLoggedUser(user: User): User {
+        return this.loggedUser = User.newInstance(user);
+    }
+
+
+    /**
+     * Registers a new user.
+     * TODO: Should live inside a user or account service, not here
+     *
+     * @param  {User}         user
+     * @param  {object}       userProps
+     * @return {Observable<any>}
+     */
+    register(user: User, userProps): Observable<any> {
         const data = {
             first_name: user.first_name,
             last_name: user.last_name,
@@ -157,7 +181,8 @@ export class AuthService {
     }
 
     /**
-     * Activate account api request
+     * Activate account API request
+     * TODO: Should live inside a user or account service, not here
      *
      * @param email - user email
      * @param token - user token
@@ -165,86 +190,8 @@ export class AuthService {
      */
     activateAccount(email, token) {
         this.httpService.post(`account/activate/${email}/${token}`).subscribe(
-            response => {
-                this.successfulActivation = true;
-            },
-            error => {
-                this.successfulActivation = false;
-
-                console.log('Account activation failed!', error);
-            }
+            response => this.successfulActivation = true,
+            error => this.successfulActivation = false
         );
-    }
-
-    /**
-     * Get logged user from api and
-     * send it back as a Promise.
-     * User for canActivate guard
-     *
-     * @returns {Promise<T>|Promise}
-     */
-    isUserLogged(): Promise<boolean> | boolean {
-        if (this.isUserLoggedCallInProgress) {
-            return false;
-        }
-
-        const userInstance = this.getLoggedUser();
-        if (userInstance) {
-            return true;
-        }
-
-        this.isUserLoggedCallInProgress = true;
-
-        return new Promise(resolve => {
-            this.httpService.get('get-logged-user').subscribe(
-                response => {
-                    this.toggleAuthentication(true, response.user, response.loginToken);
-                    this.isUserLoggedCallInProgress = false;
-
-                    resolve(true);
-                },
-                error => {
-                    this.toggleAuthentication(false);
-                    this.isUserLoggedCallInProgress = false;
-
-                    // `resolve`, no `reject`, since we're using this method on a guard
-                    resolve(false);
-                    console.log('Could not check if user is logged-in. ', error);
-                }
-            );
-        });
-    }
-
-    /**
-     * Check if the user is admin via API and
-     * send it back as a Promise.
-     * User for canActivate admin guard
-     *
-     * @returns {Promise<T>|Promise}
-     */
-    isUserAdmin(): Promise<boolean> | boolean {
-        let userInstance = this.getLoggedUser();
-
-        if (userInstance != null) {
-            return userInstance.isAdmin();
-        }
-
-        return new Promise((resolve, reject) => {
-            this.httpService.get('get-logged-user').subscribe(
-                response => {
-                    this.toggleAuthentication(true, response.user, response.loginToken);
-
-                    let adminGuardUser: User = User.newInstance(response.user);
-                    resolve(adminGuardUser.isAdmin());
-                },
-                error => {
-                    this.toggleAuthentication(false);
-                    // `resolve`, no `reject`, since we're using this method on a guard
-                    resolve(false);
-
-                    console.log('Could not check if user is admin.', error);
-                }
-            );
-        });
     }
 }

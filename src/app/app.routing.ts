@@ -1,6 +1,7 @@
 import {RouterModule, Routes} from '@angular/router';
 
 import {AuthGuard} from './core/auth.guard';
+import {NoAuthGuard} from './core/no-auth.guard';
 import {AdminGuard} from './core/admin.guard';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -20,10 +21,10 @@ import { HomeComponent } from './home/home.component';
 
 const APP_ROUTES: Routes = [
     {path: '', component: HomeComponent},
-    {path: 'login', component: LoginComponent},
+    {path: 'login', component: LoginComponent, canActivate: [NoAuthGuard]},
     {path: 'social-login/:user/:token', component: SocialComponent, canActivate: [SocialGuard]},
     {path: 'account/activate/:email/:token', component: AccountActivationComponent},
-    {path: 'register', component: RegisterComponent},
+    {path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard]},
     {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
     {path: 'admin', component: AdminComponent, canActivate: [AdminGuard]},
     {path: 'admin/categories', component: AdminCategoriesComponent, canActivate: [AdminGuard]},

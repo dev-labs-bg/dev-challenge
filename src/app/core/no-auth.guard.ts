@@ -3,13 +3,13 @@ import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '
 import { AuthService } from './auth.service';
 
 @Injectable()
-export class AdminGuard implements CanActivate {
+export class NoAuthGuard implements CanActivate {
 
     constructor(
         private authService: AuthService
     ) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> | boolean {
-        return this.authService.isAdmin();
+        return ! this.authService.isLoggedIn();
     }
 }
