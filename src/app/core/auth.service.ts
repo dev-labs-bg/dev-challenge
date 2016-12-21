@@ -10,13 +10,92 @@ export class AuthService {
     private loggedUser: User;
     public successfulActivation: boolean = null;
     public loginFail: boolean = false;
-    // Flag that indicates if an API call is in progress
-    public isUserLoggedCallInProgress: boolean = false;
+    private loggedIn: boolean = false;
+    private isServerAuthCheckPerformed: boolean = false;
 
     constructor(
         private router: Router,
         private httpService: HttpService
     ) {}
+
+    init() {
+        this.toggleServerAuthenticationCheck();
+    }
+
+    /**
+     * Access the flag if user is logged-in or not.
+     *
+     * @return {boolean}
+     */
+    isLoggedIn(): boolean {
+        return this.loggedIn;
+    }
+
+    /**
+     * Change the app authentication state
+     * and therefore perform all necessary initializations / resets / clean-up
+     * depending on if user logs in or out.
+     *
+     * @param {boolean}    isAuth - flag if user is authenticated
+     * @param {User}       user
+     * @param {string}     loginToken
+     * @param {boolean}    redirect - if user should be redirected or not
+     */
+    toggleAuthenticationState(
+        isAuth: boolean,
+        user?: User,
+        loginToken?: string,
+        redirect: boolean = false
+    ): void {
+        this.loggedIn = isAuth;
+
+        if (isAuth) {
+            localStorage.setItem('xp_login_token', loginToken);
+            this.setLoginToken(loginToken);
+            this.setLoggedUser(user);
+
+            this.httpService.updateHeader('loginToken', loginToken);
+
+            // redirect only if current route is login
+            if (this.router.url === '/login' || redirect) {
+                this.router.navigate(['dashboard']);
+            }
+        } else {
+            localStorage.removeItem('xp_login_token');
+            this.setLoginToken(null);
+            this.loggedUser = null;
+
+            this.httpService.updateHeader('loginToken', null);
+
+            this.router.navigate(['login']);
+        }
+    }
+
+    /**
+     * Toggle an API call that checks if user is currently logged-in or not.
+     * Having this info available, toggle the authentication set-up logic,
+     * inside the `toggleAuthenticationState` method.
+     *
+     * @return {Promise<boolean>}
+     */
+    toggleServerAuthenticationCheck(): Promise<boolean> {
+       return new Promise( resolve => {
+            this.httpService.get('get-logged-user').subscribe(
+                response => {
+                    this.toggleAuthenticationState(true, response.user, response.loginToken);
+                    this.isServerAuthCheckPerformed = true;
+
+                    resolve(true);
+                },
+                error => {
+                    this.toggleAuthenticationState(false);
+                    this.isServerAuthCheckPerformed = true;
+
+                    resolve(false);
+                }
+            );
+        });
+    }
 
     /**
      * Login API request
@@ -36,7 +115,7 @@ export class AuthService {
             password
         }).subscribe(
             response => {
-                authService.toggleAuthentication(true, response.user, response.loginToken);
+                authService.toggleAuthenticationState(true, response.user, response.loginToken);
                 return true;
             },
             error => {
@@ -86,37 +165,6 @@ export class AuthService {
     }
 
     /**
-     * Change authentication state
-     *
-     * @param isAuth - is the user logged in
-     * @param loginToken - user's login token if logged in
-     * @returns void
-     */
-    toggleAuthentication(isAuth: boolean, user?: User, loginToken?: string, redirect: boolean = false) {
-        if (isAuth) {
-            localStorage.setItem('xp_login_token', loginToken);
-            this.setLoginToken(loginToken);
-            this.setLoggedUser(user);
-
-            // TODO: Maybe not here?
-            this.httpService.updateHeader('loginToken', loginToken);
-
-            // redirect only if current route is login
-            if (this.router.url === '/login' || redirect) {
-                this.router.navigate(['dashboard']);
-            }
-        } else {
-            localStorage.removeItem('xp_login_token');
-            this.setLoginToken(null);
-            this.loggedUser = null;
-
-            this.httpService.updateHeader('loginToken', null);
-
-            this.router.navigate(['login']);
-        }
-    }
-
-    /**
      * Logout API request
      *
      * @returns void
@@ -124,7 +172,7 @@ export class AuthService {
     logout() {
         this.httpService.post('logout').subscribe(
             response => {
-                this.toggleAuthentication(false);
+                this.toggleAuthenticationState(false);
             },
             error => console.log('Logout failed! ', error)
         );
@@ -177,45 +225,6 @@ export class AuthService {
     }
 
     /**
-     * Get logged user from api and
-     * send it back as a Promise.
-     * User for canActivate guard
-     *
-     * @returns {Promise<T>|Promise}
-     */
-    isUserLogged(): Promise<boolean> | boolean {
-        if (this.isUserLoggedCallInProgress) {
-            return false;
-        }
-
-        const userInstance = this.getLoggedUser();
-        if (userInstance) {
-            return true;
-        }
-
-        this.isUserLoggedCallInProgress = true;
-
-        return new Promise(resolve => {
-            this.httpService.get('get-logged-user').subscribe(
-                response => {
-                    this.toggleAuthentication(true, response.user, response.loginToken);
-                    this.isUserLoggedCallInProgress = false;
-
-                    resolve(true);
-                },
-                error => {
-                    this.toggleAuthentication(false);
-                    this.isUserLoggedCallInProgress = false;
-
-                    // `resolve`, no `reject`, since we're using this method on a guard
-                    resolve(false);
-                    console.log('Could not check if user is logged-in. ', error);
-                }
-            );
-        });
-    }
-
-    /**
      * Check if the user is admin via API and
      * send it back as a Promise.
      * User for canActivate admin guard
@@ -232,13 +241,13 @@ export class AuthService {
         return new Promise((resolve, reject) => {
             this.httpService.get('get-logged-user').subscribe(
                 response => {
-                    this.toggleAuthentication(true, response.user, response.loginToken);
+                    this.toggleAuthenticationState(true, response.user, response.loginToken);
 
                     let adminGuardUser: User = User.newInstance(response.user);
                     resolve(adminGuardUser.isAdmin());
                 },
                 error => {
-                    this.toggleAuthentication(false);
+                    this.toggleAuthenticationState(false);
                     // `resolve`, no `reject`, since we're using this method on a guard
                     resolve(false);
 

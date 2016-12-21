@@ -30,7 +30,7 @@ import { AuthService } from '../core/auth.service';
                 <div class="collapse navbar-collapse" [class.in]="showMobileNav">
                     <ul class="nav navbar-nav">
                         <li
-                            *ngIf="authService.getLoggedUser()"
+                            *ngIf="authService.isLoggedIn()"
                             routerLinkActive="active">
                             <a routerLink="/dashboard">Dashboard</a>
                         </li>
@@ -41,19 +41,19 @@ import { AuthService } from '../core/auth.service';
                             <a routerLink="/admin">Admin</a>
                         </li>
                         <li
-                            *ngIf="!authService.isAuthenticated()"
+                            *ngIf="! authService.isLoggedIn()"
                             routerLinkActive="active">
                             <a routerLink="/login">Вход</a>
                         </li>
                         <li
-                            *ngIf="!authService.isAuthenticated()"
+                            *ngIf="! authService.isLoggedIn()"
                             routerLinkActive="active">
                             <a routerLink="/register">Регистрация</a>
                         </li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li *ngIf="authService.isAuthenticated()">
+                        <li *ngIf="authService.isLoggedIn()">
                             <a href="javascript:;" (click)="logout()">Logout</a>
                         </li>
                     </ul>
