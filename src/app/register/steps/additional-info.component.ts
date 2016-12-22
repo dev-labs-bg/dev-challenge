@@ -5,7 +5,11 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
     selector: 'xp-register-additional-info',
     template: `
         <form [formGroup]="form" (ngSubmit)="handleSubmit()">
-            <div class="form-group">
+            <div class="form-group"
+                [class.has-error]="
+                    ! form.controls['date_of_birth'].valid &&
+                    form.controls['date_of_birth'].touched
+                ">
                 <label class="block-display">Date of birth</label>
                 <input
                     type="date"
@@ -17,7 +21,11 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
                     required
                 />
             </div>
-            <div class="form-group">
+            <div class="form-group"
+                [class.has-error]="
+                    ! form.controls['city'].valid &&
+                    form.controls['city'].touched
+                ">
                 <label for="city">City</label>
                 <input
                     type="city"
@@ -28,16 +36,11 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
                     placeholder="City"
                     required
                 />
-                <div
-                    *ngIf="form.controls['city'].hasError('required') &&
-                    form.controls['city'].touched"
-                    class="alert alert-danger">
-                    You must specify a city.
-                </div>
             </div>
             <div class="form-group">
                 <label for="university">University</label>
                 <input
+                    #university
                     type="university"
                     name="university"
                     class="form-control"
@@ -46,7 +49,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
                     placeholder="University"
                 />
             </div>
-            <div class="form-group">
+            <div class="form-group" *ngIf="university.value.length">
                 <label for="year_of_study">Year of study</label>
                 <input
                     type="year_of_study"

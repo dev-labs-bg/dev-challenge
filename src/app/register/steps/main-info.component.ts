@@ -5,7 +5,11 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
     selector: 'xp-register-main-info',
     template: `
         <form [formGroup]="form" (ngSubmit)="handleSubmit()">
-            <div class="form-group">
+            <div class="form-group"
+                [class.has-error]="
+                    ! form.controls['email'].valid &&
+                    form.controls['email'].touched
+                ">
                 <label for="email">Email address</label>
                 <input
                     type="email"
@@ -16,14 +20,12 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
                     placeholder="Email"
                     required
                 />
-                <div
-                    *ngIf="form.controls['email'].hasError('required') &&
-                    form.controls['email'].touched"
-                    class="alert alert-danger">
-                    You must specify an email.
-                </div>
             </div>
-            <div class="form-group">
+            <div class="form-group"
+                [class.has-error]="
+                    ! form.controls['password'].valid &&
+                    form.controls['password'].touched
+                ">
                 <label for="password">Password</label>
                 <input
                     type="password"
@@ -34,14 +36,12 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
                     placeholder="Password"
                     required
                 />
-                <div
-                    *ngIf="form.controls['password'].hasError('required') &&
-                    form.controls['password'].touched"
-                    class="alert alert-danger">
-                    You must specify a password
-                </div>
             </div>
-            <div class="form-group">
+            <div class="form-group"
+                [class.has-error]="
+                    ! form.controls['password_confirmation'].valid &&
+                    form.controls['password_confirmation'].touched
+                ">
                 <label for="password_confirmation">Password</label>
                 <input
                     type="password"
@@ -58,14 +58,13 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
                         class="alert alert-danger">
                         Passwords do not match.
                     </div>
-                    <div
-                        *ngIf="form.hasError('required')"
-                        class="alert alert-danger">
-                        You must confirm your password
-                    </div>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group"
+                [class.has-error]="
+                    ! form.controls['first_name'].valid &&
+                    form.controls['first_name'].touched
+                ">
                 <label for="first_name">First name</label>
                 <input
                     type="first_name"
@@ -76,14 +75,12 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
                     placeholder="First Name"
                     required
                 />
-                <div
-                    *ngIf="form.controls['first_name'].hasError('required') &&
-                    form.controls['first_name'].touched"
-                    class="alert alert-danger">
-                    You must specify a first name.
-                </div>
             </div>
-            <div class="form-group">
+            <div class="form-group"
+                [class.has-error]="
+                    ! form.controls['last_name'].valid &&
+                    form.controls['last_name'].touched
+                ">
                 <label for="last_name">Last name</label>
                 <input
                     type="last_name"
@@ -94,12 +91,6 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
                     placeholder="Last Name"
                     required
                 />
-                <div
-                    *ngIf="form.controls['last_name'].hasError('required') &&
-                    form.controls['last_name'].touched"
-                    class="alert alert-danger">
-                    You must specify a first name.
-                </div>
              </div>
             <button
                 type="submit"
