@@ -3,6 +3,9 @@
     height: 25px;
     margin-bottom: 5px;
 }
+.container {
+    max-width: 800px;
+}
 
 // Utilities
 @import "utilities.spacing";
