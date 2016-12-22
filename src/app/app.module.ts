@@ -32,7 +32,7 @@ import { ContributorsService } from './contributions/contributors.service';
 import { AssessmentService as UserAssessmentService }  from './assessment/assessment.service';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './shared/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegisterComponent } from './register/register.component';

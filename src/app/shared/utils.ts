@@ -23,6 +23,19 @@ class Utils {
 
         return s.split(' ').length;
     }
+
+    /**
+     * Check if an e-mail is valid or not,
+     * see: http://emailregex.com/
+     *
+     * @param  {string}  email
+     * @return {boolean}
+     */
+    static isValidEmail(email: string): boolean {
+        const EMAIL_REGEXP = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+
+        return EMAIL_REGEXP.test(email);
+    }
 }
 
 export default Utils;
