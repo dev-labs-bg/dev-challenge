@@ -10,6 +10,6 @@ export class NoAuthGuard implements CanActivate {
     ) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> | boolean {
-        return ! this.authService.isLoggedIn();
+        return ! this.authService.isLoggedInGuard();
     }
 }
