@@ -45,11 +45,11 @@ export class AuthService {
     isLoggedInGuard(): Promise<boolean> {
         return new Promise(resolve => {
             if (this.isServerAuthCheckPerformed) {
-                resolve(this.loggedIn);
+                resolve(this.isLoggedIn());
             } else {
                 // wait until the server check is completed
                 this.toggleServerAuthenticationCheck()
-                    .then(() => resolve(this.loggedIn));
+                    .then( () => resolve(this.isLoggedIn()) );
             }
         });
     }
@@ -61,6 +61,30 @@ export class AuthService {
      */
     isAdmin(): boolean {
         return this.isLoggedIn() ? this.loggedUser.isAdmin() : false;
+    }
+
+    /**
+     * See this.isLoggedInGuard(),
+     *
+     * Only accessing the flag if user is logged-in or not
+     * doesn't always work on guards if the flag is about to change,
+     * example: accessing a guard-protected route directly (/admin).
+     * The route opens, but the components doesn't initiate.
+     * To work properly in case of usage in guards
+     * return a promise that wraps a boolean.
+     *
+     * @return {Promise<boolean>}
+     */
+    isAdminGuard(): Promise<boolean> {
+        return new Promise(resolve => {
+             if (this.isServerAuthCheckPerformed) {
+                resolve(this.isAdmin());
+            } else {
+                // wait until the server check is completed
+                this.toggleServerAuthenticationCheck()
+                    .then( () => resolve(this.isAdmin()) );
+            }
+        });
     }
 
     /**
