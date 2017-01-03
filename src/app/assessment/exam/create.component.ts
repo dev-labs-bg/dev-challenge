@@ -42,7 +42,7 @@ import { Modal } from '../../shared/modal.component';
                         [questionNumber]="i + 1"
                         [questionsCount]="questionsCount"
                         [todoId]="todo.assessment.todoId"
-                        [questionId]="todo.assessment.questionId"
+                        [questionId]="todo.task.questions[i].id"
                         [question]="question"
                         (onNext)="handleNext($event)">
                     </xp-assessment-exam-form-item>

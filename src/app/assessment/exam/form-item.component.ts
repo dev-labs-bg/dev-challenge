@@ -82,6 +82,9 @@ export class AssessmentExamFormItemComponent implements OnInit {
             (item: Answer) => item.is_correct
         );
         this.whyCorrect = correctAnswer.why_correct;
+
+        // Randomize / shuffle answers place
+        this.question.answers = _.shuffle(this.question.answers);
     }
 
     handleAnswerSubmit(answer) {
