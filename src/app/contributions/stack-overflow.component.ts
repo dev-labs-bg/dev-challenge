@@ -7,16 +7,21 @@ import {AuthService} from "../core/auth.service";
 @Component({
     selector: 'xp-stack-overflow',
     template: `
-    <div class="stack-overflow">
-        <h2>Stack overflow account</h2>
+        <h2>StackOverflow Activity</h2>
         <xp-contributions-status
             *ngIf="shouldSeeStatus()"
             [points]="loggedUser.bonus_points['stack_overflow_account']">
         </xp-contributions-status>
         <div *ngIf="shouldSeeForm()">
-            <p>Try to earn some points by giving your stack overflow account</p>
             <p>
-                <a href="javascript:;" (click)="showForm()">Click here</a>
+                Share with us if you've helped any fellow developers
+                or contributed with something valuable.<br />
+                <strong>Hint</strong>: Try to earn over 100 reputation points.
+            </p>
+            <p>
+                <button type="button" class="btn btn-primary" (click)="showForm()">
+                    Make a submission
+                </button>
             </p>
             <xp-contributions-form
                 *ngIf="isVisible"
@@ -27,7 +32,6 @@ import {AuthService} from "../core/auth.service";
                 (onUserChange)="changeUser($event)">
             </xp-contributions-form>
         </div>
-    </div>
     `,
     styles: []
 })
