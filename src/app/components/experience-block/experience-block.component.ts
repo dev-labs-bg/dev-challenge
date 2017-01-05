@@ -14,7 +14,7 @@ import {AuthService} from '../../core/auth.service';
             <p class="text-right">
                 {{ loggedUser.experience }} / {{ maxPoints }} experience points
                 <br />
-                Apply for bonus experience <a routerLink="/contributions">here</a>
+                Apply for <a routerLink="/contributions">bonus experience points</a>.
             </p>
         </div>
     `

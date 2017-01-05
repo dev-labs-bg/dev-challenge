@@ -7,18 +7,24 @@ import {AuthService} from "../core/auth.service";
   selector: 'xp-public-activity',
   template: `
     <div class="public-activity">
-        <h2>Public activity</h2>
+        <h2>Public Activity</h2>
         <xp-contributions-status
             *ngIf="shouldSeeStatus()"
             [points]="loggedUser.bonus_points['public_activity']">
         </xp-contributions-status>
         <div *ngIf="shouldSeeForm()">
-            <p>Some public activity info</p>
             <p>
-                <a href="javascript:;" (click)="showForm()">Click here</a>
+                Did you do any tech presentations or workshops?
+                Did you speak on a dev conference or event?<br />
+                Share with us and earn bonus experience points!
+            </p>
+            <p *ngIf="! isFormVisible">
+                <button type="button" class="btn btn-primary" (click)="showForm()">
+                    Make a submission
+                </button>
             </p>
             <xp-contributions-form
-                *ngIf="isVisible"
+                *ngIf="isFormVisible"
                 [form]="form"
                 title="Public Activity"
                 inputName="public_activity"
@@ -33,7 +39,7 @@ import {AuthService} from "../core/auth.service";
 export class PublicActivityComponent implements OnInit {
     private loggedUser: User = null;
     private form: FormGroup;
-    private isVisible: boolean = false;
+    private isFormVisible: boolean = false;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -45,7 +51,7 @@ export class PublicActivityComponent implements OnInit {
     }
 
     handleCancel() {
-        this.isVisible = false;
+        this.isFormVisible = false;
     }
 
     changeUser(value) {
@@ -56,7 +62,7 @@ export class PublicActivityComponent implements OnInit {
         this.form = this.formBuilder.group({
             public_activity: this.loggedUser.attributes.public_activity
         });
-        this.isVisible = true;
+        this.isFormVisible = true;
     }
 
     shouldSeeForm() {

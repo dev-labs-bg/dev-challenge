@@ -7,18 +7,23 @@ import {AuthService} from "../core/auth.service";
   selector: 'xp-open-source',
   template: `
     <div class="open-source">
-        <h2>Open source contributions</h2>
+        <h2>Open-Source Contributions</h2>
         <xp-contributions-status
             *ngIf="shouldSeeStatus()"
             [points]="loggedUser.bonus_points['open_source_contributions']">
         </xp-contributions-status>
         <div *ngIf="shouldSeeForm()">
-            <p>You've contributed to a project? Please share it with us</p>
             <p>
-                <a href="javascript:;" (click)="showForm()">Click here</a>
+                Do you have any open-source contributions?<br />
+                Please tell us!
+            </p>
+            <p *ngIf="! isFormVisible">
+                <button type="button" class="btn btn-primary" (click)="showForm()">
+                    Make a submission
+                </button>
             </p>
             <xp-contributions-form
-                *ngIf="isVisible"
+                *ngIf="isFormVisible"
                 [form]="form"
                 title="Open Source Contributions"
                 inputName="open_source_contributions"
@@ -31,7 +36,7 @@ import {AuthService} from "../core/auth.service";
   styles: []
 })
 export class OpenSourceComponent implements OnInit {
-    private isVisible: boolean = false;
+    private isFormVisible: boolean = false;
     private loggedUser: User = null;
     private form: FormGroup;
 
@@ -45,7 +50,7 @@ export class OpenSourceComponent implements OnInit {
     }
 
     handleCancel() {
-        this.isVisible = false;
+        this.isFormVisible = false;
     }
 
     changeUser(value) {
@@ -56,7 +61,7 @@ export class OpenSourceComponent implements OnInit {
         this.form = this.formBuilder.group({
             open_source_contributions: this.loggedUser.attributes.open_source_contributions
         });
-        this.isVisible = true;
+        this.isFormVisible = true;
     }
 
     shouldSeeForm() {
