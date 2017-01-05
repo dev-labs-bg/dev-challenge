@@ -18,13 +18,13 @@ import {AuthService} from "../core/auth.service";
                 or contributed with something valuable.<br />
                 <strong>Hint</strong>: Try to earn over 100 reputation points.
             </p>
-            <p>
+            <p *ngIf="! isFormVisible">
                 <button type="button" class="btn btn-primary" (click)="showForm()">
                     Make a submission
                 </button>
             </p>
             <xp-contributions-form
-                *ngIf="isVisible"
+                *ngIf="isFormVisible"
                 [form]="form"
                 title="Stack Overflow Account"
                 inputName="stack_overflow_account"
@@ -36,7 +36,7 @@ import {AuthService} from "../core/auth.service";
     styles: []
 })
 export class StackOverflowComponent implements OnInit {
-    private isVisible: boolean = false;
+    private isFormVisible: boolean = false;
     private loggedUser: User = null;
     private form: FormGroup;
 
@@ -50,7 +50,7 @@ export class StackOverflowComponent implements OnInit {
     }
 
     handleCancel() {
-        this.isVisible = false;
+        this.isFormVisible = false;
     }
 
     changeUser(value) {
@@ -61,7 +61,7 @@ export class StackOverflowComponent implements OnInit {
         this.form = this.formBuilder.group({
             stack_overflow_account: this.loggedUser.attributes.stack_overflow_account
         });
-        this.isVisible = true;
+        this.isFormVisible = true;
     }
 
     shouldSeeForm() {
