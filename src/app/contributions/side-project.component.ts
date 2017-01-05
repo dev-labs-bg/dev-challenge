@@ -13,12 +13,18 @@ import {AuthService} from "../core/auth.service";
             [points]="loggedUser.bonus_points['side_project']">
         </xp-contributions-status>
         <div *ngIf="shouldSeeForm()">
-            <p>Please share your side projects with us info</p>
             <p>
-                <a href="javascript:;" (click)="showForm()">Click here</a>
+                Do you have or support a side project?
+                Are there any users out there, using a project you made?<br />
+                Please share with us!
+            </p>
+            <p *ngIf="! isFormVisible">
+                <button type="button" class="btn btn-primary" (click)="showForm()">
+                    Make a submission
+                </button>
             </p>
             <xp-contributions-form
-                *ngIf="isVisible"
+                *ngIf="isFormVisible"
                 [form]="form"
                 title="Side Project"
                 inputName="side_project"
@@ -33,7 +39,7 @@ import {AuthService} from "../core/auth.service";
 export class SideProjectComponent implements OnInit {
     private loggedUser: User = null;
     private form: FormGroup;
-    private isVisible: boolean = false;
+    private isFormVisible: boolean = false;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -45,7 +51,7 @@ export class SideProjectComponent implements OnInit {
     }
 
     handleCancel() {
-        this.isVisible = false;
+        this.isFormVisible = false;
     }
 
     changeUser(value) {
@@ -56,7 +62,7 @@ export class SideProjectComponent implements OnInit {
         this.form = this.formBuilder.group({
             side_project: this.loggedUser.attributes.side_project
         });
-        this.isVisible = true;
+        this.isFormVisible = true;
     }
 
     shouldSeeForm() {

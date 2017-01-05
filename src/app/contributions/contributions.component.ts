@@ -16,7 +16,9 @@ import { Component } from '@angular/core';
             <xp-stack-overflow></xp-stack-overflow>
             <hr />
             <xp-public-activity></xp-public-activity>
+            <hr />
             <xp-side-project></xp-side-project>
+            <hr />
             <xp-open-source></xp-open-source>
         </div>
     `,
