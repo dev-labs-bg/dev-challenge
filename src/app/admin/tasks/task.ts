@@ -10,6 +10,8 @@ export class Task {
         public title: string = '',
         public description: string = '',
         public time_estimation: number = -1,
+        public disabled: boolean = false,
+        public disabledText: string = '',
         public created_at: string = ''
     ) {}
 
@@ -32,6 +34,8 @@ export class Task {
             data.title,
             data.description,
             data.time_estimation,
+            data.disabled,
+            data.disabled ? 'Disabled' : 'Active',
             data.created_at
         );
     }
@@ -42,7 +46,8 @@ export class Task {
             assessment_type_id: this.assessment.id,
             title: this.title,
             description: this.description,
-            time_estimation: this.time_estimation
+            time_estimation: this.time_estimation,
+            disabled: !this.disabled,
         };
     }
 }

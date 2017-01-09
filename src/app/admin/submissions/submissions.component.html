@@ -10,7 +10,7 @@
         [ngModel]="category">
         <option value="" selected disabled>Please select a category</option>
         <option
-            *ngFor="let category of categoryService.getCategories()"
+            *ngFor="let category of categoryService.repository.getData()"
             value="{{ category.id }}">
             {{ category.name }}
         </option>

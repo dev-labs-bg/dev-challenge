@@ -64,6 +64,16 @@
                             />
                         </div>
 
+                        <div class="form-group">
+                            <label for="disabled">Enabled?</label>
+                            <input class="form-control"
+                               formControlName="disabled"
+                               type="checkbox"
+                               name="disabled"
+                               id="disabled"
+                            />
+                        </div>
+
                         <xp-admin-assessments-list
                             [form]="taskForm"
                             [name]="'assessment_type_id'">
@@ -79,7 +89,7 @@
                             *ngIf="(selectedTask != null)"
                             (click)="deleteTask()"
                             class="btn btn-default">
-                            Delete
+                            Disable
                         </div>
                     </form>
                 </xp-loading-indicator>
@@ -98,7 +108,7 @@
         (ngModelChange)="onCategoryChange($event)"
         [(ngModel)]="categoryId">
         <option value="0" disabled selected>Select category</option>
-        <option *ngFor="let category of categoryService.getCategories()"
+        <option *ngFor="let category of categoryService.repository.getData()"
                 value="{{ category.id }}">
             {{ category.name }}
         </option>
@@ -125,6 +135,11 @@
                     href="javascript:;">
                     {{ task.title }}
                 </a>
+                <div class="task-status">
+                    <div [class]="switchLabels(task.disabled)">
+                        {{ task.disabledText }}
+                    </div>
+                </div>
             </div>
         </div>
         <div
