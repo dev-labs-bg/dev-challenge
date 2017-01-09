@@ -8,6 +8,22 @@ export class Category {
     ) {}
 
     /**
+     * Instantiate a new category instance
+     *
+     * @param categoryData
+     * @returns {Category}
+     */
+    public static newInstance(categoryData) {
+        // return new instance
+        return new Category(
+            categoryData.id,
+            categoryData.name,
+            categoryData.status,
+            categoryData.text_status,
+        );
+    }
+
+    /**
      * Get id
      *
      * @returns {number}

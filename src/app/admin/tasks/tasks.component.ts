@@ -28,7 +28,7 @@ export class TasksComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.categoryService.getAll();
+        this.categoryService.setup();
 
         this.taskService.repository.setup(
             this.taskService.apiGetURLS.all,
@@ -54,9 +54,11 @@ export class TasksComponent implements OnInit {
 
         return this.taskFormSubscription = this.taskService.createTask(values).subscribe(
             response => {
-                this.taskService.repository.add(Task.newInstance(response.task));
-                this.taskForm.reset();
-                this.onCategoryChange(response.task.category_id);
+
+                this.categoryService.reset();
+                // this.taskService.repository.add(Task.newInstance(response.task));
+                // this.taskForm.reset();
+                // this.onCategoryChange(response.task.category_id);
                 document.getElementById('close_modal').click();
             },
             error => console.log('Ah, task not created!', error)
@@ -137,7 +139,7 @@ export class TasksComponent implements OnInit {
 
         this.categoryId = categoryId;
 
-        this.selectedCategory = this.categoryService.findCategory(categoryId);
+        this.selectedCategory = this.categoryService.repository.find(categoryId);
 
         this.categoryTasks = this.taskService.getFromCategory(categoryId);
     }

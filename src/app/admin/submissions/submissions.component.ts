@@ -23,19 +23,16 @@ export class SubmissionsComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.categoryService.getAll();
+        this.categoryService.setup();
         this.submissionService.getAll();
-        this.taskService.repository.setup(
-            this.taskService.apiGetURLS.all,
-            Task
-        );
+        this.taskService.setup()
         this.userService.setup();
     }
 
     onCategoryChange(val) {
         let categoryId = val;
 
-        this.selectedCategory = this.categoryService.findCategory(categoryId);
+        this.selectedCategory = this.categoryService.repository.find(categoryId);
 
         this.categoryTasks = this.taskService.getFromCategory(categoryId);
     }

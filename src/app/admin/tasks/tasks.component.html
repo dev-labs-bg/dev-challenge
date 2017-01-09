@@ -23,7 +23,7 @@
                                 name="category_id"
                                 formControlName="category_id"
                                 id="category_id">
-                                <option *ngFor="let category of categoryService.getCategories()"
+                                <option *ngFor="let category of categoryService.repository.getData()"
                                     value="{{ category.id }}">
                                     {{ category.name }}
                                 </option>

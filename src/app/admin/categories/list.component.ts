@@ -11,7 +11,7 @@ import { Category } from './category';
             <ul class="list-group">
                 <li
                     class="list-group-item"
-                    *ngFor="let category of categoryService.getCategories()">
+                    *ngFor="let category of categoryService.repository.getData()">
                     <a
                         href="javascript:;"
                         (click)="toggleMode('EDIT', category)">
@@ -44,7 +44,7 @@ export class ListComponent implements OnInit {
     constructor(private categoryService: CategoryService) { }
 
     ngOnInit() {
-        this.subscription = this.categoryService.getAll();
+        this.subscription = this.categoryService.setup();
     }
 
     toggleMode(nextState = 'DISPLAY', category: Category = null) {
