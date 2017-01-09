@@ -51,13 +51,13 @@ export class EditComponent {
     }
 
     handleSubmit(values) {
-        const { id, name } = values;
-
-        this.subscription = this.categoryService.updateCategory(id, name)
+        this.subscription = this.categoryService.updateCategory(values)
             .subscribe((response) => {
                 let updatedCategory = new Category(
                     response.category.id,
-                    response.category.name
+                    response.category.name,
+                    response.category.status,
+                    response.category.text_status,
                 );
 
                 this.categoryService.updateMainArray(updatedCategory);

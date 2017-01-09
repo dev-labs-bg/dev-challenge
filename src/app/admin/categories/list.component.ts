@@ -18,6 +18,12 @@ import { Category } from './category';
                         {{ category.name }}
                     </a>
 
+                    <div class="category-status">
+                        <div [class]="switchLabels(category.text_status)">
+                            {{ category.text_status }}
+                        </div>
+                    </div>
+
                     <div *ngIf="mode === 'EDIT' && category === selectedCategory">
                         <hr />
                         <xp-admin-categories-edit
@@ -48,5 +54,26 @@ export class ListComponent implements OnInit {
 
     toggleSelectedCategory(nextCategory: Category) {
         this.selectedCategory = nextCategory;
+    }
+
+    /**
+     * Switch label according to class
+     * 
+     * @param {string} Category text_status
+     */
+    switchLabels(textStatus) {
+        switch (textStatus) {
+            case "draft":
+                return "label label-warning text-uppercase";
+
+            case "published":
+                return "label label-success text-uppercase";
+
+            case "disabled":
+                return "label label-danger text-uppercase";
+            
+            default:
+                return "";
+        }
     }
 }

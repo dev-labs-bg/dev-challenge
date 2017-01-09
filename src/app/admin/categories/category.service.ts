@@ -8,6 +8,17 @@ import { Category } from './category';
 export class CategoryService {
     private categories: Category[];
 
+    /**
+     * Category available statuses
+     * 
+     * @type {Array}
+     */
+    public statuses = [
+        'Draft',
+        'Published',
+        'Disabled',
+    ];
+
     constructor(
         private httpService: HttpService
     ) {}
@@ -21,9 +32,15 @@ export class CategoryService {
      */
     getAll(): Subscription {
         return this.httpService.get('category/all').subscribe(
-            response => this.categories = response.categories.map(
-                el => new Category(el.id, el.name)
-            ),
+            response => 
+                this.categories = response.categories.map(
+                    el => new Category(
+                        el.id, 
+                        el.name, 
+                        el.status, 
+                        el.text_status
+                    )
+                ),
             error => console.log('Could not get all categories!', error)
         );
     }
@@ -54,8 +71,8 @@ export class CategoryService {
      * @param name - new category name
      * @returns {Observable<R>}
      */
-    updateCategory(id, name) {
-        return this.httpService.put(`category/${id}`, {name: name});
+    updateCategory(values) {
+        return this.httpService.put(`category/${values.id}`, values);
     }
 
     /**

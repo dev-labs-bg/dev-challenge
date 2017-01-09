@@ -2,7 +2,9 @@ export class Category {
 
     constructor(
        private id: number = -1,
-       private name = ''
+       private name = '',
+       public status: number = -1,
+       public text_status: string = ''
     ) {}
 
     /**
