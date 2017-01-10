@@ -51,5 +51,24 @@ export class SubmissionService {
         return this.httpService.post('submission/' + id + '/deny');
     }
 
+    /**
+     * Find submissions by user
+     * 
+     * @param {int} user_id
+     */
+    findByUser(user_id) {
+        let submissions: Submission[] = [];
+        let userId = parseInt(user_id, 10);
+
+        _.forEach(this.getSubmissions(),
+            submission => {
+                if (submission.user_id === userId) {
+                    submissions.push(submission);
+                }
+            }
+        );
+
+        return submissions;
+    }
 
 }

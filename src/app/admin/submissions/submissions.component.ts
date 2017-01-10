@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {CategoryService} from '../categories/category.service';
 import {Category} from '../categories/category';
-import {TaskService} from '../tasks/task.service';
 import {SubmissionService} from './submission.service';
 import {UserService} from '../../shared/user.service';
-import {Task} from '../tasks/task';
+import {TaskService} from '../tasks/task.service';
+import {User} from '../../classes/user';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'xp-approvals',
@@ -13,20 +14,20 @@ import {Task} from '../tasks/task';
 })
 export class SubmissionsComponent implements OnInit {
     private selectedCategory: Category = null;
-    private categoryTasks: Task[] = [];
+    private categoryUsers: User[] = [];
 
     constructor(
         private categoryService: CategoryService,
-        private taskService: TaskService,
         private submissionService: SubmissionService,
-        private userService: UserService
+        private userService: UserService,
+        private taskService: TaskService,
     ) { }
 
     ngOnInit() {
         this.categoryService.setup();
         this.submissionService.getAll();
-        this.taskService.setup()
         this.userService.setup();
+        this.taskService.setup();
     }
 
     onCategoryChange(val) {
@@ -34,7 +35,7 @@ export class SubmissionsComponent implements OnInit {
 
         this.selectedCategory = this.categoryService.repository.find(categoryId);
 
-        this.categoryTasks = this.taskService.getFromCategory(categoryId);
+        this.categoryUsers = this.userService.findByCategory(categoryId);
     }
 
 }
