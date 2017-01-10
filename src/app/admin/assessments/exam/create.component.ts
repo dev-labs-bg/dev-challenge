@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
 import { QuestionService } from '../question.service';
@@ -18,6 +18,7 @@ import { NotificationService } from '../../../shared/notification.service';
 })
 export class AdminAssessmentsExamCreateComponent implements OnInit {
     @Input() private task: Task;
+    @Output() private onExamChange = new EventEmitter();
     private subscription: Subscription;
 
     constructor(
@@ -29,9 +30,11 @@ export class AdminAssessmentsExamCreateComponent implements OnInit {
     }
 
     handleSubmit(formData) {
+        let parentId = this.task.parent_id;
+
         return this.subscription = this.questionService.saveExam(formData).subscribe(
             response => {
-                this.questionService.reset();
+                this.onExamChange.emit(parentId);
                 this.notificationService.fireSuccess('Exam created!');
             },
             error => console.log('Ah, exam not created!', error)

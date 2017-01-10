@@ -50,7 +50,8 @@ import { Assessment } from './assessment';
 
             <xp-admin-assessments-exam
                 *ngSwitchCase="ASSESSMENT_TYPES.EXAM"
-                [task]="selectedTask">
+                [task]="selectedTask"
+                (onExamChange)="handleTaskChange($event)">
             </xp-admin-assessments-exam>
         </div>
     `
