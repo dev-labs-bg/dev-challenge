@@ -17,8 +17,25 @@ export class TaskService {
         private submissionService: SubmissionService
     ) {}
 
+    /**
+     * Setup task data
+     *
+     * @returns {TeardownLogic|any|AnonymousSubscription|Object|Subscription}
+     */
     setup() {
         return this.repository.setup(
+            this.apiGetURLS.all,
+            Task
+        );
+    }
+
+    /**
+     * Reset tasks data
+     *
+     * @returns {TeardownLogic|any|AnonymousSubscription|Object|Subscription}
+     */
+    reset() {
+        return this.repository.reset(
             this.apiGetURLS.all,
             Task
         );
@@ -89,6 +106,20 @@ export class TaskService {
 
     updateList(data) {
         return this.httpService.put('task/update-list', data);
+    }
+
+    /**
+     * Find a task by its parent
+     *
+     * @param {int} parentId
+     * @returns {Task}
+     */
+    findByParentId(parentId) {
+        let dataId = parseInt(parentId, 10);
+
+        return _.find(this.repository.getData(),
+            el => el.parent_id === dataId
+        );
     }
 
 }

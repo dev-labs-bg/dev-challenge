@@ -5,6 +5,7 @@ export class Task {
 
     constructor(
         public id: number = -1,
+        public parent_id: number = -1,
         public category: Category = new Category(),
         public assessment: Assessment = new Assessment(),
         public title: string = '',
@@ -29,6 +30,7 @@ export class Task {
 
         return new Task(
             data.id,
+            data.task_id,
             category,
             assessment,
             data.title,

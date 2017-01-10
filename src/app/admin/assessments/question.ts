@@ -7,10 +7,11 @@ export class Question {
         public examAnswers: Array<any> = [],
     ) {}
 
-    public static newQuestion(data) {
+    public static newInstance(data) {
+        
         return new Question(
             data.id,
-            data.task_version_id,
+            data.task_id,
             data.body,
             data.answers
         );

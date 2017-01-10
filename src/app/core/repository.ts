@@ -27,6 +27,13 @@ export class Repository {
         );
     }
 
+    /**
+     * Reset model data and fetch it again
+     * 
+     * @param {Observable} httpObservable - http call
+     * @param {class} className - model we're loading
+     * @returns {TeardownLogic|any|AnonymousSubscription|Object|Subscription}
+     */
     reset(httpObservable, className) {
         this.data.length = 0;
 

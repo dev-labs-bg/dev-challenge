@@ -37,7 +37,8 @@ import { Assessment } from './assessment';
         <div [ngSwitch]="selectedTask?.assessment.id">
             <xp-admin-assessments-micro-project
                 *ngSwitchCase="ASSESSMENT_TYPES.MICRO_PROJECT"
-                [task]="selectedTask">
+                [task]="selectedTask"
+                (onTaskChange)="handleTaskChange($event)">
             </xp-admin-assessments-micro-project>
 
             <xp-admin-assessments-question
@@ -57,6 +58,7 @@ export class AssessmentsComponent implements OnInit {
     private ASSESSMENT_TYPES = ASSESSMENT_TYPES;
     private Assessment = Assessment;
     private subscription: Subscription;
+    private task_id: number;
 
     constructor(
         private taskService: TaskService,
@@ -66,7 +68,7 @@ export class AssessmentsComponent implements OnInit {
     ngOnInit() {
         this.subscription = this.taskService.setup();
 
-        this.questionService.getAll();
+        this.questionService.setup();
     }
 
     onTaskChange(value): null | void {
@@ -76,6 +78,11 @@ export class AssessmentsComponent implements OnInit {
 
         // find selected task out of tasks array
         this.selectedTask = this.taskService.repository.find(value);
+    }
+
+    handleTaskChange(value) {
+        this.selectedTask = this.taskService.findByParentId(value);
+        this.task_id = this.selectedTask.id;
     }
 
 }
