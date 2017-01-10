@@ -20,7 +20,7 @@ import { TaskService } from '../../tasks/task.service';
 })
 export class AdminAssessmentsMicroProjectCreateComponent implements OnInit {
     @Input() private task: Task;
-    @Output() private taskChanged = new EventEmitter();
+    @Output() private onQuestionChange = new EventEmitter();
     private subscription: Subscription;
 
     constructor(
@@ -33,11 +33,13 @@ export class AdminAssessmentsMicroProjectCreateComponent implements OnInit {
     }
 
     handleSubmit(formData) {
+        // get task parent id
+        let parentId = this.task.parent_id;
+
         this.subscription = this.questionService.create(formData).subscribe(
             response => {
-                this.taskService.reset();
-                this.questionService.reset();
-                this.taskChanged.emit(70);
+                // say that question has been added / changed
+                this.onQuestionChange.emit(parentId);
                 this.notificationService.fireSuccess('Assessment added!');
             },
             error => console.log('Ah, record not created!', error)

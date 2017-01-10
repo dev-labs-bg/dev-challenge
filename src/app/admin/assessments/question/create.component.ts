@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { Task } from '../../tasks/task';
 
@@ -12,13 +12,19 @@ import { Task } from '../../tasks/task';
     selector: 'xp-admin-assessments-question-create',
     template: `
         <xp-admin-assessments-micro-project-create
-            [task]="task">
+            [task]="task"
+            (onQuestionChange)="handleQuestionChange($event)">
         </xp-admin-assessments-micro-project-create>
     `
 })
 export class AdminAssessmentsQuestionCreateComponent {
     @Input() private task: Task;
+    @Output() private onQuestionChange = new EventEmitter();
 
     constructor() { }
+
+    handleQuestionChange(value) {
+        this.onQuestionChange.emit(value);
+    }
 
 }

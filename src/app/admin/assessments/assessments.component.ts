@@ -5,6 +5,7 @@ import { ASSESSMENT_TYPES } from '../../assessment/constants';
 import { TaskService } from '../tasks/task.service';
 import { Task } from '../tasks/task';
 import { QuestionService } from './question.service';
+import { Question } from './question';
 import { Assessment } from './assessment';
 
 @Component({
@@ -43,7 +44,8 @@ import { Assessment } from './assessment';
 
             <xp-admin-assessments-question
                 *ngSwitchCase="ASSESSMENT_TYPES.QUESTION"
-                [task]="selectedTask">
+                [task]="selectedTask"
+                (onTaskChange)="handleTaskChange($event)">
             </xp-admin-assessments-question>
 
             <xp-admin-assessments-exam
@@ -81,8 +83,37 @@ export class AssessmentsComponent implements OnInit {
     }
 
     handleTaskChange(value) {
-        this.selectedTask = this.taskService.findByParentId(value);
-        this.task_id = this.selectedTask.id;
+        // null task data
+        this.taskService.repository.setData([]);
+
+        // reset task service data
+        // and emit new task change
+        this.taskService.repository.getAll(
+            this.taskService.apiGetURLS.all
+        ).subscribe(
+            response => {
+                this.taskService.repository.setData(response.data.map(
+                    el => Task.newInstance(el)
+                ));
+
+                // reset questions
+                this.questionService.repository.setData([]);
+
+                this.questionService.repository.getAll(
+                    this.questionService.apiGetURLS.all
+                ).subscribe(
+                    response => {
+                        this.questionService.repository.setData(response.data.map(
+                            el => Question.newInstance(el)
+                        ));
+
+                        this.selectedTask = this.taskService.findByParentId(value);
+                        this.task_id = this.selectedTask.id;
+                    }
+                );
+            },
+            error => console.log('Ah, no Task found.', error)
+        );
     }
 
 }

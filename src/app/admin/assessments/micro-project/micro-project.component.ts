@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angu
 import { QuestionService } from '../question.service';
 import { Task } from '../../tasks/task';
 import { Question } from '../question';
+import { TaskService } from '../../tasks/task.service';
 
 @Component({
     selector: 'xp-admin-assessments-micro-project',
@@ -11,13 +12,13 @@ import { Question } from '../question';
             <xp-admin-assessments-micro-project-create
                 *ngSwitchCase="modes.CREATE"
                 [task]="task"
-                (onTaskChange)="handleTaskChange($event)">
+                (onQuestionChange)="handleQuestionChange($event)">
             </xp-admin-assessments-micro-project-create>
             <xp-admin-assessments-micro-project-edit
                 *ngSwitchCase="modes.EDIT"
                 [task]="task"
                 [question]="assessmentEntry"
-                (onTaskChange)="handleTaskChange($event)">
+                (onQuestionChange)="handleQuestionChange($event)">
             </xp-admin-assessments-micro-project-edit>
         </div>
     `
@@ -32,7 +33,10 @@ export class AdminAssessmentsMicroProjectComponent implements OnInit, OnChanges 
     };
     private currentMode: number = -1;
 
-    constructor(private questionService: QuestionService) { }
+    constructor(
+        private questionService: QuestionService,
+        private taskService: TaskService,
+    ) { }
 
     ngOnInit() {
         this.setMode();
@@ -61,7 +65,7 @@ export class AdminAssessmentsMicroProjectComponent implements OnInit, OnChanges 
         }
     }
 
-    handleTaskChange(value) {
+    handleQuestionChange(value) {
         this.onTaskChange.emit(value);
     }
 }

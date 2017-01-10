@@ -23,7 +23,7 @@ import { TaskService } from '../../tasks/task.service';
 export class AdminAssessmentsMicroProjectEditComponent implements OnInit {
     @Input() private task: Task;
     @Input() private question: Question;
-    @Output() private onTaskChange = new EventEmitter();
+    @Output() private onQuestionChange = new EventEmitter();
     private subscription: Subscription;
 
     constructor(
@@ -41,28 +41,8 @@ export class AdminAssessmentsMicroProjectEditComponent implements OnInit {
 
         this.subscription = this.questionService.update(this.question.id, formData).subscribe(
             response => {
-                // reset questions
-                this.questionService.reset();
-
-                // null task data
-                this.taskService.repository.setData([]);
-
-                // reset task service data
-                // and emit new task change
-                this.taskService.repository.getAll(
-                    this.taskService.apiGetURLS.all
-                ).subscribe(
-                    response => {
-                        this.taskService.repository.setData(response.data.map(
-                            el => Task.newInstance(el)
-                        ));
-
-                        // say that task has been changed
-                        // after data reset
-                        this.onTaskChange.emit(parentId);
-                    },
-                    error => console.log('Ah, no Task found.', error)
-                );
+                // say that question has been added / changed
+                this.onQuestionChange.emit(parentId);
                 
                 this.notificationService.fireSuccess('Assessment updated!');
             },
