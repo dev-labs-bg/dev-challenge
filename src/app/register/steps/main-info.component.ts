@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
+import { HttpService } from '../../services/http.service';
+
 @Component({
     selector: 'xp-register-main-info',
     template: `
@@ -104,7 +106,10 @@ export class MainInfoComponent implements OnInit {
     @Output() onSubmit = new EventEmitter();
     form: FormGroup;
 
-    constructor(private formBuilder: FormBuilder) { }
+    constructor(
+        private formBuilder: FormBuilder,
+        private httpService: HttpService,
+    ) { }
 
     ngOnInit() {
         this.form = this.formBuilder.group({
@@ -132,6 +137,20 @@ export class MainInfoComponent implements OnInit {
     }
 
     handleSubmit() {
-        this.onSubmit.emit(this.form.value);
+        this.checkEmail().subscribe(
+            response => this.onSubmit.emit(this.form.value),
+            error => console.log('Duplicate email', error)
+        );
+    }
+
+    /**
+     * Check if email is taken
+     *
+     * @return {Observable}
+     */
+    checkEmail() {
+        let email = this.form.controls['email'].value;
+
+        return this.httpService.post('check-email', {email: email});
     }
 }
