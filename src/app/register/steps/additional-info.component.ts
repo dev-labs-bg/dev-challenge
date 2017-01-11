@@ -18,7 +18,6 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
                     id="date_of_birth"
                     formControlName="date_of_birth"
                     placeholder="Date of Birth"
-                    required
                 />
             </div>
             <div class="form-group"
@@ -34,7 +33,6 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
                     id="city"
                     formControlName="city"
                     placeholder="City"
-                    required
                 />
             </div>
             <div class="form-group">
@@ -78,7 +76,7 @@ export class AdditionalInfoComponent implements OnInit {
 
     ngOnInit() {
         this.form = this.formBuilder.group({
-            'city': ['', Validators.required],
+            'city': [''],
             'university': [''],
             'year_of_study': [''],
             'date_of_birth': [new Date()]
