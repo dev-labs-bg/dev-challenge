@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
 import { Question } from '../question';
@@ -23,6 +23,7 @@ import { Task } from '../../tasks/task';
 export class AdminAssessmentsExamEditComponent implements OnInit {
     @Input() private task: Task;
     @Input() private questions: Question[];
+    @Output() private onExamChange = new EventEmitter();
     private subscription: Subscription;
 
     constructor(
@@ -34,9 +35,12 @@ export class AdminAssessmentsExamEditComponent implements OnInit {
     }
 
     handleSubmit(formData) {
+        let parentId = this.task.parent_id;
+
         return this.subscription = this.questionService.saveExam(formData).subscribe(
             response => {
-                this.questionService.reset();
+                this.onExamChange.emit(parentId);
+
                 this.notificationService.fireSuccess('Exam updated!');
             },
             error => console.log('Ah, exam not updated!', error)
@@ -44,9 +48,12 @@ export class AdminAssessmentsExamEditComponent implements OnInit {
     }
 
     handleDelete(questionId) {
+        let parentId = this.task.parent_id;
+        
         this.subscription = this.questionService.delete(questionId).subscribe(
             response => {
-                this.questionService.reset();
+                this.onExamChange.emit(parentId);
+
                 this.notificationService.fireSuccess('Exam question deleted!');
             },
             error => console.log('Ah, exam question not deleted!', error)

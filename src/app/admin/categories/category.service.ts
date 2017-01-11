@@ -3,38 +3,51 @@ import { Subscription } from 'rxjs/Rx';
 import * as _ from 'lodash';
 import { HttpService } from '../../services/http.service';
 import { Category } from './category';
+import { Repository } from '../../core/repository';
 
 @Injectable()
 export class CategoryService {
-    private categories: Category[];
+    public repository: Repository = new Repository();
+    public apiGetURLS = {
+        all: this.httpService.get('category/all'),
+    };
+    /**
+     * Category available statuses
+     * 
+     * @type {Array}
+     */
+    public statuses = [
+        'Draft',
+        'Published',
+        'Disabled',
+    ];
 
     constructor(
         private httpService: HttpService
     ) {}
 
     /**
-     * Get all categories from API,
-     * parse them to Category class
-     * and save them to this.categories
+     * Setup repository function
      *
-     * @returns {Subscription}
+     * @returns {Object|Subscription}
      */
-    getAll(): Subscription {
-        return this.httpService.get('category/all').subscribe(
-            response => this.categories = response.categories.map(
-                el => new Category(el.id, el.name)
-            ),
-            error => console.log('Could not get all categories!', error)
+    setup() {
+        return this.repository.setup(
+            this.apiGetURLS.all,
+            Category
         );
     }
 
     /**
-     * Return all categories
+     * Reset repository function
      *
-     * @returns {Category[]}
+     * @returns {Object|Subscription}
      */
-    getCategories(): Category[] {
-        return this.categories;
+    reset() {
+        return this.repository.reset(
+            this.apiGetURLS.all,
+            Category
+        );
     }
 
     /**
@@ -54,8 +67,8 @@ export class CategoryService {
      * @param name - new category name
      * @returns {Observable<R>}
      */
-    updateCategory(id, name) {
-        return this.httpService.put(`category/${id}`, {name: name});
+    updateCategory(values) {
+        return this.httpService.put(`category/${values.id}`, values);
     }
 
     /**
@@ -67,52 +80,4 @@ export class CategoryService {
     deleteCategory(id: number) {
         return this.httpService.delete(`category/${id}`);
     }
-
-    /**
-     * Add a category to main categories []
-     *
-     * @param category
-     * @returns {Category[]}
-     */
-    addCategory(category: Category) {
-        this.categories.push(category);
-
-        return this.categories;
-    }
-
-    /**
-     * Replaces old category with new one
-     * from main categories []
-     *
-     * @param category
-     * @returns {Category[]}
-     */
-    updateMainArray(category: Category) {
-        let id = category.getId();
-        let categoryIndex = _.findIndex(this.categories, { id });
-
-        this.categories[categoryIndex] = category;
-
-        return this.categories;
-    }
-
-    /**
-     * Removes a category item from the main
-     * categories []
-     *
-     * @param id - category id
-     * @returns {any}
-     */
-    removeCategory(id: number) {
-        return _.remove(this.categories, { id });
-    }
-
-    findCategory(id) {
-        const foundCategory = _.find(this.categories,
-            category => category.getId() === id
-        );
-
-        return foundCategory;
-    }
-
 }

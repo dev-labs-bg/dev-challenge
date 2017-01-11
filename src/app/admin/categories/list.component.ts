@@ -11,12 +11,18 @@ import { Category } from './category';
             <ul class="list-group">
                 <li
                     class="list-group-item"
-                    *ngFor="let category of categoryService.getCategories()">
+                    *ngFor="let category of categoryService.repository.getData()">
                     <a
                         href="javascript:;"
                         (click)="toggleMode('EDIT', category)">
                         {{ category.name }}
                     </a>
+
+                    <div class="category-status">
+                        <div [class]="switchLabels(category.text_status)">
+                            {{ category.text_status }}
+                        </div>
+                    </div>
 
                     <div *ngIf="mode === 'EDIT' && category === selectedCategory">
                         <hr />
@@ -38,7 +44,7 @@ export class ListComponent implements OnInit {
     constructor(private categoryService: CategoryService) { }
 
     ngOnInit() {
-        this.subscription = this.categoryService.getAll();
+        this.subscription = this.categoryService.setup();
     }
 
     toggleMode(nextState = 'DISPLAY', category: Category = null) {
@@ -48,5 +54,26 @@ export class ListComponent implements OnInit {
 
     toggleSelectedCategory(nextCategory: Category) {
         this.selectedCategory = nextCategory;
+    }
+
+    /**
+     * Switch label according to class
+     * 
+     * @param {string} Category text_status
+     */
+    switchLabels(textStatus) {
+        switch (textStatus) {
+            case "draft":
+                return "label label-warning text-uppercase";
+
+            case "published":
+                return "label label-success text-uppercase";
+
+            case "disabled":
+                return "label label-danger text-uppercase";
+            
+            default:
+                return "";
+        }
     }
 }

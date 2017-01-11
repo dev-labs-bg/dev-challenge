@@ -39,7 +39,7 @@ export class SingleComponent implements OnInit, OnDestroy {
                                 this.submission = Submission.newSubmission(response.submission);
                                 this.task = Task.newInstance(response.task);
                                 this.user = User.newInstance(response.user);
-                                this.question = Question.newQuestion(response.questions[0]);
+                                this.question = Question.newInstance(response.questions[0]);
                                 resolve(response.success);
                             },
                             error => console.log('Ah, submission was not found')

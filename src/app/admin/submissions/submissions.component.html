@@ -10,7 +10,7 @@
         [ngModel]="category">
         <option value="" selected disabled>Please select a category</option>
         <option
-            *ngFor="let category of categoryService.getCategories()"
+            *ngFor="let category of categoryService.repository.getData()"
             value="{{ category.id }}">
             {{ category.name }}
         </option>
@@ -18,30 +18,17 @@
 </div>
 
 <div
-    *ngFor="let task of categoryTasks"
+    *ngFor="let user of categoryUsers"
     class="panel panel-default">
-    <div class="panel-heading">{{ task.title }}</div>
-    <ul
-        *ngIf="taskService.findSubmissions(task.id).length > 0"
-        class="list-group">
+    <div class="panel-heading">{{ user.first_name }} {{ user.last_name }}</div>
+    <ul class="list-group">
         <li class="list-group-item">
             <a
-                *ngFor="let submission of taskService.findSubmissions(task.id)"
+                *ngFor="let submission of submissionService.findByUser(user.id)"
                 routerLink="/admin/submissions/{{ submission.id }}">
-                Submitted by {{ userService.repository.find(submission.user_id).getName() }}
+                <!-- TO DO: add task title -->
+                име на таск
             </a>
         </li>
     </ul>
-    <div
-        *ngIf="taskService.findSubmissions(task.id).length === 0"
-        class="list-group-item alert-danger"
-        role="alert">
-        No submissions for review
-    </div>
-</div>
-
-<div
-    *ngIf="categoryTasks.length === 0"
-    class="alert alert-warning">
-    No tasks found for given category
 </div>

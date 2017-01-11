@@ -19,7 +19,7 @@ import { CategoryService } from '../../admin/categories/category.service';
                     class="form-control"
                     id="category_id">
                     <option value="" disabled="true" [selected]="true">Please Choose</option>
-                    <option *ngFor="let category of categoryService.getCategories()"
+                    <option *ngFor="let category of categoryService.repository.getData()"
                         value="{{ category.id }}">
                         {{ category.name }}
                     </option>
@@ -76,7 +76,7 @@ export class TimeInvestmentComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.categoryService.getAll();
+        this.categoryService.setup();
 
         this.form = this.formBuilder.group({
             'category_id': ['', Validators.required],

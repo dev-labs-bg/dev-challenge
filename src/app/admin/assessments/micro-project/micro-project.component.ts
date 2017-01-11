@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 
 import { QuestionService } from '../question.service';
 import { Task } from '../../tasks/task';
 import { Question } from '../question';
+import { TaskService } from '../../tasks/task.service';
 
 @Component({
     selector: 'xp-admin-assessments-micro-project',
@@ -10,18 +11,21 @@ import { Question } from '../question';
         <div [ngSwitch]="currentMode">
             <xp-admin-assessments-micro-project-create
                 *ngSwitchCase="modes.CREATE"
-                [task]="task">
+                [task]="task"
+                (onQuestionChange)="handleQuestionChange($event)">
             </xp-admin-assessments-micro-project-create>
             <xp-admin-assessments-micro-project-edit
                 *ngSwitchCase="modes.EDIT"
                 [task]="task"
-                [question]="assessmentEntry">
+                [question]="assessmentEntry"
+                (onQuestionChange)="handleQuestionChange($event)">
             </xp-admin-assessments-micro-project-edit>
         </div>
     `
 })
 export class AdminAssessmentsMicroProjectComponent implements OnInit, OnChanges {
     @Input() private task: Task;
+    @Output() private onTaskChange = new EventEmitter();
     private assessmentEntry: Question;
     private modes = {
         CREATE: 0,
@@ -29,7 +33,10 @@ export class AdminAssessmentsMicroProjectComponent implements OnInit, OnChanges 
     };
     private currentMode: number = -1;
 
-    constructor(private questionService: QuestionService) { }
+    constructor(
+        private questionService: QuestionService,
+        private taskService: TaskService,
+    ) { }
 
     ngOnInit() {
         this.setMode();
@@ -56,5 +63,9 @@ export class AdminAssessmentsMicroProjectComponent implements OnInit, OnChanges 
         } else {
             this.currentMode = this.modes.CREATE;
         }
+    }
+
+    handleQuestionChange(value) {
+        this.onTaskChange.emit(value);
     }
 }

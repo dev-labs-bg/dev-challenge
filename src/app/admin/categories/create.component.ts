@@ -32,14 +32,14 @@ export class CreateComponent {
     ) { }
 
     handleSubmit(values) {
-        const { name } = values;
-
-        this.subscription = this.categoryService.createCategory({name: name})
+        this.subscription = this.categoryService.createCategory(values)
             .subscribe(response => {
-                this.categoryService.addCategory(
+                this.categoryService.repository.add(
                     new Category(
-                        response.category.id,
-                        response.category.name
+                        response.data.id,
+                        response.data.name,
+                        response.data.status,
+                        response.data.text_status,
                     )
                 );
 

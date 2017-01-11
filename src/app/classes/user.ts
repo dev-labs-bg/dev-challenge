@@ -17,6 +17,7 @@ export class User {
         public roles: Role[] = [],
         public attributes: any = {},
         public provider: any = {},
+        public category_id: number = -1,
     ) {}
 
     /**
@@ -46,6 +47,7 @@ export class User {
             roles,
             userData.attributes,
             userData.provider,
+            userData.category_id,
         );
     }
 

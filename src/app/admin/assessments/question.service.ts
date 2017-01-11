@@ -1,49 +1,50 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
-import {Question} from './question';
-import {HttpService} from '../../services/http.service';
+import { Question } from './question';
+import { HttpService } from '../../services/http.service';
+import { Repository } from '../../core/repository';
 import * as _ from 'lodash';
 
 @Injectable()
 export class QuestionService {
-    private questions: Question[] = [];
+    public repository: Repository = new Repository();
+    public apiGetURLS = {
+        all: this.httpService.get('question/all'),
+    };
     dataChanged = new EventEmitter();
 
     constructor(
-         private httpService: HttpService
+        private httpService: HttpService
     ) { }
 
-    getAll(): Subscription | Question[] {
-        if (this.questions.length > 0) {
-            return this.questions;
-        }
-
-        return this.httpService.get('question/all').subscribe(
-            response => {
-                this.questions = response.questions.map(
-                    el => Question.newQuestion(el)
-                );
-
-                this.dataChanged.emit(this.questions);
-            },
-            error => console.log('Sorry, no questions found', error)
+    /**
+     * Setup question data
+     *
+     * @returns {TeardownLogic|any|AnonymousSubscription|Object|Subscription}
+     */
+    setup() {
+        return this.repository.setup(
+            this.apiGetURLS.all,
+            Question
         );
     }
 
+    /**
+     * Reset question data
+     *
+     * @returns {TeardownLogic|any|AnonymousSubscription|Object|Subscription}
+     */
     reset() {
-        this.questions.length = 0;
-
-        this.getAll();
-    }
-
-    getQuestions() {
-        return this.questions;
+        return this.repository.reset(
+            this.apiGetURLS.all,
+            Question
+        );
     }
 
     findByTaskId(taskId) {
         let questions = [];
 
-        _.forEach(this.questions,
+        _.forEach(this.repository.getData(),
             question => {
                 if (question.task_id == taskId) {
                     questions.push(question);
@@ -62,33 +63,11 @@ export class QuestionService {
         return this.httpService.post('question', data);
     }
 
-    add(question: Question) {
-        this.questions.push(question);
-    }
-
     update(id, data) {
         return this.httpService.put('question/' + id, data);
-    }
-
-    find(id) {
-        return _.find(this.questions, { id });
     }
 
     delete(id) {
         return this.httpService.delete('question/' + id);
     }
-
-    remove(id) {
-        return _.remove(this.questions, { id });
-    }
-
-    updateMainArray(question: Question) {
-        let id = question.id;
-        let questionIndex = _.findIndex(this.questions, { id });
-
-        this.questions[questionIndex] = question;
-
-        return this.questions;
-    }
-
 }

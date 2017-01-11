@@ -2,8 +2,26 @@ export class Category {
 
     constructor(
        private id: number = -1,
-       private name = ''
+       private name = '',
+       public status: number = -1,
+       public text_status: string = ''
     ) {}
+
+    /**
+     * Instantiate a new category instance
+     *
+     * @param categoryData
+     * @returns {Category}
+     */
+    public static newInstance(categoryData) {
+        // return new instance
+        return new Category(
+            categoryData.id,
+            categoryData.name,
+            categoryData.status,
+            categoryData.text_status,
+        );
+    }
 
     /**
      * Get id

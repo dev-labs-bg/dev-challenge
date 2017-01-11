@@ -5,6 +5,7 @@ import { ASSESSMENT_TYPES } from '../../assessment/constants';
 import { TaskService } from '../tasks/task.service';
 import { Task } from '../tasks/task';
 import { QuestionService } from './question.service';
+import { Question } from './question';
 import { Assessment } from './assessment';
 
 @Component({
@@ -37,17 +38,20 @@ import { Assessment } from './assessment';
         <div [ngSwitch]="selectedTask?.assessment.id">
             <xp-admin-assessments-micro-project
                 *ngSwitchCase="ASSESSMENT_TYPES.MICRO_PROJECT"
-                [task]="selectedTask">
+                [task]="selectedTask"
+                (onTaskChange)="handleTaskChange($event)">
             </xp-admin-assessments-micro-project>
 
             <xp-admin-assessments-question
                 *ngSwitchCase="ASSESSMENT_TYPES.QUESTION"
-                [task]="selectedTask">
+                [task]="selectedTask"
+                (onTaskChange)="handleTaskChange($event)">
             </xp-admin-assessments-question>
 
             <xp-admin-assessments-exam
                 *ngSwitchCase="ASSESSMENT_TYPES.EXAM"
-                [task]="selectedTask">
+                [task]="selectedTask"
+                (onExamChange)="handleTaskChange($event)">
             </xp-admin-assessments-exam>
         </div>
     `
@@ -57,6 +61,7 @@ export class AssessmentsComponent implements OnInit {
     private ASSESSMENT_TYPES = ASSESSMENT_TYPES;
     private Assessment = Assessment;
     private subscription: Subscription;
+    private task_id: number;
 
     constructor(
         private taskService: TaskService,
@@ -66,7 +71,7 @@ export class AssessmentsComponent implements OnInit {
     ngOnInit() {
         this.subscription = this.taskService.setup();
 
-        this.questionService.getAll();
+        this.questionService.setup();
     }
 
     onTaskChange(value): null | void {
@@ -76,6 +81,40 @@ export class AssessmentsComponent implements OnInit {
 
         // find selected task out of tasks array
         this.selectedTask = this.taskService.repository.find(value);
+    }
+
+    handleTaskChange(value) {
+        // null task data
+        this.taskService.repository.setData([]);
+
+        // reset task service data
+        // and emit new task change
+        this.taskService.repository.getAll(
+            this.taskService.apiGetURLS.all
+        ).subscribe(
+            response => {
+                this.taskService.repository.setData(response.data.map(
+                    el => Task.newInstance(el)
+                ));
+
+                // reset questions
+                this.questionService.repository.setData([]);
+
+                this.questionService.repository.getAll(
+                    this.questionService.apiGetURLS.all
+                ).subscribe(
+                    response => {
+                        this.questionService.repository.setData(response.data.map(
+                            el => Question.newInstance(el)
+                        ));
+
+                        this.selectedTask = this.taskService.findByParentId(value);
+                        this.task_id = this.selectedTask.id;
+                    }
+                );
+            },
+            error => console.log('Ah, no Task found.', error)
+        );
     }
 
 }

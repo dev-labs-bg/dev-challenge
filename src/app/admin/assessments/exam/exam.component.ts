@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
 import { Question } from '../question';
@@ -11,18 +11,21 @@ import { QuestionService } from '../question.service';
         <div [ngSwitch]="currentMode">
             <xp-admin-assessments-exam-create
                 *ngSwitchCase="modes.CREATE"
-                [task]="task">
+                [task]="task"
+                (onExamChange)="handleExamChange($event)">
             </xp-admin-assessments-exam-create>
             <xp-admin-assessments-exam-edit
                 *ngSwitchCase="modes.EDIT"
                 [questions]="questions"
-                [task]="task">
+                [task]="task"
+                (onExamChange)="handleExamChange($event)">
             </xp-admin-assessments-exam-edit>
         </div>
     `
 })
 export class AdminAssessmentsExamComponent implements OnInit {
     @Input() private task: Task;
+    @Output() private onExamChange = new EventEmitter();
     private questions: Question[];
     private modes = {
         CREATE: 0,
@@ -70,6 +73,10 @@ export class AdminAssessmentsExamComponent implements OnInit {
 
     ngOnDestroy() {
         this.subscription.unsubscribe();
+    }
+
+    handleExamChange(value) {
+        this.onExamChange.emit(value);
     }
 
 }

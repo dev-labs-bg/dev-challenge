@@ -24,4 +24,24 @@ export class UserService {
         );
     }
 
+    /**
+     * Find users by category
+     * 
+     * @param {int} categoryId
+     */
+    findByCategory(categoryId) {
+        let categoryUsers: User[] = [];
+        let category_id = parseInt(categoryId, 10);
+
+        _.forEach(this.repository.getData(),
+            user => {
+                if (user.category_id === category_id) {
+                    categoryUsers.push(user);
+                }
+            }
+        );
+
+        return categoryUsers;
+    }
+
 }

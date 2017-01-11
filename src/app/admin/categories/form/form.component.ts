@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Category } from '../category';
+import { CategoryService } from '../category.service';
 
 @Component({
   selector: 'xp-admin-category-form',
@@ -15,13 +16,15 @@ export class CategoryFormComponent implements OnInit {
     form: FormGroup;
 
     constructor(
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private categoryService: CategoryService,
     ) { }
 
     ngOnInit() {
         this.form = this.formBuilder.group({
             'id': this.category.getId(),
-            'name': [this.category.getName(), Validators.required]
+            'name': [this.category.getName(), Validators.required],
+            'status': [this.category.status, Validators.required],
         });
     }
 

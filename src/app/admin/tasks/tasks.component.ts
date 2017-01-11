@@ -28,7 +28,7 @@ export class TasksComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.categoryService.getAll();
+        this.categoryService.setup();
 
         this.taskService.repository.setup(
             this.taskService.apiGetURLS.all,
@@ -41,6 +41,7 @@ export class TasksComponent implements OnInit {
             'title': ['', Validators.required],
             'description': ['', Validators.required],
             'time_estimation': ['', Validators.required],
+            'disabled': [''],
         });
     }
 
@@ -74,7 +75,8 @@ export class TasksComponent implements OnInit {
         return this.taskFormSubscription = this.taskService.updateTask(this.selectedTask.id, values).subscribe(
             response => {
                 let newTask = Task.newInstance(response.task);
-                this.taskService.repository.update(newTask);
+                this.taskService.repository.remove(this.selectedTask.id);
+                this.taskService.repository.add(newTask);
                 this.taskForm.reset();
                 this.onCategoryChange(newTask.category.getId());
                 document.getElementById('close_modal').click();
@@ -124,6 +126,7 @@ export class TasksComponent implements OnInit {
         return this.taskFormSubscription = this.taskService.deleteTask(this.selectedTask.id).subscribe(
             response => {
                 this.taskService.repository.remove(this.selectedTask.id);
+                this.taskService.repository.add(Task.newInstance(response.task));
                 this.onCategoryChange(this.selectedTask.category.getId());
                 this.selectedTask = null;
                 document.getElementById('close_modal').click();
@@ -137,7 +140,7 @@ export class TasksComponent implements OnInit {
 
         this.categoryId = categoryId;
 
-        this.selectedCategory = this.categoryService.findCategory(categoryId);
+        this.selectedCategory = this.categoryService.repository.find(categoryId);
 
         this.categoryTasks = this.taskService.getFromCategory(categoryId);
     }
@@ -153,6 +156,24 @@ export class TasksComponent implements OnInit {
         this.listFormSubscription = this.taskService.updateList(values).subscribe(
             response => console.log(response)
         );
+    }
+
+    /**
+     * Switch task label style
+     * 
+     * @param {boolean} disabled
+     */
+    switchLabels(disabled) {
+        switch (disabled) {
+            case 0:
+                return 'label label-success text-uppercase';
+
+            case 1:
+                return 'label label-danger text-uppercase';
+            
+            default:
+                return '';
+        }
     }
 
 }
