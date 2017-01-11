@@ -89,7 +89,6 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
                     id="last_name"
                     formControlName="last_name"
                     placeholder="Last Name"
-                    required
                 />
              </div>
             <button
@@ -113,7 +112,7 @@ export class MainInfoComponent implements OnInit {
             'password': ['', Validators.required],
             'password_confirmation': ['', Validators.required],
             'first_name': ['', Validators.required],
-            'last_name': ['', Validators.required]
+            'last_name': ['']
         }, {
            validator: this.matchingPasswords('password', 'password_confirmation')
         });
