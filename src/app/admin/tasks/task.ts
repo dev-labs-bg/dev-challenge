@@ -5,7 +5,7 @@ export class Task {
 
     constructor(
         public id: number = -1,
-        public parent_id: number = -1,
+        public task_id: number = -1,
         public category: Category = new Category(),
         public assessment: Assessment = new Assessment(),
         public title: string = '',

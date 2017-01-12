@@ -34,7 +34,7 @@ export class AdminAssessmentsMicroProjectCreateComponent implements OnInit {
 
     handleSubmit(formData) {
         // get task parent id
-        let parentId = this.task.parent_id;
+        let parentId = this.task.task_id;
 
         this.subscription = this.questionService.create(formData).subscribe(
             response => {

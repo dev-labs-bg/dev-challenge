@@ -35,7 +35,7 @@ export class AdminAssessmentsExamEditComponent implements OnInit {
     }
 
     handleSubmit(formData) {
-        let parentId = this.task.parent_id;
+        let parentId = this.task.task_id;
 
         return this.subscription = this.questionService.saveExam(formData).subscribe(
             response => {
@@ -48,7 +48,7 @@ export class AdminAssessmentsExamEditComponent implements OnInit {
     }
 
     handleDelete(questionId) {
-        let parentId = this.task.parent_id;
+        let parentId = this.task.task_id;
         
         this.subscription = this.questionService.delete(questionId).subscribe(
             response => {

@@ -30,7 +30,7 @@ export class AdminAssessmentsExamCreateComponent implements OnInit {
     }
 
     handleSubmit(formData) {
-        let parentId = this.task.parent_id;
+        let parentId = this.task.task_id;
 
         return this.subscription = this.questionService.saveExam(formData).subscribe(
             response => {

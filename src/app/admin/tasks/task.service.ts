@@ -118,7 +118,7 @@ export class TaskService {
         let dataId = parseInt(parentId, 10);
 
         return _.find(this.repository.getData(),
-            el => el.parent_id === dataId
+            el => el.task_id === dataId
         );
     }
 
