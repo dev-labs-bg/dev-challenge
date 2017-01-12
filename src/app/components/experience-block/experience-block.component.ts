@@ -7,12 +7,12 @@ import {AuthService} from '../../core/auth.service';
     templateUrl: `
         <div class="text-center">
             <h3 class="mb">
-                {{ loggedUser.first_name }}'s Experience Points
+                {{ authService.getLoggedUser().first_name }}'s Experience Points
             </h3>
             <progressbar value="{{ getProgress() }}"></progressbar>
 
             <p class="text-right">
-                {{ loggedUser.experience }} / {{ maxPoints }} experience points
+                {{ authService.getLoggedUser().experience }} / {{ maxPoints }} experience points
                 <br />
                 Apply for <a routerLink="/contributions">bonus experience points</a>.
             </p>
@@ -20,7 +20,6 @@ import {AuthService} from '../../core/auth.service';
     `
 })
 export class ExperienceBlockComponent implements OnInit {
-    private loggedUser: User;
     private maxPoints: number = 500;
 
     constructor(
@@ -28,11 +27,11 @@ export class ExperienceBlockComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.loggedUser = this.authService.getLoggedUser();
+        //
     }
 
     getProgress() {
-        return (this.loggedUser.experience / this.maxPoints) * 100;
+        return (this.authService.getLoggedUser().experience / this.maxPoints) * 100;
     }
 
 }

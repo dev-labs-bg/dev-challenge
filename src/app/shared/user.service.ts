@@ -25,6 +25,15 @@ export class UserService {
     }
 
     /**
+     * Get logged user api call
+     *
+     * @returns {Observable}
+     */
+    getLoggedUser() {
+        return this.httpService.get('get-logged-user');
+    }
+
+    /**
      * Find users by category
      * 
      * @param {int} categoryId

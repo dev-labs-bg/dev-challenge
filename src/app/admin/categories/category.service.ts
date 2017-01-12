@@ -80,4 +80,13 @@ export class CategoryService {
     deleteCategory(id: number) {
         return this.httpService.delete(`category/${id}`);
     }
+
+    /**
+     * Get published categories
+     *
+     * @returns {Observable}
+     */
+    getAllowedCategories() {
+        return this.httpService.get('category/allowed');
+    }
 }

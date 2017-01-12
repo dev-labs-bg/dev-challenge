@@ -1,6 +1,8 @@
 import { Component, OnChanges, Input, ViewChild } from '@angular/core';
 
 import { Todo } from '../../todos/todo';
+import { UserService } from '../../shared/user.service';
+import { AuthService } from '../../core/auth.service';
 import { AssessmentService } from '../assessment.service';
 import { TodoService } from '../../todos/todo.service';
 import { NotificationService } from '../../shared/notification.service';
@@ -102,6 +104,8 @@ export class AssessmentExamCreateComponent implements OnChanges {
         private assessmentService: AssessmentService,
         private todoService: TodoService,
         private notificationService: NotificationService,
+        private userService: UserService,
+        private authService: AuthService,
     ) { }
 
     ngOnChanges() {
@@ -155,6 +159,14 @@ export class AssessmentExamCreateComponent implements OnChanges {
         if (this.areAllQuestionsAnswered()) {
             this.modal.hide();
             this.toggleMode(this.modes.DONE);
+
+            // reset todos
+            this.todoService.reset();
+
+            // get user's experience
+            this.userService.getLoggedUser().subscribe(
+                response => this.authService.setLoggedUser(response.user)
+            )
 
             return;
         }

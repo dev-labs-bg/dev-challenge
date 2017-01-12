@@ -7,6 +7,9 @@ export class Submission {
         public finished: string,
         public reviewed: boolean,
         public passed: boolean,
+        public task: {
+            assessment_type_id: number
+        },
     ) {}
 
     static newSubmission(el) {
@@ -17,6 +20,7 @@ export class Submission {
             el.finished,
             el.reviewed,
             el.passed,
+            el.task,
         );
     }
 }
