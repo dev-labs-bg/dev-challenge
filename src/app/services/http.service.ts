@@ -35,7 +35,18 @@ export class HttpService {
      */
     checkServerSuccess(response) {
         if (! response.success) {
-            throw(new Error(response.error));
+            let errorMessage = '';
+
+            // build error message
+            if (typeof response.error === 'object') {
+                _.forEach(response.error, 
+                    message => errorMessage += message + ' '
+                );
+            } else {
+                errorMessage = response.error;
+            }
+
+            throw(new Error(errorMessage));
         }
 
         return response;
@@ -132,6 +143,7 @@ export class HttpService {
     }
 
     buildErrorMessage(error: any) {
+
         if (! _.isEmpty(error.message)) {
             return `Server response: ${error.message}`;
         }

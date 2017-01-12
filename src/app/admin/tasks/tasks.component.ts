@@ -145,6 +145,11 @@ export class TasksComponent implements OnInit {
         this.categoryTasks = this.taskService.getFromCategory(categoryId);
     }
 
+    /**
+     * Update task list
+     *
+     * @returns {Subscription}
+     */
     updateList() {
         let inputs = document.getElementById('task_holder').getElementsByTagName('input');
         let values = [];
@@ -153,8 +158,22 @@ export class TasksComponent implements OnInit {
             input => values.push(input.value)
         );
 
-        this.listFormSubscription = this.taskService.updateList(values).subscribe(
-            response => console.log(response)
+        let categoryId = this.selectedCategory.getId();
+
+        return this.listFormSubscription = this.taskService.updateList(values).subscribe(
+            response => {
+                this.taskService.reset();
+                this.categoryService.repository.setData([]);
+                this.categoryService.repository
+                    .getAll(this.categoryService.apiGetURLS.all).subscribe(
+                        response => {
+                            this.categoryService.repository.setData(response.data.map(
+                                el => Category.newInstance(el)
+                            )),
+                            this.selectedCategory = this.categoryService.repository.find(categoryId);
+                        }
+                );
+            }
         );
     }
 

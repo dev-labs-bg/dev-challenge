@@ -62,7 +62,8 @@ export class SubmissionService {
 
         _.forEach(this.getSubmissions(),
             submission => {
-                if (submission.user_id === userId) {
+                if (submission.user_id === userId && 
+                    submission.task.assessment_type_id != 2) {
                     submissions.push(submission);
                 }
             }

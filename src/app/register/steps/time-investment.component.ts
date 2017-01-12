@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { CategoryService } from '../../admin/categories/category.service';
+import { Category } from '../../admin/categories/category';
 
 @Component({
     selector: 'xp-register-time-investment',
@@ -19,7 +20,7 @@ import { CategoryService } from '../../admin/categories/category.service';
                     class="form-control"
                     id="category_id">
                     <option value="" disabled="true" [selected]="true">Please Choose</option>
-                    <option *ngFor="let category of categoryService.repository.getData()"
+                    <option *ngFor="let category of publishedCategories"
                         value="{{ category.id }}">
                         {{ category.name }}
                     </option>
@@ -69,14 +70,19 @@ export class TimeInvestmentComponent implements OnInit {
     private currentDate = new Date();
     private maxDate: Date = new Date();
     private tileSlots = [0.5, 1, 2, 4];
-
+    private publishedCategories: Category[] = [];
+ 
     constructor(
         private formBuilder: FormBuilder,
         private categoryService: CategoryService
     ) { }
 
     ngOnInit() {
-        this.categoryService.setup();
+        this.categoryService.getAllowedCategories().subscribe(
+            response => response.data.map(
+                el => this.publishedCategories.push(Category.newInstance(el))
+            )
+        );
 
         this.form = this.formBuilder.group({
             'category_id': ['', Validators.required],
