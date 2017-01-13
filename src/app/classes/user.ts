@@ -71,8 +71,17 @@ export class User {
         return admin;
     }
 
+    /**
+     * Return user's name
+     *
+     * @returns {string}
+     */
     getName() {
-        return this.first_name + ' ' + this.last_name;
+        // if we have last name, return that as well
+        if (this.last_name)
+            return this.first_name + ' ' + this.last_name;
+
+        return this.first_name;
     }
 
 

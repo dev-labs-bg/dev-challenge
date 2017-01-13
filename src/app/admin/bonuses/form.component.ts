@@ -13,6 +13,7 @@ import {ContributorsService} from '../../contributions/contributors.service';
   selector: 'xp-bonus-form',
   template: `
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <p>Maximum allowed award points are 25 per item!</p>
         <div class="form-group">
             <label for="points">Points</label>
             <input
