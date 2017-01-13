@@ -8,6 +8,7 @@ import {User} from '../../../classes/user';
 import {HttpService} from '../../../services/http.service';
 import {SubmissionService} from '../submission.service';
 import {NotificationService} from '../../../shared/notification.service';
+import {ASSESSMENT_OPEN_ANSWER_TYPES} from '../../../assessment/constants';
 
 @Component({
     selector: 'xp-single',
@@ -21,6 +22,7 @@ export class SingleComponent implements OnInit, OnDestroy {
     private user: User = null;
     private question: Question = null;
     private answer = [];
+    private ASSESSMENT_OPEN_ANSWER_TYPES = ASSESSMENT_OPEN_ANSWER_TYPES;
 
     constructor(
         private activatedRoute: ActivatedRoute,
