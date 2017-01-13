@@ -25,9 +25,9 @@
         <li class="list-group-item">
             <a
                 *ngFor="let submission of submissionService.findByUser(user.id)"
-                routerLink="/admin/submissions/{{ submission.id }}">
+                routerLink="/admin/submissions/single/{{ submission.id }}">
                 <!-- TO DO: add task title -->
-                име на таск
+                {{ submission.task.title }}
             </a>
         </li>
     </ul>

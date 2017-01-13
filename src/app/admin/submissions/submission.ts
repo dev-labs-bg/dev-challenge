@@ -9,6 +9,7 @@ export class Submission {
         public passed: boolean,
         public task: {
             assessment_type_id: number
+            title: string
         },
     ) {}
 

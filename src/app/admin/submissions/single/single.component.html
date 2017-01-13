@@ -9,7 +9,12 @@
 
     <div class="submission">
         <h3>Submission from {{ user.getName() }}</h3>
-        <p>{{ answer.body }}</p>
+        <p *ngIf="answer.type != ASSESSMENT_OPEN_ANSWER_TYPES.AUDIO">{{ answer.body }}</p>
+        <p *ngIf="answer.type == ASSESSMENT_OPEN_ANSWER_TYPES.AUDIO">
+            <xp-audio-player
+                [source]="answer.body">
+            </xp-audio-player>
+        </p>
     </div>
 
     <div class="form-group">
@@ -25,7 +30,7 @@
         </div>
         <a
             class="btn btn-default"
-            routerLink="/admin/submissions">
+            routerLink="/admin/submissions/{{ task.category.getId() }}">
             Go Back
         </a>
     </div>

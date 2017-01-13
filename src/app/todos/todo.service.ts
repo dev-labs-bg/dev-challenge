@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpService } from '../services/http.service';
 import { Repository } from '../core/repository';
 import { Todo } from './todo';
+import * as _ from 'lodash';
 
 @Injectable()
 export class TodoService {

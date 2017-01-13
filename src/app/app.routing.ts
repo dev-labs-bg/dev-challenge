@@ -31,7 +31,8 @@ const APP_ROUTES: Routes = [
     {path: 'admin/tasks', component: TasksComponent, canActivate: [AdminGuard]},
     {path: 'admin/assessments', component: AssessmentsComponent, canActivate: [AdminGuard]},
     {path: 'admin/submissions', component: SubmissionsComponent, canActivate: [AdminGuard]},
-    {path: 'admin/submissions/:id', component: SingleComponent, canActivate: [AdminGuard]},
+    {path: 'admin/submissions/:id', component: SubmissionsComponent, canActivate: [AdminGuard]},
+    {path: 'admin/submissions/single/:id', component: SingleComponent, canActivate: [AdminGuard]},
     {path: 'admin/bonuses', component: BonusesComponent, canActivate: [AdminGuard]},
     {path: 'contributions', component: ContributionsComponent, canActivate: [AuthGuard]},
 ];
