@@ -17,12 +17,25 @@
         </p>
     </div>
 
+    <ng-container [ngSwitch]="submission.status">
+        <p *ngSwitchCase="TODO_STATUSES.SUBMITTED_FOR_REVIEW" class="alert alert-warning text-uppercase">
+            Waiting for approval
+        </p>
+        <p *ngSwitchCase="TODO_STATUSES.DENIED" class="alert alert-danger text-uppercase">
+            Denied
+        </p>
+        <p *ngSwitchCase="TODO_STATUSES.COMPLETED" class="alert alert-success text-uppercase">
+            Approved
+        </p>
+    </ng-container>
+
     <div class="form-group">
-        <div
+        <button
             class="btn btn-primary"
+            [disabled]="submission.status == TODO_STATUSES.COMPLETED"
             (click)="approve(submission.id)">
             Approve
-        </div>
+        </button>
         <div
             class="btn btn-danger"
             (click)="deny(submission.id)">
