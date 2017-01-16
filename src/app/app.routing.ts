@@ -22,6 +22,7 @@ import { HomeComponent } from './home/home.component';
 const APP_ROUTES: Routes = [
     {path: '', component: HomeComponent},
     {path: 'login', component: LoginComponent, canActivate: [NoAuthGuard]},
+    {path: 'login/duplicate-email', component: LoginComponent, canActivate: [NoAuthGuard]},
     {path: 'social-login/:user/:token', component: SocialComponent, canActivate: [SocialGuard]},
     {path: 'account/activate/:email/:token', component: AccountActivationComponent},
     {path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard]},
