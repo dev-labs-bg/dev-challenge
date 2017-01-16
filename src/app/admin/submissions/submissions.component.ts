@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {CategoryService} from '../categories/category.service';
 import {ActivatedRoute, Router} from '@angular/router';
+
+import * as _ from 'lodash';
+
+import {CategoryService} from '../categories/category.service';
 import {Category} from '../categories/category';
 import {SubmissionService} from './submission.service';
 import {UserService} from '../../shared/user.service';
@@ -8,7 +11,7 @@ import {TaskService} from '../tasks/task.service';
 import {Task} from '../tasks/task';
 import {Subscription} from 'rxjs/Rx';
 import {User} from '../../classes/user';
-import * as _ from 'lodash';
+import { TODO_STATUSES } from '../../assessment/constants';
 
 @Component({
   selector: 'xp-approvals',
@@ -20,6 +23,7 @@ export class SubmissionsComponent implements OnInit {
     private categoryUsers: User[] = [];
     private routeSubscription: Subscription;
     private category: number;
+    private TODO_STATUSES = TODO_STATUSES;
 
     constructor(
         private categoryService: CategoryService,

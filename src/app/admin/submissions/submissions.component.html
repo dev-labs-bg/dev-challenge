@@ -22,13 +22,25 @@
     class="panel panel-default">
     <div class="panel-heading">{{ user.first_name }} {{ user.last_name }}</div>
     <ul class="list-group">
-        <li class="list-group-item">
+        <li
+            *ngFor="let submission of submissionService.findByUser(user.id)"
+            class="list-group-item">
             <a
-                *ngFor="let submission of submissionService.findByUser(user.id)"
                 routerLink="/admin/submissions/single/{{ submission.id }}">
                 <!-- TO DO: add task title -->
                 {{ submission.task.title }}
             </a>
+            <ng-container [ngSwitch]="submission.status">
+                <span *ngSwitchCase="TODO_STATUSES.SUBMITTED_FOR_REVIEW" class="label label-warning text-uppercase">
+                    Waiting for approval
+                </span>
+                <span *ngSwitchCase="TODO_STATUSES.DENIED" class="label label-danger text-uppercase">
+                    Denied
+                </span>
+                <span *ngSwitchCase="TODO_STATUSES.COMPLETED" class="label label-success text-uppercase">
+                    Approved
+                </span>
+            </ng-container>
         </li>
     </ul>
 </div>

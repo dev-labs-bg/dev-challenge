@@ -9,6 +9,7 @@ import {HttpService} from '../../../services/http.service';
 import {SubmissionService} from '../submission.service';
 import {NotificationService} from '../../../shared/notification.service';
 import {ASSESSMENT_OPEN_ANSWER_TYPES} from '../../../assessment/constants';
+import {TODO_STATUSES} from '../../../assessment/constants';
 
 @Component({
     selector: 'xp-single',
@@ -23,6 +24,7 @@ export class SingleComponent implements OnInit, OnDestroy {
     private question: Question = null;
     private answer = [];
     private ASSESSMENT_OPEN_ANSWER_TYPES = ASSESSMENT_OPEN_ANSWER_TYPES;
+    private TODO_STATUSES = TODO_STATUSES;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -62,7 +64,7 @@ export class SingleComponent implements OnInit, OnDestroy {
         this.submissionService.approve(id).subscribe(
             response => {
                 this.notificationService.fireSuccess('Submission approved!');
-                this.router.navigate(['admin/submissions']);
+                this.router.navigate(['admin/submissions/' + this.task.category.getId()]);
             }
         );
     }
@@ -71,7 +73,7 @@ export class SingleComponent implements OnInit, OnDestroy {
         this.submissionService.deny(id).subscribe(
             response => {
                 this.notificationService.fireSuccess('Submission denied!');
-                this.router.navigate(['admin/submissions']);
+                this.router.navigate(['admin/submissions/' + this.task.category.getId()]);
             }
         );
     }
