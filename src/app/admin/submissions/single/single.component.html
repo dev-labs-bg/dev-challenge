@@ -32,15 +32,16 @@
     <div class="form-group">
         <button
             class="btn btn-primary"
-            [disabled]="submission.status == TODO_STATUSES.COMPLETED"
+            [disabled]="submission.status != TODO_STATUSES.SUBMITTED_FOR_REVIEW"
             (click)="approve(submission.id)">
             Approve
         </button>
-        <div
+        <button
             class="btn btn-danger"
+            [disabled]="submission.status != TODO_STATUSES.SUBMITTED_FOR_REVIEW"
             (click)="deny(submission.id)">
             Deny
-        </div>
+        </button>
         <a
             class="btn btn-default"
             routerLink="/admin/submissions/{{ task.category.getId() }}">

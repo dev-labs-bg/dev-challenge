@@ -10,6 +10,9 @@ import {SubmissionService} from '../submission.service';
 import {NotificationService} from '../../../shared/notification.service';
 import {ASSESSMENT_OPEN_ANSWER_TYPES} from '../../../assessment/constants';
 import {TODO_STATUSES} from '../../../assessment/constants';
+import {TodoService} from '../../../todos/todo.service';
+import {UserService} from '../../../shared/user.service';
+import {AuthService} from '../../../core/auth.service';
 
 @Component({
     selector: 'xp-single',
@@ -32,6 +35,9 @@ export class SingleComponent implements OnInit, OnDestroy {
         private submissionService: SubmissionService,
         private notificationService: NotificationService,
         private router: Router,
+        private todoService: TodoService,
+        private userService: UserService,
+        private authService: AuthService,
     ) { }
 
     ngOnInit() {
@@ -60,21 +66,65 @@ export class SingleComponent implements OnInit, OnDestroy {
         this.routeSubscription.unsubscribe();
     }
 
+    /**
+     * Approve a submission
+     * 
+     * @param {Submission} id
+     * @returns {null}
+     */
     approve(id) {
-        this.submissionService.approve(id).subscribe(
-            response => {
-                this.notificationService.fireSuccess('Submission approved!');
-                this.router.navigate(['admin/submissions/' + this.task.category.getId()]);
-            }
-        );
+        let confirmation = `Are you sure you want to approve this submission?`;
+
+        if (confirm(confirmation)) {
+
+            this.submissionService.approve(id).subscribe(
+                response => {
+                    this.resetData();
+                    this.notificationService.fireSuccess('Submission approved!');
+                    this.router.navigate(['admin/submissions/' + this.task.category.getId()]);
+                }
+            );
+
+        }
     }
 
+    /**
+     * Deny a submission
+     * 
+     * @param {Submission} id
+     * @returns {null}
+     */
     deny(id) {
-        this.submissionService.deny(id).subscribe(
-            response => {
-                this.notificationService.fireSuccess('Submission denied!');
-                this.router.navigate(['admin/submissions/' + this.task.category.getId()]);
-            }
-        );
+        let confirmation = `Are you sure you want to deny this submission?`;
+
+        if (confirm(confirmation)) {
+
+            this.submissionService.deny(id).subscribe(
+                response => {
+                    this.resetData();
+                    this.notificationService.fireSuccess('Submission denied!');
+                    this.router.navigate(['admin/submissions/' + this.task.category.getId()]);
+                }
+            );
+        }
+    }
+
+    /**
+     * Reset dashboard data
+     * We need to reset it, otherwise it don't get updated
+     *
+     * @returns {null}
+     */
+    resetData() {
+        // reset user data
+        this.submissionService.setSubmissions([]);
+
+        // reset todos
+        this.todoService.reset();
+
+        // get user's experience
+        this.userService.getLoggedUser().subscribe(
+            response => this.authService.setLoggedUser(response.user)
+        )
     }
 }

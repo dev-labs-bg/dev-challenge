@@ -4,6 +4,8 @@ import { Subscription } from 'rxjs/Rx';
 import { Assessment } from '../assessment';
 import { AssessmentService } from '../assessment.service';
 import { TodoService } from '../../todos/todo.service';
+import { SubmissionService } from '../../admin/submissions/submission.service';
+
 import { NotificationService } from '../../shared/notification.service';
 
 @Component({
@@ -32,7 +34,8 @@ export class AssessmentQuestionCreateComponent {
     constructor(
         private assessmentService: AssessmentService,
         private todoService: TodoService,
-        private notificationService: NotificationService
+        private notificationService: NotificationService,
+        private submissionService: SubmissionService,
     ) { }
 
     private handleSubmit(formData) {
@@ -45,6 +48,7 @@ export class AssessmentQuestionCreateComponent {
         ).subscribe(
             response => {
                 this.todoService.reset();
+                this.submissionService.setSubmissions([]);
                 this.notificationService.fireSuccess('Assessment submitted!');
             },
             error => console.log('Ah, assessment not submitted!', error)
@@ -59,6 +63,7 @@ export class AssessmentQuestionCreateComponent {
         ).subscribe(
             response => {
                 this.todoService.reset();
+                this.submissionService.setSubmissions([]);
                 this.notificationService.fireSuccess('Assessment submitted!');
             },
             error => console.log('Ah, audio upload failed!', error)
