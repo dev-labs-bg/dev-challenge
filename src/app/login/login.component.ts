@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 
 import { AuthService } from '../core/auth.service';
@@ -10,6 +11,7 @@ import Utils from '../shared/utils';
         <div class="row">
             <div class="col-sm-8 col-sm-push-2">
                 <h3>Вхoд</h3>
+                <div *ngIf="message.length" class="alert alert-danger">{{ message }}</div>
                 <form [formGroup]="form" (ngSubmit)="onSubmit()">
                     <div class="form-group"
                         [class.has-error]="
@@ -58,13 +60,20 @@ import Utils from '../shared/utils';
 })
 export class LoginComponent implements OnInit {
     form: FormGroup;
+    message: string = '';
 
     constructor(
         private formBuilder: FormBuilder,
-        private authService: AuthService
+        private authService: AuthService,
+        private router: Router,
     ) {}
 
     ngOnInit() {
+
+        if (this.router.url === '/login/duplicate-email') {
+            this.message = 'Email has already been taken';
+        }
+
         // init form and set rules
         this.form = this.formBuilder.group({
             'email': ['', Validators.compose([
