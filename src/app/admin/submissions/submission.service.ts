@@ -33,6 +33,15 @@ export class SubmissionService {
         return this.submissions;
     }
 
+    /**
+     * Set submissions var
+     * 
+     * @param {Submission} submissions
+     */
+    setSubmissions(submissions) {
+        return this.submissions = submissions;
+    }
+
     getById(id) {
         let submissionId = parseInt(id, 10);
 
