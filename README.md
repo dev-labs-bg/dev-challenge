@@ -12,7 +12,9 @@ Dev Challenge is a to-do app that assigns todos with assessments to an user and 
   * API_ENDPOINT is API url
   * APPLICATION_TOKEN is the token generated from the API. When you configure your API, you will generate a token, paste it here.
   * Configure one signal if you wish to use notifications.
-6. Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+6. Run npm install
+7. Run ng build --target=production
+8. Make it so the virtual hosts target the created "app/dist" directory.
 
 ## Build
 
