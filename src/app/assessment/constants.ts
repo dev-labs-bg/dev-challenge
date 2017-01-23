@@ -14,8 +14,8 @@ export const ASSESSMENT_ANSWER_TYPES = {
 
 
 export const ASSESSMENT_OPEN_ANSWER_TYPES = {
-    AUDIO: '\\App\\UserAnswers\\AudioAnswers',
-    TEXT: '\\App\\UserAnswers\\OpenAnswers'
+    AUDIO: 'App\\Models\\UserAnswers\\AudioAnswer',
+    TEXT: 'App\\Models\\UserAnswers\\OpenAnswer'
 };
 
 
