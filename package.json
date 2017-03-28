@@ -1,6 +1,6 @@
 {
   "name": "dev-challenge",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
@@ -25,7 +25,7 @@
     "@angular/platform-server": "^4.0.0",
     "@angular/router": "^4.0.0",
     "@types/lodash": "^4.14.39",
-    "angular2-busy": "https://github.com/dinusuresh/angular2-busy.git",
+    "angular2-busy": "https://github.com/superKalo/angular-2-busy.git",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
     "dragula": "^3.7.2",
