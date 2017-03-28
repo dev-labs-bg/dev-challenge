@@ -2,13 +2,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // 3rd party plugins
 import { ToastyModule } from 'ng2-toasty';
 import { BusyModule } from 'angular2-busy';
 import {
     AlertModule, DatepickerModule, ModalModule, ProgressbarModule
-} from 'ng2-bootstrap/ng2-bootstrap';
+} from 'ng2-bootstrap';
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 
@@ -164,14 +165,15 @@ import { FooterComponent } from './shared/footer.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
     routing,
-    AlertModule,
-    DatepickerModule,
-    ModalModule,
-    ProgressbarModule,
+    AlertModule.forRoot(),
+    DatepickerModule.forRoot(),
+    ModalModule.forRoot(),
+    ProgressbarModule.forRoot(),
     BusyModule,
     ToastyModule.forRoot(),
     DragulaModule

@@ -4,20 +4,7 @@ import {AuthService} from '../../core/auth.service';
 
 @Component({
     selector: 'xp-experience-block',
-    templateUrl: `
-        <div class="text-center">
-            <h3 class="mb">
-                {{ authService.getLoggedUser().first_name }}'s Experience Points
-            </h3>
-            <progressbar value="{{ getProgress() }}"></progressbar>
-
-            <p class="text-right">
-                {{ authService.getLoggedUser().experience }} / {{ maxPoints }} experience points
-                <br />
-                Apply for <a routerLink="/contributions">bonus experience points</a>.
-            </p>
-        </div>
-    `
+    templateUrl: './experience-block.component.html',
 })
 export class ExperienceBlockComponent implements OnInit {
     private maxPoints: number = 500;
