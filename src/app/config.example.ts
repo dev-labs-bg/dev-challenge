@@ -15,3 +15,8 @@ export const APPLICATION_TOKEN = 'XXXXXXX';
  */
 export const ONE_SIGNAL_APP_KEY = "XXXXXXX"; // for chrome and firefox
 export const ONE_SIGNAL_SAFARI = "XXXXXXX"; // for safari
+
+/**
+ * Github Login Url
+*/
+export const GITHUB_ENDPOINT = "http://dev-challenge-api.dev/auth/github";

@@ -1,11 +1,23 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { HttpService } from '../../services/http.service';
 
+import { GITHUB_ENDPOINT } from '../../config';
+import { User } from '../../classes/user';
+
 @Component({
     selector: 'xp-register-main-info',
     template: `
+        <p>Можете да се регистрирате чрез Github:</p>
+        <p>
+            <a
+                href="{{ GITHUB_ENDPOINT }}"
+                class="btn btn-primary">
+                Github registration
+            </a>
+        </p>
+        <p>...или да използвате стандартната форма:</p>
         <form [formGroup]="form" (ngSubmit)="handleSubmit()">
             <div class="form-group"
                 [class.has-error]="
@@ -103,8 +115,10 @@ import { HttpService } from '../../services/http.service';
     `
 })
 export class MainInfoComponent implements OnInit {
+    @Input() user: User;
     @Output() onSubmit = new EventEmitter();
     form: FormGroup;
+    GITHUB_ENDPOINT: string = GITHUB_ENDPOINT;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -113,11 +127,11 @@ export class MainInfoComponent implements OnInit {
 
     ngOnInit() {
         this.form = this.formBuilder.group({
-            'email': ['', Validators.required],
+            'email': [this.user.email, Validators.required],
             'password': ['', Validators.required],
             'password_confirmation': ['', Validators.required],
-            'first_name': ['', Validators.required],
-            'last_name': ['']
+            'first_name': [this.user.first_name, Validators.required],
+            'last_name': [this.user.last_name]
         }, {
            validator: this.matchingPasswords('password', 'password_confirmation')
         });
