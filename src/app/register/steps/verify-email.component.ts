@@ -11,7 +11,7 @@ import { Component, Input } from '@angular/core';
                     class="btn btn-primary"
                     href="http://{{ domains[domains.indexOf(provider)] }}"
                     target="_blank">
-                    Open your email provider
+                    Open {{ domains[domains.indexOf(provider)] }}
                 </a>
             </p>
         </alert>
