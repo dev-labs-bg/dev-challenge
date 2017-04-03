@@ -15,11 +15,14 @@ import {HttpService} from "../../services/http.service";
        <div [ngSwitch]="currentMode">
             <xp-register-time-investment
                 *ngSwitchCase="modes.TIME_INVESTMENT"
-                (onSubmit)="handleTimeInvestmentSubmit($event)">
+                (onSubmit)="handleTimeInvestmentSubmit($event)"
+                [userProps]="userProps"
+                [showGoBack]="false">
             </xp-register-time-investment>
             <xp-register-additional-info
                 *ngSwitchCase="modes.ADDITIONAL_INFO"
-                (onSubmit)="handleAdditionalInfoSubmit($event)">
+                (onSubmit)="handleAdditionalInfoSubmit($event)"
+                [showGoBack]="false">
             </xp-register-additional-info>
         </div>
   `,
@@ -34,11 +37,11 @@ export class SocialComponent implements OnInit {
         ADDITIONAL_INFO: 1,
     }
     private currentMode = this.modes.TIME_INVESTMENT;
-    private userProps: { spent_time: string, category_id: number, date_of_birth: number,
+    private userProps: { spent_time: string, category_id: number, date_of_birth: string,
     city: string, university: string, year_of_study: number} = {
         spent_time: '',
         category_id: -1,
-        date_of_birth: -1,
+        date_of_birth: '',
         city: '',
         university: '',
         year_of_study: -1,
