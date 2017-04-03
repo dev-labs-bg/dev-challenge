@@ -15,7 +15,7 @@ import { REGISTRATION_MODES } from '../constants';
                 ">
                 <label class="block-display">Year of Birth</label>
                 <input
-                    type="text"
+                    type="number"
                     name="date_of_birth"
                     class="form-control"
                     id="date_of_birth"
