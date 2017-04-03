@@ -5,6 +5,8 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { AuthService } from '../core/auth.service';
 import Utils from '../shared/utils';
 
+import { GITHUB_ENDPOINT } from '../config';
+
 @Component({
     selector: 'xp-login',
     template: `
@@ -49,7 +51,7 @@ import Utils from '../shared/utils';
                         Хайде!
                     </button>
                     <a
-                        href="http://dev-challenge.dev/auth/github"
+                        href="{{ GITHUB_ENDPOINT }}"
                         class="btn btn-link btn-lg">
                         ... or login with github
                     </a>
@@ -61,6 +63,7 @@ import Utils from '../shared/utils';
 export class LoginComponent implements OnInit {
     form: FormGroup;
     message: string = '';
+    GITHUB_ENDPOINT: string = GITHUB_ENDPOINT;
 
     constructor(
         private formBuilder: FormBuilder,

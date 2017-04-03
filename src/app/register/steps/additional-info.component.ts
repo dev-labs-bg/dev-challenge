@@ -1,23 +1,26 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
+import { REGISTRATION_MODES } from '../constants';
+
 @Component({
     selector: 'xp-register-additional-info',
     template: `
+        <div class="alert alert-success">Fields below are optional</div>
         <form [formGroup]="form" (ngSubmit)="handleSubmit()">
             <div class="form-group"
                 [class.has-error]="
                     ! form.controls['date_of_birth'].valid &&
                     form.controls['date_of_birth'].touched
                 ">
-                <label class="block-display">Date of birth</label>
+                <label class="block-display">Year of Birth</label>
                 <input
-                    type="date"
+                    type="number"
                     name="date_of_birth"
                     class="form-control"
                     id="date_of_birth"
                     formControlName="date_of_birth"
-                    placeholder="Date of Birth"
+                    placeholder="Year of Birth"
                 />
             </div>
             <div class="form-group"
@@ -59,6 +62,11 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
                 />
             </div>
             <button
+                class="btn btn-primary"
+                (click)="goBack()">
+                Back
+            </button>
+            <button
                 type="submit"
                 class="btn btn-primary"
                 [disabled]="! form.valid">
@@ -70,6 +78,8 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 })
 export class AdditionalInfoComponent implements OnInit {
     @Output() onSubmit = new EventEmitter();
+    @Output() goToPreviousStep = new EventEmitter();
+    private modes: any = REGISTRATION_MODES;
     form: FormGroup;
 
     constructor(private formBuilder: FormBuilder) { }
@@ -79,11 +89,18 @@ export class AdditionalInfoComponent implements OnInit {
             'city': [''],
             'university': [''],
             'year_of_study': [''],
-            'date_of_birth': [new Date()]
+            'date_of_birth': ['']
         });
     }
 
     handleSubmit() {
         this.onSubmit.emit(this.form.value);
+    }
+
+    /**
+     * go back to previous step
+    **/
+    goBack() {
+        this.goToPreviousStep.emit(this.modes.TIME_INVESTMENT);
     }
 }

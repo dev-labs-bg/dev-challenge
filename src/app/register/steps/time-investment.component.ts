@@ -1,8 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { CategoryService } from '../../admin/categories/category.service';
 import { Category } from '../../admin/categories/category';
+import { REGISTRATION_MODES } from '../constants';
 
 @Component({
     selector: 'xp-register-time-investment',
@@ -41,7 +42,7 @@ import { Category } from '../../admin/categories/category';
                     formControlName="spent_time"
                     class="form-control"
                     id="spent_time">
-                    <option value="" disabled="true" [selected]="true">Please Choose</option>
+                    <option value="" disabled="true">Please Choose</option>
                     <option *ngFor="let tileSlot of tileSlots"
                         value="{{ tileSlot }}">
                         {{ tileSlot }} hours
@@ -56,6 +57,11 @@ import { Category } from '../../admin/categories/category';
                 </p>
             </div>
             <button
+                class="btn btn-primary"
+                (click)="goBack()">
+                Back
+            </button>
+            <button
                 type="submit"
                 class="btn btn-primary"
                 [disabled]="! form.valid">
@@ -66,11 +72,14 @@ import { Category } from '../../admin/categories/category';
 })
 export class TimeInvestmentComponent implements OnInit {
     @Output() onSubmit = new EventEmitter();
+    @Output() goToPreviousStep = new EventEmitter();
+    @Input() userProps: any;
     form: FormGroup;
     private currentDate = new Date();
     private maxDate: Date = new Date();
     private tileSlots = [0.5, 1, 2, 4];
     private publishedCategories: Category[] = [];
+    private modes: any = REGISTRATION_MODES;
  
     constructor(
         private formBuilder: FormBuilder,
@@ -84,14 +93,29 @@ export class TimeInvestmentComponent implements OnInit {
             )
         );
 
+        // empty cat id
+        let formCategoryId = '';
+
+        // fill in cat id if initialized
+        if (this.userProps.category_id > 0) {
+            formCategoryId = this.userProps.category_id
+        }
+
         this.form = this.formBuilder.group({
-            'category_id': ['', Validators.required],
-            'spent_time': ['', Validators.required],
+            'category_id': [formCategoryId, Validators.required],
+            'spent_time': [this.userProps.spent_time, Validators.required],
         });
     }
 
     handleSubmit() {
         this.onSubmit.emit(this.form.value);
+    }
+
+    /**
+     * go back to previous step
+    **/
+    goBack() {
+        this.goToPreviousStep.emit(this.modes.MAIN_INFO);
     }
 
 }
