@@ -57,6 +57,7 @@ import { REGISTRATION_MODES } from '../constants';
                 </p>
             </div>
             <button
+                *ngIf="showGoBack"
                 class="btn btn-primary"
                 (click)="goBack()">
                 Back
@@ -74,6 +75,7 @@ export class TimeInvestmentComponent implements OnInit {
     @Output() onSubmit = new EventEmitter();
     @Output() goToPreviousStep = new EventEmitter();
     @Input() userProps: any;
+    @Input() showGoBack: boolean = true;
     form: FormGroup;
     private currentDate = new Date();
     private maxDate: Date = new Date();

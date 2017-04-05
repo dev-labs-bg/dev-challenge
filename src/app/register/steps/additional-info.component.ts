@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { REGISTRATION_MODES } from '../constants';
@@ -62,6 +62,7 @@ import { REGISTRATION_MODES } from '../constants';
                 />
             </div>
             <button
+                *ngIf="showGoBack"
                 class="btn btn-primary"
                 (click)="goBack()">
                 Back
@@ -79,6 +80,7 @@ import { REGISTRATION_MODES } from '../constants';
 export class AdditionalInfoComponent implements OnInit {
     @Output() onSubmit = new EventEmitter();
     @Output() goToPreviousStep = new EventEmitter();
+    @Input() showGoBack: boolean = true;
     private modes: any = REGISTRATION_MODES;
     form: FormGroup;
 
