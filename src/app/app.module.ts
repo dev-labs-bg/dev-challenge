@@ -96,6 +96,7 @@ import { Modal } from './shared/modal.component';
 import { HomeComponent } from './home/home.component';
 import { RulesComponent } from './home/rules.component';
 import { FooterComponent } from './shared/footer.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -161,7 +162,8 @@ import { FooterComponent } from './shared/footer.component';
     Modal,
     HomeComponent,
     RulesComponent,
-    FooterComponent
+    FooterComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

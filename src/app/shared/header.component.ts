@@ -53,6 +53,9 @@ import { AuthService } from '../core/auth.service';
 
                     <ul class="nav navbar-nav navbar-right">
                         <li *ngIf="authService.isLoggedIn()">
+                            <a routerLink="/settings">Settings</a>
+                        </li>
+                        <li *ngIf="authService.isLoggedIn()">
                             <a href="javascript:;" (click)="logout()">Logout</a>
                         </li>
                     </ul>

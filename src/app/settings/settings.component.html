@@ -1,0 +1,92 @@
+<form [formGroup]="form" (ngSubmit)="handleSubmit()">
+    <div class="form-group"
+        [class.has-error]="
+            ! form.controls['first_name'].valid &&
+            form.controls['first_name'].touched
+        ">
+        <label for="first_name">First name</label>
+        <input
+            type="text"
+            name="first_name"
+            class="form-control"
+            id="first_name"
+            formControlName="first_name"
+            placeholder="First Name"
+            required
+        />
+    </div>
+    <div class="form-group"
+        [class.has-error]="
+            ! form.controls['last_name'].valid &&
+            form.controls['last_name'].touched
+        ">
+        <label for="last_name">Last name</label>
+        <input
+            type="text"
+            name="last_name"
+            class="form-control"
+            id="last_name"
+            formControlName="last_name"
+            placeholder="Last Name"
+        />
+    </div>
+    <div class="form-group"
+        [class.has-error]="
+            ! form.controls['date_of_birth'].valid &&
+            form.controls['date_of_birth'].touched
+        ">
+        <label class="block-display">Year of Birth</label>
+        <input
+            type="number"
+            name="date_of_birth"
+            class="form-control"
+            id="date_of_birth"
+            formControlName="date_of_birth"
+            placeholder="Year of Birth"
+        />
+    </div>
+    <div class="form-group"
+        [class.has-error]="
+            ! form.controls['city'].valid &&
+            form.controls['city'].touched
+        ">
+        <label for="city">City</label>
+        <input
+            type="text"
+            name="city"
+            class="form-control"
+            id="city"
+            formControlName="city"
+            placeholder="City"
+        />
+    </div>
+    <div class="form-group">
+        <label for="university">University</label>
+        <input
+            #university
+            type="text"
+            name="university"
+            class="form-control"
+            id="university"
+            formControlName="university"
+            placeholder="University"
+        />
+    </div>
+    <div class="form-group" *ngIf="university.value.length">
+        <label for="year_of_study">Year of study</label>
+        <input
+            type="number"
+            name="year_of_study"
+            class="form-control"
+            id="year_of_study"
+            formControlName="year_of_study"
+            placeholder="Year of study"
+        />
+    </div>
+    <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="! form.valid">
+        Save
+    </button>
+</form>
