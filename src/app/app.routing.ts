@@ -18,6 +18,7 @@ import {ContributionsComponent} from "./contributions/contributions.component";
 import {SocialComponent} from "./components/social/social.component";
 import {SocialGuard} from "./core/social.guard";
 import { HomeComponent } from './home/home.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const APP_ROUTES: Routes = [
     {path: '', component: HomeComponent},
@@ -36,6 +37,7 @@ const APP_ROUTES: Routes = [
     {path: 'admin/submissions/single/:id', component: SingleComponent, canActivate: [AdminGuard]},
     {path: 'admin/bonuses', component: BonusesComponent, canActivate: [AdminGuard]},
     {path: 'contributions', component: ContributionsComponent, canActivate: [AuthGuard]},
+    {path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
 ];
 
 export const routing = RouterModule.forRoot(APP_ROUTES);

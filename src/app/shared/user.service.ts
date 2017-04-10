@@ -53,4 +53,13 @@ export class UserService {
         return categoryUsers;
     }
 
+    /**
+     * Edit user's settings
+     *
+     * @returns {Observable}
+     */
+    editSettings(data) {
+        return this.httpService.post('edit-user-settings', data);
+    }
+
 }
