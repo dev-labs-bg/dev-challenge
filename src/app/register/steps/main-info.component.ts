@@ -9,7 +9,7 @@ import { User } from '../../classes/user';
 @Component({
     selector: 'xp-register-main-info',
     template: `
-        <p>Можете да се регистрирате чрез Github:</p>
+        <p>BTW: Можеш да се регистрираш и чрез GitHub:</p>
         <p>
             <a
                 href="{{ GITHUB_ENDPOINT }}"
@@ -17,7 +17,7 @@ import { User } from '../../classes/user';
                 Github registration
             </a>
         </p>
-        <p>...или да използвате стандартната форма:</p>
+        <p>...или да попълниш тази форма:</p>
         <form [formGroup]="form" (ngSubmit)="handleSubmit()">
             <div class="form-group"
                 [class.has-error]="
