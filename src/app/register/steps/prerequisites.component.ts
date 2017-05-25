@@ -3,8 +3,6 @@ import { Component, Output, EventEmitter } from '@angular/core';
 @Component({
     selector: 'xp-register-prerequisites',
     template: `
-        <h1>Hello World!</h1>
-
         <p>Преди да се включиш в предизвикателството, има няколко умения,
         които задължително трябва да притежаваш:</p>
 
