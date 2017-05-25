@@ -9,7 +9,7 @@ import { ToastyModule } from 'ng2-toasty';
 import { BusyModule } from 'angular2-busy';
 import {
     AlertModule, DatepickerModule, ModalModule, ProgressbarModule
-} from 'ng2-bootstrap';
+} from 'ngx-bootstrap';
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 
